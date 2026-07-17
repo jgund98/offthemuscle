@@ -56,13 +56,13 @@ export const metadata: Metadata = {
     title: "Off The Muscle Pressure Cleaning — West Palm Beach & South Florida",
     description:
       "Family-owned, licensed & insured pressure cleaning across South Florida: homes, driveways, roofs & storefronts. Free estimates.",
-    images: [{ url: "/images/ba-roof-after.jpg", width: 1400, height: 1050, alt: "A South Florida tile roof soft washed clean by Off The Muscle" }],
+    images: [{ url: "/images/og-card.jpg", width: 1200, height: 630, alt: "Off The Muscle Pressure Cleaning — We put the muscle in clean. 5.0 on Google." }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Off The Muscle Pressure Cleaning — South Florida",
     description: "Licensed & insured, family-owned pressure cleaning across Palm Beach, Broward & Martin counties.",
-    images: ["/images/ba-roof-after.jpg"],
+    images: ["/images/og-card.jpg"],
   },
   robots: {
     index: true,
