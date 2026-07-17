@@ -186,7 +186,7 @@ export default function Hero({ media = HERO_MEDIA }: { media?: typeof HERO_MEDIA
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.78 }}
-            className="group/tel mt-5 inline-flex items-baseline gap-2.5 md:mt-6"
+            className="group/tel mt-6 flex w-fit items-baseline gap-2.5 md:mt-7"
           >
             <span className="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-mist">Or call / text</span>
             <span className="display text-xl text-foam transition-colors group-hover/tel:text-hydro md:text-2xl">{SITE.phone}</span>
@@ -200,7 +200,7 @@ export default function Hero({ media = HERO_MEDIA }: { media?: typeof HERO_MEDIA
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.85 }}
-            className="mt-4 inline-flex items-center gap-3 self-start rounded-full border border-foam/15 bg-abyss/40 py-2.5 pl-4 pr-5 backdrop-blur-sm transition-colors hover:border-hydro/50"
+            className="mt-4 flex w-fit items-center gap-3 rounded-full border border-foam/15 bg-abyss/40 py-2.5 pl-4 pr-5 backdrop-blur-sm transition-colors hover:border-hydro/50"
           >
             <span className="flex gap-0.5" aria-hidden="true">
               {[...Array(5)].map((_, i) => (

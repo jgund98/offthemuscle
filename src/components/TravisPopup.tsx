@@ -76,24 +76,8 @@ export default function LeadPopup() {
                 className="object-cover object-[50%_22%]"
                 sizes="416px"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-abyss/80 via-abyss/10 to-abyss/30" />
-
-              {/* licensed & insured, pinned top-left — same inset + height as the close button */}
-              <div className="absolute left-4 top-4 flex h-10 items-center gap-2 rounded-full bg-abyss/60 px-4 backdrop-blur-sm">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z" stroke="#7cd0f7" strokeWidth="2" strokeLinejoin="round" />
-                  <path d="M9 12l2 2 4-4" stroke="#7cd0f7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                <span className="text-[0.6rem] font-bold text-foam">Licensed &amp; Insured</span>
-              </div>
-
-              <div className="absolute bottom-[4.75rem] left-5 flex items-center gap-2.5">
-                <Image src="/images/otm-script-white.svg" alt="" width={44} height={44} className="h-11 w-11 drop-shadow-lg" />
-                <div>
-                  <p className="display text-xl leading-none text-foam drop-shadow-md">Off The Muscle</p>
-                  <p className="mt-1 text-[0.58rem] font-bold uppercase tracking-[0.24em] text-spray">Family Owned · South Florida</p>
-                </div>
-              </div>
+              {/* just enough feather for the close button — the photo stays clean */}
+              <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-abyss/45 to-transparent" />
             </div>
 
             {/* the jet riding the cut */}
@@ -116,6 +100,7 @@ export default function LeadPopup() {
                 aria-hidden="true"
                 className="pointer-events-none absolute -right-6 bottom-0 w-36 rotate-6 opacity-[0.05]"
               />
+              <p className="label mb-2.5 text-brand">Off The Muscle · Family owned</p>
               <p className="display text-[1.65rem] leading-[1.05] text-ink">
                 Let&apos;s get you a <span className="whitespace-nowrap text-hydro">straight price.</span>
               </p>
