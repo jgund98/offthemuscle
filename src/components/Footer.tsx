@@ -54,12 +54,9 @@ export default function Footer() {
                   {SITE.hours} · {SITE.hoursNote}
                 </p>
               </div>
-              <p className="mt-6 inline-flex items-center gap-2 rounded-full border border-hydro/20 px-4 py-2 text-xs font-bold text-mist">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z" stroke="#1da9e8" strokeWidth="2" strokeLinejoin="round" />
-                  <path d="M9 12l2 2 4-4" stroke="#1da9e8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                Licensed &amp; Insured · Docs on request
+              <p className="mt-6 text-sm leading-relaxed text-mist">
+                Fully licensed &amp; insured — insurance documentation available on
+                request, before we ever start.
               </p>
             </div>
 
@@ -92,10 +89,18 @@ export default function Footer() {
                   </li>
                 ))}
               </ul>
-              <p className="label mb-3 mt-8 text-mist-dim">Proudly serving</p>
-              <p className="text-xs leading-relaxed text-mist-dim">
-                {`${CITIES.slice(0, 10).join(" · ")} & beyond`}
-              </p>
+              <p className="label mb-4 mt-8 text-mist-dim">Proudly serving</p>
+              <div className="flex max-w-xs flex-wrap items-center gap-x-3 gap-y-2 text-sm leading-snug text-mist">
+                {CITIES.slice(0, 10).map((c) => (
+                  <span key={c} className="flex items-center gap-3">
+                    {c}
+                    <svg width="6" height="9" viewBox="0 0 10 14" fill="none" aria-hidden="true">
+                      <path d="M5 0C7 3.5 10 6.5 10 9a5 5 0 1 1-10 0C0 6.5 3 3.5 5 0Z" fill="#1da9e8" opacity="0.7" />
+                    </svg>
+                  </span>
+                ))}
+                <span>&amp; beyond</span>
+              </div>
             </div>
           </div>
 

@@ -121,16 +121,16 @@ export default function AboutPage() {
                 <Reveal>
                   <div className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-brand/10 shadow-[0_20px_50px_-24px_rgba(13,37,55,0.4)]">
                     <Image
-                      src="/images/jason-surface.jpg"
-                      alt="Jason, owner of Off The Muscle, running a surface cleaner on a commercial job in South Florida"
+                      src="/images/jason-son.jpg"
+                      alt="Jason, owner of Off The Muscle, with his son in matching company shirts"
                       fill
-                      className="object-cover object-[30%_center]"
+                      className="object-cover object-top"
                       sizes="(min-width: 1024px) 40vw, 100vw"
                       priority
                     />
                     <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-abyss/90 to-transparent p-6">
-                      <p className="display text-2xl text-foam">Jason, on the job</p>
-                      <p className="label mt-1 text-spray">Owner · lead technician</p>
+                      <p className="display text-2xl text-foam">The family in family owned</p>
+                      <p className="label mt-1 text-spray">Jason · Owner, Off The Muscle</p>
                     </div>
                   </div>
                 </Reveal>

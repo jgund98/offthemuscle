@@ -144,10 +144,10 @@ export default function Hero({ media = HERO_MEDIA }: { media?: typeof HERO_MEDIA
             </span>
           </motion.p>
 
-          <h1 className="display text-[clamp(2.3rem,9vw,3.6rem)] md:text-[clamp(2.6rem,5vw,5rem)]">
-            <PowerWash text="BREATHE LIFE" delay={0.5} duration={1.05} className="block" />
-            <PowerWash text="BACK INTO" delay={1.15} duration={0.95} className="block" />
-            <PowerWash text="YOUR PROPERTY." delay={1.8} duration={1.05} cleanClassName="text-hydro" className="block" />
+          <h1 className="display text-[clamp(2.6rem,10vw,4rem)] md:text-[clamp(2.8rem,5.5vw,5.5rem)]">
+            <PowerWash text="WE PUT THE" delay={0.5} duration={1.0} className="block" />
+            <PowerWash text="MUSCLE" delay={1.1} duration={0.95} cleanClassName="text-hydro" className="block" />
+            <PowerWash text="IN CLEAN." delay={1.7} duration={1.0} className="block" />
           </h1>
 
           <motion.p
@@ -156,7 +156,7 @@ export default function Hero({ media = HERO_MEDIA }: { media?: typeof HERO_MEDIA
             transition={{ duration: 0.8, delay: 0.55 }}
             className="mt-5 max-w-md text-sm leading-relaxed text-mist sm:text-base md:mt-7 md:text-lg"
           >
-            Cleaning up South Florida one property at a time — homes, driveways, roofs, and storefronts, done right.
+            Breathing life back into South Florida properties — homes, driveways, roofs, and storefronts, one at a time.
           </motion.p>
 
           <motion.div
@@ -192,26 +192,28 @@ export default function Hero({ media = HERO_MEDIA }: { media?: typeof HERO_MEDIA
             <span className="display text-xl text-foam transition-colors group-hover/tel:text-hydro md:text-2xl">{SITE.phone}</span>
           </motion.a>
 
-          {/* real trust chips — licensed, insured, family owned */}
-          <motion.div
+          {/* real proof beats badges: the actual Google rating */}
+          <motion.a
+            href={SITE.gmb}
+            target="_blank"
+            rel="noopener noreferrer"
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.85 }}
-            className="mt-4 flex flex-wrap gap-2.5"
+            className="mt-4 inline-flex items-center gap-3 self-start rounded-full border border-foam/15 bg-abyss/40 py-2.5 pl-4 pr-5 backdrop-blur-sm transition-colors hover:border-hydro/50"
           >
-            {["Licensed & Insured", "Family Owned", "Free Estimates"].map((t) => (
-              <span
-                key={t}
-                className="inline-flex items-center gap-2 rounded-full border border-foam/15 bg-abyss/40 py-2 pl-3 pr-4 text-xs font-semibold text-foam backdrop-blur-sm"
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z" stroke="#1da9e8" strokeWidth="2" strokeLinejoin="round" />
-                  <path d="M9 12l2 2 4-4" stroke="#1da9e8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <span className="flex gap-0.5" aria-hidden="true">
+              {[...Array(5)].map((_, i) => (
+                <svg key={i} width="14" height="14" viewBox="0 0 24 24" fill="#fbbc04">
+                  <path d="m12 2 2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8L12 2Z" />
                 </svg>
-                {t}
-              </span>
-            ))}
-          </motion.div>
+              ))}
+            </span>
+            <span className="text-xs font-semibold text-foam">
+              {SITE.rating.value} on Google
+              <span className="text-mist-dim"> · {SITE.rating.count} reviews</span>
+            </span>
+          </motion.a>
         </div>
       </div>
 
