@@ -62,6 +62,8 @@ export default function QuoteForm() {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
+    // honeypot: real users never fill this hidden field — bots do
+    if (fd.get("company")) return;
     const body = encodeURIComponent(
       `Name: ${fd.get("name")}\nPhone: ${fd.get("phone")}\nEmail: ${fd.get("email") || "—"}\nProperty: ${property}\nNeeds washing: ${services.join(", ") || "Not sure yet — walk me through it"}\nNotes: ${fd.get("message") || "—"}`
     );
@@ -130,6 +132,8 @@ export default function QuoteForm() {
             onSubmit={onSubmit}
             className="rounded-3xl border border-brand/15 bg-white p-6 shadow-[0_24px_60px_-24px_rgba(13,37,55,0.25)] md:p-9"
           >
+            {/* honeypot — hidden from humans, catches bots */}
+            <input type="text" name="company" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute left-[-9999px] h-0 w-0 opacity-0" />
             {/* 1 — property type, big friendly targets */}
             <p className="display text-lg text-ink">Where are we washing?</p>
             <div className="mt-4 grid grid-cols-3 gap-2.5">

@@ -57,7 +57,7 @@ export default function GrimeCanvas() {
 
   useEffect(() => {
     const img = new window.Image();
-    img.src = "/images/ba-driveway-before.jpg";
+    img.src = "/images/sidewalk-dirty.jpg";
     img.onload = () => {
       imgRef.current = img;
       setReady(true);
@@ -183,7 +183,7 @@ export default function GrimeCanvas() {
             <Reveal delay={0.08}>
               <h2 className="display max-w-2xl text-[1.9rem] leading-[1.05] sm:text-4xl md:text-5xl">
                 <span className="block">Grab the wand.</span>
-                <span className="block text-hydro">Wash this driveway.</span>
+                <span className="block text-hydro">Wash this walkway.</span>
               </h2>
             </Reveal>
           </div>
@@ -203,8 +203,8 @@ export default function GrimeCanvas() {
             {/* AFTER photo underneath */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/images/ba-driveway-after.jpg"
-              alt="The same driveway restored to bright, clean concrete"
+              src="/images/sidewalk-clean.jpg"
+              alt="The same walkway restored to bright, clean concrete"
               className="absolute inset-0 h-full w-full object-cover"
               draggable={false}
               loading="lazy"

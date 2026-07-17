@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
 import QuoteForm from "@/components/QuoteForm";
+import ObfMail from "@/components/ObfMail";
 import { Reveal } from "@/components/Reveal";
 import { SITE } from "@/lib/site";
 
@@ -35,15 +36,21 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <p className="label mb-3 text-slate">Email</p>
-                    <a href={`mailto:${SITE.email}`} className="text-lg font-semibold text-brand underline-offset-4 hover:underline">
-                      {SITE.email}
-                    </a>
+                    <ObfMail className="text-lg font-semibold text-brand underline-offset-4 hover:underline" />
+                  </div>
+                  <div>
+                    <p className="label mb-3 text-slate">Office hours</p>
+                    <p className="max-w-xs text-base leading-relaxed text-slate">
+                      {SITE.hours}
+                      <br />
+                      {SITE.hoursNote}
+                    </p>
                   </div>
                   <div>
                     <p className="label mb-3 text-slate">Service area</p>
                     <p className="max-w-xs text-base leading-relaxed text-slate">
-                      Palm Beach County, Northern Broward, and Southern Martin — call for
-                      any area-specific questions.
+                      Based in {SITE.address.city} · serving Palm Beach County, Northern
+                      Broward, and Southern Martin. Call for any area-specific questions.
                     </p>
                   </div>
                   <div>

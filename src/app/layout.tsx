@@ -5,7 +5,8 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import MobileDock from "@/components/MobileDock";
 import TravisPopup from "@/components/TravisPopup";
-import { SITE, SERVICES, CITIES } from "@/lib/site";
+import LiveChat from "@/components/LiveChat";
+import { SITE, SERVICES, CITIES, COUNTIES } from "@/lib/site";
 
 const archivo = Archivo({
   subsets: ["latin"],
@@ -79,6 +80,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Footer />
         <MobileDock />
         <TravisPopup />
+        <LiveChat />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -100,18 +102,33 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               priceRange: "$$",
               address: {
                 "@type": "PostalAddress",
-                addressRegion: "FL",
-                addressLocality: "West Palm Beach",
+                streetAddress: SITE.address.street,
+                addressLocality: SITE.address.city,
+                addressRegion: SITE.address.state,
+                postalCode: SITE.address.zip,
                 addressCountry: "US",
               },
               geo: { "@type": "GeoCoordinates", latitude: SITE.geo.lat, longitude: SITE.geo.lng },
-              areaServed: CITIES.map((c) => ({ "@type": "City", name: `${c}, FL` })),
+              areaServed: [
+                ...COUNTIES.map((c) => ({ "@type": "AdministrativeArea", name: c })),
+                ...CITIES.map((c) => ({ "@type": "City", name: `${c}, FL` })),
+              ],
               openingHoursSpecification: {
                 "@type": "OpeningHoursSpecification",
-                dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
                 opens: "07:00",
                 closes: "19:00",
               },
+              knowsAbout: [
+                "pressure washing",
+                "power washing",
+                "soft washing",
+                "roof cleaning",
+                "driveway cleaning",
+                "paver cleaning",
+                "commercial pressure washing",
+                "house washing",
+              ],
               hasOfferCatalog: {
                 "@type": "OfferCatalog",
                 name: "Pressure Washing Services",

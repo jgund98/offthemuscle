@@ -31,8 +31,40 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
   if (!s) notFound();
   const others = SERVICES.filter((x) => x.slug !== s.slug).slice(0, 3);
 
+  const schema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Service",
+        name: `${s.name} — ${SITE.fullName}`,
+        serviceType: s.name,
+        description: s.intro,
+        provider: { "@type": "HomeAndConstructionBusiness", name: SITE.fullName, telephone: "+1-561-698-8537" },
+        areaServed: { "@type": "AdministrativeArea", name: "Palm Beach County, FL" },
+        url: `${SITE.url}/services/${s.slug}`,
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: s.faqs.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: SITE.url },
+          { "@type": "ListItem", position: 2, name: "Services", item: `${SITE.url}/services` },
+          { "@type": "ListItem", position: 3, name: s.name, item: `${SITE.url}/services/${s.slug}` },
+        ],
+      },
+    ],
+  };
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <PageHero kicker={`Services / ${s.name}`} title={s.name} body={s.headline} image={s.image} imageAlt={s.imageAlt} />
 
       <section className="bg-foam pb-24 pt-20 text-ink md:pb-32">

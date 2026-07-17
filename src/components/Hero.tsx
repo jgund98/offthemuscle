@@ -156,7 +156,7 @@ export default function Hero({ media = HERO_MEDIA }: { media?: typeof HERO_MEDIA
             transition={{ duration: 0.8, delay: 0.55 }}
             className="mt-5 max-w-md text-sm leading-relaxed text-mist sm:text-base md:mt-7 md:text-lg"
           >
-            Homes, driveways, roofs, and storefronts across South Florida — soft washed, surface cleaned, and treated right. Licensed, insured, and family owned.
+            Cleaning up South Florida one property at a time — homes, driveways, roofs, and storefronts, done right.
           </motion.p>
 
           <motion.div

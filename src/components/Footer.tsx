@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import ObfMail from "@/components/ObfMail";
 import { SITE, SERVICES, CITIES } from "@/lib/site";
 
 export default function Footer() {
@@ -46,9 +47,12 @@ export default function Footer() {
                 <a href={SITE.phoneHref} className="display text-3xl text-foam transition-colors hover:text-hydro">
                   {SITE.phone}
                 </a>
-                <a href={`mailto:${SITE.email}`} className="text-sm text-mist transition-colors hover:text-hydro">
-                  {SITE.email}
-                </a>
+                <ObfMail className="text-sm text-mist transition-colors hover:text-hydro" />
+                <p className="mt-2 text-sm leading-relaxed text-mist-dim">
+                  {SITE.address.street}, {SITE.address.city}, {SITE.address.state} {SITE.address.zip}
+                  <br />
+                  {SITE.hours} · {SITE.hoursNote}
+                </p>
               </div>
               <p className="mt-6 inline-flex items-center gap-2 rounded-full border border-hydro/20 px-4 py-2 text-xs font-bold text-mist">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">

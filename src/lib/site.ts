@@ -8,10 +8,22 @@ export const SITE = {
   phoneHref: "tel:+15616988537",
   smsHref: "sms:+15616988537",
   email: "info@offthemuscle.net",
+  // email split so plain-text scrapers can't harvest it; joined at runtime
+  emailUser: "info",
+  emailDomain: "offthemuscle.net",
   base: "South Florida",
   region: "Palm Beach County, Florida",
+  owner: "Jason",
   url: "https://offthemuscle.net",
   founded: "2021",
+  address: {
+    street: "3200 Summit Blvd",
+    city: "West Palm Beach",
+    state: "FL",
+    zip: "33416",
+  },
+  hours: "Mon–Sun · 7am – 7pm",
+  hoursNote: "Holidays closed",
   // West Palm Beach
   geo: { lat: 26.7153, lng: -80.0534 },
 };
@@ -175,14 +187,23 @@ export const TRANSFORMATIONS = [
   },
 ];
 
-/* Real job photography for the recent-work gallery. */
+/* Real job photography for the recent-work gallery (9 = fills a 3-col grid). */
 export const GALLERY = [
-  { img: "/images/crew-roof.jpg", label: "Rooftop soft wash", tag: "Residential" },
-  { img: "/images/svc-commercial.jpg", label: "Commercial steps & entry", tag: "Commercial" },
-  { img: "/images/ba-driveway-after.jpg", label: "Driveway, restored", tag: "Surface" },
-  { img: "/images/roof-halfclean.jpg", label: "Half-clean roof reveal", tag: "Roof" },
-  { img: "/images/svc-surface.jpg", label: "Surface cleaner at work", tag: "Surface" },
   { img: "/images/ba-roof-after.jpg", label: "Tile roof, transformed", tag: "Roof" },
+  { img: "/images/svc-commercial.jpg", label: "Commercial steps & entry", tag: "Commercial" },
+  { img: "/images/crew-roof.jpg", label: "Rooftop soft wash", tag: "Residential" },
+  { img: "/images/ba-driveway-after.jpg", label: "Driveway, restored", tag: "Surface" },
+  { img: "/images/jason-surface.jpg", label: "Surface cleaning a commercial pad", tag: "Commercial" },
+  { img: "/images/roof-halfclean.jpg", label: "Half-clean roof reveal", tag: "Roof" },
+  { img: "/images/svc-surface.jpg", label: "Paver surface clean", tag: "Surface" },
   { img: "/images/svc-residential.jpg", label: "Home exterior refresh", tag: "Residential" },
   { img: "/images/ba-patio-after.jpg", label: "Patio brought back", tag: "Surface" },
+];
+
+/* What sets us apart — carried over from Off The Muscle's own site. */
+export const APART = [
+  { title: "Owner on every job", body: "You'll find Jason on nearly every job, or directly overseeing the crew, so quality and consistency never slip." },
+  { title: "No job too big or small", body: "From a single driveway to full commercial cleanups, we take on the jobs others avoid. No grime is too stubborn." },
+  { title: "Professional results", body: "Curb appeal that protects your property and turns heads — it's more than a slogan, it's the mindset." },
+  { title: "We give back", body: "We're proud to donate a share of our profits to causes we care about right here in the community." },
 ];

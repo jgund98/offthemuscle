@@ -4,7 +4,7 @@ import PageHero from "@/components/PageHero";
 import CtaBand from "@/components/CtaBand";
 import SplashMark from "@/components/SplashMark";
 import { Reveal } from "@/components/Reveal";
-import { TRUST, SITE } from "@/lib/site";
+import { TRUST, APART, SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About Off The Muscle — Jason's Family-Owned Pressure Cleaning in South Florida",
@@ -121,16 +121,16 @@ export default function AboutPage() {
                 <Reveal>
                   <div className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-brand/10 shadow-[0_20px_50px_-24px_rgba(13,37,55,0.4)]">
                     <Image
-                      src="/images/crew-roof.jpg"
-                      alt="Off The Muscle technician soft washing a South Florida tile roof under palms"
+                      src="/images/jason-surface.jpg"
+                      alt="Jason, owner of Off The Muscle, running a surface cleaner on a commercial job in South Florida"
                       fill
-                      className="object-cover"
+                      className="object-cover object-[30%_center]"
                       sizes="(min-width: 1024px) 40vw, 100vw"
                       priority
                     />
-                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-abyss/85 to-transparent p-6">
-                      <p className="display text-2xl text-foam">On the job, on the roof</p>
-                      <p className="label mt-1 text-spray">Soft wash · South Florida</p>
+                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-abyss/90 to-transparent p-6">
+                      <p className="display text-2xl text-foam">Jason, on the job</p>
+                      <p className="label mt-1 text-spray">Owner · lead technician</p>
                     </div>
                   </div>
                 </Reveal>
@@ -173,6 +173,24 @@ export default function AboutPage() {
                   </Reveal>
                 ))}
               </div>
+            </div>
+
+            {/* what sets us apart */}
+            <div className="mt-16 grid gap-4 sm:grid-cols-2">
+              {APART.map((a, i) => (
+                <Reveal key={a.title} delay={i * 0.05}>
+                  <div className="h-full rounded-2xl border border-brand/15 bg-white p-6 shadow-[0_16px_40px_-24px_rgba(13,37,55,0.28)]">
+                    <div className="mb-3 grid h-10 w-10 place-items-center rounded-full bg-hydro/12">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z" stroke="#0a5b56" strokeWidth="2" strokeLinejoin="round" />
+                        <path d="M9 12l2 2 4-4" stroke="#0a5b56" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </div>
+                    <h3 className="display text-lg text-ink md:text-xl">{a.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-slate">{a.body}</p>
+                  </div>
+                </Reveal>
+              ))}
             </div>
 
             <Reveal delay={0.1}>
