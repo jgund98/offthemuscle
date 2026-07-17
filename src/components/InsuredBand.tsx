@@ -32,20 +32,22 @@ export default function InsuredBand() {
           </div>
 
           <Reveal delay={0.12}>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
               {TRUST.map((t) => (
                 <div
                   key={t.label}
-                  className="rounded-2xl border border-hydro/15 bg-trench/60 p-6 backdrop-blur-sm"
+                  className="flex items-center gap-4 rounded-2xl border border-hydro/15 bg-trench/60 p-4 backdrop-blur-sm sm:block sm:p-6"
                 >
-                  <div className="mb-3 grid h-10 w-10 place-items-center rounded-full bg-hydro/12">
+                  <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-hydro/12 sm:mb-3">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                       <path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z" stroke="#1da9e8" strokeWidth="2" strokeLinejoin="round" />
                       <path d="M9 12l2 2 4-4" stroke="#1da9e8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </div>
-                  <p className="display text-xl text-foam md:text-2xl">{t.value}</p>
-                  <p className="mt-1.5 text-xs leading-snug text-mist-dim">{t.label}</p>
+                  <div className="min-w-0">
+                    <p className="display whitespace-nowrap text-lg leading-none text-foam sm:text-xl md:text-2xl">{t.value}</p>
+                    <p className="mt-1.5 text-[0.7rem] leading-snug text-mist-dim sm:text-xs">{t.label}</p>
+                  </div>
                 </div>
               ))}
             </div>

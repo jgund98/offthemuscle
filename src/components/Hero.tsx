@@ -122,11 +122,12 @@ export default function Hero({ media = HERO_MEDIA }: { media?: typeof HERO_MEDIA
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.25 }}
-            className="label mb-4 flex items-center gap-3 text-spray md:mb-6"
+            className="label mb-4 flex items-start gap-3 text-spray md:mb-6"
           >
-            <SplashMark className="h-3.5" />
+            <SplashMark className="mt-0.5 h-3.5 shrink-0" />
             <span>
-              Residential &amp; Commercial · <span className="whitespace-nowrap">South Florida</span>
+              <span className="whitespace-nowrap">Residential &amp; Commercial</span>{" "}
+              <span className="whitespace-nowrap">Pressure Washing</span>
             </span>
           </motion.p>
 

@@ -116,6 +116,8 @@ export default function LiveChat() {
       {/* launcher — slides in only once it has the stage to itself */}
       <div
         className={`fixed bottom-[5.5rem] right-4 z-50 transition-all duration-500 lg:bottom-6 lg:right-6 ${
+          open ? "pointer-events-none opacity-0 lg:opacity-100 lg:pointer-events-auto" : ""
+        } ${
           launcherVisible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-24 opacity-0"
         }`}
       >
@@ -161,7 +163,7 @@ export default function LiveChat() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.97 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed bottom-[10rem] right-4 z-50 flex h-[70vh] max-h-[560px] w-[calc(100vw-2rem)] max-w-[24rem] flex-col overflow-hidden rounded-[1.75rem] border border-hydro/20 bg-white shadow-[0_48px_120px_-24px_rgba(6,24,38,0.75)] lg:bottom-28 lg:right-6"
+            className="fixed inset-x-3 bottom-3 z-[60] flex h-[68svh] max-h-[calc(100svh-5.5rem)] flex-col overflow-hidden rounded-[1.75rem] border border-hydro/20 bg-white shadow-[0_48px_120px_-24px_rgba(6,24,38,0.75)] lg:inset-x-auto lg:right-6 lg:bottom-28 lg:h-[70vh] lg:max-h-[560px] lg:w-[24rem]"
             role="dialog"
             aria-label="Chat with Jason"
           >
