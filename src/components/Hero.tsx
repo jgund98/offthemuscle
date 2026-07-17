@@ -87,11 +87,37 @@ export default function Hero({ media = HERO_MEDIA }: { media?: typeof HERO_MEDIA
             <motion.span
               key={i}
               className="absolute left-[-3px] h-6 w-[5px] rounded-full bg-spray/80 blur-[1px]"
-              initial={{ top: "-10%", opacity: 0 }}
+              initial={{ top: "14%", opacity: 0 }}
               animate={{ top: "110%", opacity: [0, 0.9, 0.9, 0] }}
               transition={{ duration: 3.2, delay: 1.2 + i * 2.1, repeat: Infinity, repeatDelay: 3.4, ease: "easeIn" }}
             />
           ))}
+
+          {/* the source: the brand droplet sits on the seam like a valve —
+              the whole jet (and every drip) pours out of the logo */}
+          <div className="absolute left-0 top-[8%] z-10 w-24 -translate-x-1/2 -skew-x-[7deg] lg:w-28">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.5, y: -18 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 1.05, ease: [0.22, 1, 0.36, 1] }}
+              className="relative"
+            >
+              <span className="absolute inset-0 -m-4 rounded-full bg-hydro/25 blur-2xl" aria-hidden="true" />
+              <motion.div
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <Image
+                  src="/images/otm-script-white.svg"
+                  alt=""
+                  aria-hidden="true"
+                  width={120}
+                  height={120}
+                  className="relative h-auto w-full drop-shadow-[0_0_28px_rgba(29,169,232,0.8)]"
+                />
+              </motion.div>
+            </motion.div>
+          </div>
         </div>
       </div>
 
