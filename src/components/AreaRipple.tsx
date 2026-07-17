@@ -29,7 +29,7 @@ export default function AreaRipple() {
           <p className="label mb-4 text-hydro">Based in {SITE.base}</p>
         </Reveal>
         <Reveal delay={0.08}>
-          <h2 className="display text-[2rem] leading-[1.05] sm:text-5xl md:text-[3.25rem]">
+          <h2 className="display text-[2rem] leading-[1.04] sm:text-4xl md:text-5xl">
             <span className="block">One drop here.</span>
             <span className="block">Ripples across</span>
             <span className="block text-hydro">South Florida.</span>

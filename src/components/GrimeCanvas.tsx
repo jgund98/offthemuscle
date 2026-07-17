@@ -181,7 +181,7 @@ export default function GrimeCanvas() {
               </p>
             </Reveal>
             <Reveal delay={0.08}>
-              <h2 className="display max-w-2xl text-[1.9rem] leading-[1.05] sm:text-4xl md:text-5xl">
+              <h2 className="display max-w-2xl text-[2rem] leading-[1.04] sm:text-4xl md:text-5xl">
                 <span className="block">Grab the wand.</span>
                 <span className="block text-hydro">Wash this walkway.</span>
               </h2>
@@ -231,18 +231,24 @@ export default function GrimeCanvas() {
 
             {/* pressure gauge readout */}
             <div className="pointer-events-none absolute left-4 top-4 flex items-center gap-3 rounded-full bg-abyss/70 px-4 py-2 backdrop-blur-sm">
-              <span className="relative grid h-8 w-8 place-items-center">
-                <svg viewBox="0 0 36 36" className="h-8 w-8 -rotate-90">
-                  <circle cx="18" cy="18" r="15" fill="none" stroke="rgba(159,196,218,0.25)" strokeWidth="4" />
-                  <circle
-                    cx="18"
-                    cy="18"
-                    r="15"
-                    fill="none"
-                    stroke="#17c1c9"
-                    strokeWidth="4"
-                    strokeLinecap="round"
-                    strokeDasharray={`${(pct / 100) * 94.2} 94.2`}
+              {/* the brand droplet fills with clean water as you wash */}
+              <span className="relative grid h-8 w-7 place-items-center">
+                <svg viewBox="0 0 24 30" className="h-8 w-7">
+                  <defs>
+                    <clipPath id="dropfill">
+                      <rect x="0" y={30 - (pct / 100) * 28} width="24" height="30" />
+                    </clipPath>
+                  </defs>
+                  <path
+                    d="M12 1.5C15.8 8 21.5 12.8 21.5 19a9.5 9.5 0 1 1-19 0C2.5 12.8 8.2 8 12 1.5Z"
+                    fill="rgba(159,196,218,0.18)"
+                    stroke="rgba(159,196,218,0.5)"
+                    strokeWidth="1.5"
+                  />
+                  <path
+                    d="M12 1.5C15.8 8 21.5 12.8 21.5 19a9.5 9.5 0 1 1-19 0C2.5 12.8 8.2 8 12 1.5Z"
+                    fill="#17c1c9"
+                    clipPath="url(#dropfill)"
                   />
                 </svg>
               </span>

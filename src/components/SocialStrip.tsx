@@ -28,7 +28,7 @@ function Card({ c }: { c: (typeof CARDS)[number] }) {
 
 export default function SocialStrip() {
   return (
-    <section className="grain relative overflow-hidden bg-abyss py-20 md:py-28">
+    <section className="grain relative overflow-hidden bg-abyss py-24 md:py-32">
       <div className="mx-auto mb-10 flex max-w-7xl flex-col gap-5 px-5 md:mb-12 md:flex-row md:items-end md:justify-between md:px-8">
         <div>
           <Reveal>
@@ -38,7 +38,7 @@ export default function SocialStrip() {
             </p>
           </Reveal>
           <Reveal delay={0.08}>
-            <h2 className="display text-[1.9rem] leading-[1.04] text-foam sm:text-4xl md:text-5xl">
+            <h2 className="display text-[2rem] leading-[1.04] sm:text-4xl md:text-5xl text-foam">
               <span className="block">Real jobs.</span>
               <span className="block text-hydro">Real results.</span>
             </h2>

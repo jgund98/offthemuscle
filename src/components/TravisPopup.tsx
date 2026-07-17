@@ -78,8 +78,8 @@ export default function LeadPopup() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-abyss/80 via-abyss/10 to-abyss/30" />
 
-              {/* licensed & insured, pinned top-left */}
-              <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full bg-abyss/60 px-3 py-1.5 backdrop-blur-sm">
+              {/* licensed & insured, pinned top-left — same inset + height as the close button */}
+              <div className="absolute left-4 top-4 flex h-10 items-center gap-2 rounded-full bg-abyss/60 px-4 backdrop-blur-sm">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z" stroke="#66dfe4" strokeWidth="2" strokeLinejoin="round" />
                   <path d="M9 12l2 2 4-4" stroke="#66dfe4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -159,7 +159,7 @@ export default function LeadPopup() {
             <button
               onClick={() => setOpen(false)}
               aria-label="Close"
-              className="absolute right-2.5 top-2.5 z-10 grid h-11 w-11 place-items-center rounded-full bg-abyss/60 text-foam backdrop-blur-sm transition-all hover:scale-105 hover:bg-abyss/85"
+              className="absolute right-4 top-4 z-10 grid h-10 w-10 place-items-center rounded-full bg-abyss/60 text-foam backdrop-blur-sm transition-all hover:scale-105 hover:bg-abyss/85"
             >
               <svg width="16" height="16" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                 <path d="M2 2l10 10M12 2 2 12" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />

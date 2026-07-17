@@ -34,7 +34,7 @@ export default function Home() {
                 </p>
               </Reveal>
               <Reveal delay={0.08}>
-                <h2 className="display text-[1.9rem] leading-[1.05] sm:text-4xl md:text-5xl">
+                <h2 className="display text-[2rem] leading-[1.04] sm:text-4xl md:text-5xl">
                   <span className="block">Every job leaves</span>
                   <span className="block text-hydro">evidence.</span>
                 </h2>
@@ -95,7 +95,7 @@ export default function Home() {
                 </p>
               </Reveal>
               <Reveal delay={0.08}>
-                <h2 className="display text-[2rem] leading-[1.03] sm:text-5xl md:text-6xl">
+                <h2 className="display text-[2rem] leading-[1.04] sm:text-4xl md:text-5xl">
                   <span className="block">No shortcuts.</span>
                   <span className="block text-hydro">No excuses.</span>
                 </h2>

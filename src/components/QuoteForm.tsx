@@ -34,8 +34,9 @@ const PROPERTY_TYPES = [
     label: "My roof",
     icon: (
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M2 12 12 4l10 8M5 11v9h14v-9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M9 20v-5h6v5" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+        <path d="M2 13 12 4l10 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M6 9.5V8h3v-2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M5 16h14M7.5 19.5h9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
       </svg>
     ),
     services: ["Tile roof", "Shingle roof", "House soft wash", "Screen enclosure", "Patio / lanai", "Not sure yet"],

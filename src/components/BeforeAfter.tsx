@@ -72,13 +72,17 @@ export default function BeforeAfter({
           className="absolute inset-y-0 -left-2 w-4 blur-sm"
           style={{ background: "linear-gradient(90deg, transparent, rgba(190,235,252,0.5), transparent)" }}
         />
-        {/* nozzle handle */}
+        {/* the brand droplet is the handle — drag the drop */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-          <div className="grid h-12 w-12 place-items-center rounded-full border-2 border-spray bg-abyss/85 shadow-[0_0_24px_rgba(23,193,201,0.45)] backdrop-blur-sm">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M8 5 4 12l4 7M16 5l4 7-4 7" stroke="#66dfe4" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </div>
+          <svg width="46" height="56" viewBox="0 0 46 56" aria-hidden="true" className="drop-shadow-[0_0_20px_rgba(23,193,201,0.55)]">
+            <path
+              d="M23 2C30 14 42 23 42 35a19 19 0 1 1-38 0C4 23 16 14 23 2Z"
+              fill="rgba(7,26,30,0.88)"
+              stroke="#66dfe4"
+              strokeWidth="2.5"
+            />
+            <path d="M17 30l-5 6 5 6M29 30l5 6-5 6" stroke="#66dfe4" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          </svg>
         </div>
       </div>
 

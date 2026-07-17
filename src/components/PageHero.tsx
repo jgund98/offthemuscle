@@ -7,6 +7,7 @@ export default function PageHero({
   title,
   accent,
   body,
+  bodyMax = "max-w-xl",
   image,
   imageAlt = "",
 }: {
@@ -14,6 +15,7 @@ export default function PageHero({
   title: string;
   accent?: string;
   body?: string;
+  bodyMax?: string;
   image?: string;
   imageAlt?: string;
 }) {
@@ -45,7 +47,7 @@ export default function PageHero({
         </h1>
         {body && (
           <Reveal delay={0.2}>
-            <p className="mt-7 max-w-xl text-lg leading-relaxed text-mist">{body}</p>
+            <p className={`mt-7 ${bodyMax} text-lg leading-relaxed text-mist`}>{body}</p>
           </Reveal>
         )}
       </div>

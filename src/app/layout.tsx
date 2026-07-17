@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import MobileDock from "@/components/MobileDock";
 import TravisPopup from "@/components/TravisPopup";
 import LiveChat from "@/components/LiveChat";
+import DropTop from "@/components/DropTop";
 import { SITE, SERVICES, CITIES, COUNTIES } from "@/lib/site";
 
 const archivo = Archivo({
@@ -81,6 +82,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <MobileDock />
         <TravisPopup />
         <LiveChat />
+        <DropTop />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

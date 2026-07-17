@@ -15,11 +15,13 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
+      {/* body constrained so the floating form card never overlaps the copy */}
       <PageHero
         kicker="Free Estimate"
         title="Let's talk"
         accent="clean."
         body="A few quick details and we'll come back with a straight price — usually the same day. No spam, no pushy calls."
+        bodyMax="max-w-md xl:max-w-[26rem]"
       />
 
       <section className="bg-foam pb-24 text-ink md:pb-32">

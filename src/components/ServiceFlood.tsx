@@ -25,7 +25,7 @@ export default function ServiceFlood() {
               </p>
             </Reveal>
             <Reveal delay={0.08}>
-              <h2 className="display text-[1.75rem] leading-[1.05] sm:text-4xl md:text-6xl">
+              <h2 className="display text-[2rem] leading-[1.04] sm:text-4xl md:text-5xl">
                 <span className="block">Every surface,</span>
                 <span className="block">brought <span className="text-hydro">back to life.</span></span>
               </h2>

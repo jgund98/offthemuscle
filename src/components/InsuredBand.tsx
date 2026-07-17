@@ -6,7 +6,7 @@ import { TRUST } from "@/lib/site";
    "Stay informed. Stay protected." — a trust band, not vanity stats. */
 export default function InsuredBand() {
   return (
-    <section className="caustics grain relative overflow-hidden bg-abyss py-20 md:py-28">
+    <section className="caustics grain relative overflow-hidden bg-abyss py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
           <div>
@@ -17,7 +17,7 @@ export default function InsuredBand() {
               </p>
             </Reveal>
             <Reveal delay={0.08}>
-              <h2 className="display text-[1.9rem] leading-[1.05] sm:text-4xl md:text-5xl">
+              <h2 className="display text-[2rem] leading-[1.04] sm:text-4xl md:text-5xl">
                 <span className="block">Licensed, insured,</span>
                 <span className="block">and <span className="text-hydro">we&apos;ll prove it.</span></span>
               </h2>
