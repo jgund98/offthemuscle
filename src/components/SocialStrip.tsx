@@ -38,9 +38,9 @@ export default function SocialStrip() {
             </p>
           </Reveal>
           <Reveal delay={0.08}>
-            <h2 className="display text-3xl text-foam md:text-5xl">
-              <span className="block">Roofs, driveways, storefronts</span>
-              <span className="block text-hydro">— brought back to life.</span>
+            <h2 className="display text-[1.9rem] leading-[1.04] text-foam sm:text-4xl md:text-5xl">
+              <span className="block">Real jobs.</span>
+              <span className="block text-hydro">Real results.</span>
             </h2>
           </Reveal>
         </div>

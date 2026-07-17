@@ -19,7 +19,7 @@ export default function InsuredBand() {
             <Reveal delay={0.08}>
               <h2 className="display text-[1.9rem] leading-[1.05] sm:text-4xl md:text-5xl">
                 <span className="block">Licensed, insured,</span>
-                <span className="block">and <span className="text-hydro">happy to prove it.</span></span>
+                <span className="block">and <span className="text-hydro">we&apos;ll prove it.</span></span>
               </h2>
             </Reveal>
             <Reveal delay={0.16}>

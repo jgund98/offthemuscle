@@ -46,7 +46,7 @@ export default function CtaBand() {
           <p className="label mb-5 text-spray">Free custom quotes · Fast turnaround</p>
         </Reveal>
         <Reveal delay={0.08}>
-          <h2 className="display text-[clamp(2.5rem,7.5vw,5.5rem)] text-foam">
+          <h2 className="display text-[clamp(2.2rem,6vw,4.25rem)] text-foam">
             Let&apos;s make yours <br className="hidden md:block" />
             the <span className="text-hydro">clean one</span> on the street.
           </h2>

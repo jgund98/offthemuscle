@@ -181,7 +181,7 @@ export default function GrimeCanvas() {
               </p>
             </Reveal>
             <Reveal delay={0.08}>
-              <h2 className="display max-w-2xl text-[1.9rem] leading-[1.05] sm:text-4xl md:text-6xl">
+              <h2 className="display max-w-2xl text-[1.9rem] leading-[1.05] sm:text-4xl md:text-5xl">
                 <span className="block">Grab the wand.</span>
                 <span className="block text-hydro">Wash this driveway.</span>
               </h2>
