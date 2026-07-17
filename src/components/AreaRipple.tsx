@@ -56,7 +56,7 @@ export default function AreaRipple() {
             <span key={i} className="flex items-center gap-8">
               <span className="display text-3xl text-foam/12 md:text-5xl">{c}</span>
               <svg width="10" height="14" viewBox="0 0 10 14" fill="none" className="opacity-25">
-                <path d="M5 0C7 3.5 10 6.5 10 9a5 5 0 1 1-10 0C0 6.5 3 3.5 5 0Z" fill="#17c1c9" />
+                <path d="M5 0C7 3.5 10 6.5 10 9a5 5 0 1 1-10 0C0 6.5 3 3.5 5 0Z" fill="#1da9e8" />
               </svg>
             </span>
           ))}

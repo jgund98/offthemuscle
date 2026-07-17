@@ -50,8 +50,12 @@ export default function QuoteForm() {
   const [sent, setSent] = useState(false);
   const [property, setProperty] = useState("Residential");
   const [services, setServices] = useState<string[]>([]);
+  const [hasName, setHasName] = useState(false);
+  const [hasPhone, setHasPhone] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
   const active = PROPERTY_TYPES.find((p) => p.key === property)!;
+  // estimate progress fills like a water line: property is picked by default
+  const progress = 25 + (services.length ? 25 : 0) + (hasName ? 25 : 0) + (hasPhone ? 25 : 0);
 
   const pickProperty = (key: string) => {
     setProperty(key);
@@ -135,6 +139,28 @@ export default function QuoteForm() {
           >
             {/* honeypot — hidden from humans, catches bots */}
             <input type="text" name="company" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute left-[-9999px] h-0 w-0 opacity-0" />
+
+            {/* water-line progress: the estimate fills up as you go */}
+            <div className="mb-7 flex items-center gap-3">
+              <div className="relative h-2.5 flex-1 overflow-visible rounded-full bg-ice">
+                <div
+                  className="h-full rounded-full bg-gradient-to-r from-brand to-hydro shadow-[0_0_12px_rgba(29,169,232,0.5)] transition-all duration-700 ease-out"
+                  style={{ width: `${progress}%` }}
+                />
+                {/* droplet riding the water line */}
+                <svg
+                  width="16"
+                  height="20"
+                  viewBox="0 0 24 30"
+                  aria-hidden="true"
+                  className="absolute -top-[5px] -ml-2 transition-all duration-700 ease-out"
+                  style={{ left: `${progress}%` }}
+                >
+                  <path d="M12 1.5C15.8 8 21.5 12.8 21.5 19a9.5 9.5 0 1 1-19 0C2.5 12.8 8.2 8 12 1.5Z" fill="#1da9e8" stroke="#fff" strokeWidth="2" />
+                </svg>
+              </div>
+              <span className="label whitespace-nowrap text-[0.58rem] text-slate">{progress}% there</span>
+            </div>
             {/* 1 — property type, big friendly targets */}
             <p className="display text-lg text-ink">Where are we washing?</p>
             <div className="mt-4 grid grid-cols-3 gap-2.5">
@@ -188,11 +214,11 @@ export default function QuoteForm() {
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
               <div>
                 <label className="label mb-2 block text-slate" htmlFor="qf-name">Name *</label>
-                <input id="qf-name" name="name" required placeholder="First name is fine" className={inputCls} autoComplete="name" />
+                <input id="qf-name" name="name" required placeholder="First name is fine" className={inputCls} autoComplete="name" onChange={(e) => setHasName(e.target.value.trim().length > 1)} />
               </div>
               <div>
                 <label className="label mb-2 block text-slate" htmlFor="qf-phone">Phone *</label>
-                <input id="qf-phone" name="phone" required type="tel" placeholder="(561) 555-0134" className={inputCls} autoComplete="tel" />
+                <input id="qf-phone" name="phone" required type="tel" placeholder="(561) 555-0134" className={inputCls} autoComplete="tel" onChange={(e) => setHasPhone(e.target.value.replace(/\D/g, "").length >= 7)} />
               </div>
               <div className="sm:col-span-2">
                 <label className="label mb-2 block text-slate" htmlFor="qf-email">

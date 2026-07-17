@@ -95,7 +95,7 @@ export default function LiveChat() {
   return (
     <>
       {/* launcher */}
-      <div className="fixed bottom-4 left-4 z-50 lg:bottom-6 lg:left-6">
+      <div className="fixed bottom-[5.5rem] right-4 z-50 lg:bottom-6 lg:right-6">
         <AnimatePresence>
           {nudge && !open && (
             <motion.button
@@ -103,7 +103,7 @@ export default function LiveChat() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
               onClick={() => { setOpen(true); setNudge(false); }}
-              className="absolute bottom-16 left-0 w-56 rounded-2xl rounded-bl-sm border border-hydro/20 bg-white p-3.5 text-left shadow-[0_16px_40px_-16px_rgba(4,18,31,0.5)]"
+              className="absolute bottom-16 right-0 w-56 rounded-2xl rounded-br-sm border border-hydro/20 bg-white p-3.5 text-left shadow-[0_16px_40px_-16px_rgba(6,24,38,0.5)]"
             >
               <span className="mb-1 block text-[0.6rem] font-bold uppercase tracking-[0.18em] text-brand">Jason · Off The Muscle</span>
               <span className="block text-sm leading-snug text-ink">Got a property that needs a wash? Let&apos;s talk 👋</span>
@@ -113,10 +113,10 @@ export default function LiveChat() {
         <button
           onClick={() => { setOpen((o) => !o); setNudge(false); }}
           aria-label={open ? "Close chat" : "Chat with Jason"}
-          className="group relative flex items-center gap-3 rounded-full border-2 border-foam/15 bg-abyss/90 py-2 pl-2 pr-5 shadow-[0_12px_36px_-10px_rgba(23,193,201,0.6)] backdrop-blur-md transition-transform hover:scale-[1.03]"
+          className="group relative flex items-center gap-3 rounded-full border-2 border-foam/15 bg-abyss/90 py-2 pl-2 pr-5 shadow-[0_12px_36px_-10px_rgba(29,169,232,0.6)] backdrop-blur-md transition-transform hover:scale-[1.03]"
         >
           <span className="relative grid h-11 w-11 shrink-0 place-items-center overflow-hidden rounded-full ring-2 ring-hydro">
-            <Image src="/images/jason-surface.jpg" alt="Jason" fill className="object-cover object-[22%_8%]" sizes="44px" />
+            <Image src="/images/jason-face.jpg" alt="Jason" fill className="object-cover" sizes="44px" />
           </span>
           {!open && (
             <span className="hidden text-left leading-none sm:block">
@@ -138,14 +138,14 @@ export default function LiveChat() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.97 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed bottom-24 left-4 z-50 flex h-[70vh] max-h-[560px] w-[calc(100vw-2rem)] max-w-[24rem] flex-col overflow-hidden rounded-[1.75rem] border border-hydro/20 bg-white shadow-[0_48px_120px_-24px_rgba(4,18,31,0.75)] lg:bottom-28 lg:left-6"
+            className="fixed bottom-[10rem] right-4 z-50 flex h-[70vh] max-h-[560px] w-[calc(100vw-2rem)] max-w-[24rem] flex-col overflow-hidden rounded-[1.75rem] border border-hydro/20 bg-white shadow-[0_48px_120px_-24px_rgba(6,24,38,0.75)] lg:bottom-28 lg:right-6"
             role="dialog"
             aria-label="Chat with Jason"
           >
             {/* header */}
             <div className="relative flex items-center gap-3 bg-abyss p-4" style={{ clipPath: "polygon(0 0,100% 0,100% 84%,0 100%)" }}>
               <span className="relative grid h-11 w-11 shrink-0 place-items-center overflow-hidden rounded-full ring-2 ring-hydro">
-                <Image src="/images/jason-surface.jpg" alt="Jason" fill className="object-cover object-[22%_8%]" sizes="44px" />
+                <Image src="/images/jason-face.jpg" alt="Jason" fill className="object-cover" sizes="44px" />
               </span>
               <div className="leading-tight">
                 <p className="display text-lg text-foam">Jason</p>

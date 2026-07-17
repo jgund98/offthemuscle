@@ -64,16 +64,16 @@ export default function LeadPopup() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="no-scrollbar relative max-h-[92svh] w-full max-w-[26rem] overflow-hidden overflow-y-auto rounded-[1.75rem] bg-white shadow-[0_48px_120px_-24px_rgba(4,18,31,0.85)]"
+            className="no-scrollbar relative max-h-[92svh] w-full max-w-[26rem] overflow-hidden overflow-y-auto rounded-[1.75rem] bg-white shadow-[0_48px_120px_-24px_rgba(6,24,38,0.85)]"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* real crew photo, cut on the wand angle */}
-            <div className="relative h-56 sm:h-60" style={{ clipPath: "polygon(0 0, 100% 0, 100% 78%, 0 100%)" }}>
+            {/* Jason & Jay — the family in family owned, cut on the wand angle */}
+            <div className="relative h-60 sm:h-64" style={{ clipPath: "polygon(0 0, 100% 0, 100% 78%, 0 100%)" }}>
               <Image
-                src="/images/crew-roof.jpg"
-                alt="Off The Muscle technician soft washing a South Florida roof"
+                src="/images/jason-son.jpg"
+                alt="Jason, owner of Off The Muscle, with his son in matching company shirts"
                 fill
-                className="object-cover object-[50%_35%]"
+                className="object-cover object-[50%_22%]"
                 sizes="416px"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-abyss/80 via-abyss/10 to-abyss/30" />
@@ -81,13 +81,13 @@ export default function LeadPopup() {
               {/* licensed & insured, pinned top-left — same inset + height as the close button */}
               <div className="absolute left-4 top-4 flex h-10 items-center gap-2 rounded-full bg-abyss/60 px-4 backdrop-blur-sm">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z" stroke="#66dfe4" strokeWidth="2" strokeLinejoin="round" />
-                  <path d="M9 12l2 2 4-4" stroke="#66dfe4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z" stroke="#7cd0f7" strokeWidth="2" strokeLinejoin="round" />
+                  <path d="M9 12l2 2 4-4" stroke="#7cd0f7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
                 <span className="text-[0.6rem] font-bold text-foam">Licensed &amp; Insured</span>
               </div>
 
-              <div className="absolute bottom-[4.5rem] left-5 flex items-center gap-2.5">
+              <div className="absolute bottom-[4.75rem] left-5 flex items-center gap-2.5">
                 <Image src="/images/otm-script-white.svg" alt="" width={44} height={44} className="h-11 w-11 drop-shadow-lg" />
                 <div>
                   <p className="display text-xl leading-none text-foam drop-shadow-md">Off The Muscle</p>
@@ -99,11 +99,11 @@ export default function LeadPopup() {
             {/* the jet riding the cut */}
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute left-0 top-0 h-56 w-full sm:h-60"
+              className="pointer-events-none absolute left-0 top-0 h-60 w-full sm:h-64"
               style={{
                 clipPath: "polygon(0 97.4%, 100% 75.4%, 100% 78.2%, 0 100%)",
-                background: "linear-gradient(90deg, rgba(23,193,201,0.25), rgba(102,223,228,0.95), rgba(23,193,201,0.25))",
-                filter: "drop-shadow(0 0 10px rgba(23,193,201,0.6))",
+                background: "linear-gradient(90deg, rgba(29,169,232,0.25), rgba(124,208,247,0.95), rgba(29,169,232,0.25))",
+                filter: "drop-shadow(0 0 10px rgba(29,169,232,0.6))",
               }}
             />
 

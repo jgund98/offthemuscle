@@ -39,7 +39,7 @@ export default function Nav() {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "border-b border-hydro/15 bg-abyss/92 shadow-[0_8px_32px_rgba(4,18,31,0.35)] backdrop-blur-xl"
+          ? "border-b border-hydro/15 bg-abyss/92 shadow-[0_8px_32px_rgba(6,24,38,0.35)] backdrop-blur-xl"
           : "border-b border-transparent"
       }`}
     >
@@ -75,7 +75,7 @@ export default function Nav() {
             width={220}
             height={220}
             priority
-            className={`w-auto object-contain drop-shadow-[0_2px_10px_rgba(23,193,201,0.3)] transition-all duration-500 ${
+            className={`w-auto object-contain drop-shadow-[0_2px_10px_rgba(29,169,232,0.3)] transition-all duration-500 ${
               scrolled ? "h-10 md:h-11" : "h-11 md:h-14"
             }`}
           />
@@ -106,7 +106,7 @@ export default function Nav() {
           {/* call/text chip — a real element, not floating text */}
           <a
             href={SITE.phoneHref}
-            className="group/call flex items-center gap-3 rounded-full border border-foam/25 bg-abyss/50 py-2 pl-2.5 pr-5 shadow-[0_4px_16px_rgba(4,18,31,0.35)] backdrop-blur-md transition-colors hover:border-hydro/70"
+            className="group/call flex items-center gap-3 rounded-full border border-foam/25 bg-abyss/50 py-2 pl-2.5 pr-5 shadow-[0_4px_16px_rgba(6,24,38,0.35)] backdrop-blur-md transition-colors hover:border-hydro/70"
           >
             <span className="grid h-9 w-9 place-items-center rounded-full bg-hydro text-abyss transition-transform duration-300 group-hover/call:scale-105">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -128,7 +128,7 @@ export default function Nav() {
           {/* CTA cut on the wand angle — same diagonal as the hero jet */}
           <Link
             href="/contact"
-            className="group relative -skew-x-[10deg] overflow-hidden rounded-md bg-hydro px-7 py-3.5 shadow-[0_6px_20px_-6px_rgba(23,193,201,0.7)] transition-all duration-300 hover:shadow-[0_8px_26px_-6px_rgba(23,193,201,0.9)]"
+            className="group relative -skew-x-[10deg] overflow-hidden rounded-md bg-hydro px-7 py-3.5 shadow-[0_6px_20px_-6px_rgba(29,169,232,0.7)] transition-all duration-300 hover:shadow-[0_8px_26px_-6px_rgba(29,169,232,0.9)]"
           >
             <span
               aria-hidden="true"

@@ -13,6 +13,9 @@ export default function GrimeCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sprayRef = useRef<HTMLCanvasElement>(null);
   const imgRef = useRef<HTMLImageElement | null>(null);
+  const cleanRef = useRef<HTMLImageElement | null>(null);
+  // canvas-space points that are actually dirty — % clean is measured on these
+  const dirtPts = useRef<{ x: number; y: number }[]>([]);
   const [ready, setReady] = useState(false);
   const [pct, setPct] = useState(0);
   const [done, setDone] = useState(false);
@@ -41,9 +44,37 @@ export default function GrimeCanvas() {
     const dh = img.naturalHeight * s;
     ctx.globalCompositeOperation = "source-over";
     ctx.drawImage(img, (w - dw) / 2, (h - dh) / 2, dw, dh);
-    // faint murky cast so even matching areas read "unwashed"
-    ctx.fillStyle = "rgba(48,42,26,0.10)";
-    ctx.fillRect(0, 0, w, h);
+
+    // map where the dirt actually is: diff dirty vs clean at low res using the
+    // same cover-fit transform, so "% clean" only tracks the grimy sidewalk
+    const cleanImg = cleanRef.current;
+    if (cleanImg) {
+      const k = 10; // sample every ~10 css px
+      const ow = Math.max(1, Math.round(w / k));
+      const oh = Math.max(1, Math.round(h / k));
+      const off = (im: HTMLImageElement) => {
+        const cv = document.createElement("canvas");
+        cv.width = ow; cv.height = oh;
+        const c2 = cv.getContext("2d", { willReadFrequently: true })!;
+        const ss = Math.max(ow / im.naturalWidth, oh / im.naturalHeight);
+        c2.drawImage(im, (ow - im.naturalWidth * ss) / 2, (oh - im.naturalHeight * ss) / 2, im.naturalWidth * ss, im.naturalHeight * ss);
+        return c2.getImageData(0, 0, ow, oh).data;
+      };
+      const dDirty = off(img);
+      const dClean = off(cleanImg);
+      const pts: { x: number; y: number }[] = [];
+      for (let py = 0; py < oh; py++) {
+        for (let px = 0; px < ow; px++) {
+          const i = (py * ow + px) * 4;
+          const delta =
+            Math.abs(dDirty[i] - dClean[i]) +
+            Math.abs(dDirty[i + 1] - dClean[i + 1]) +
+            Math.abs(dDirty[i + 2] - dClean[i + 2]);
+          if (delta > 36) pts.push({ x: px * k + k / 2, y: py * k + k / 2 });
+        }
+      }
+      dirtPts.current = pts;
+    }
     const spray = sprayRef.current!;
     spray.width = w * dpr;
     spray.height = h * dpr;
@@ -56,12 +87,14 @@ export default function GrimeCanvas() {
   }, []);
 
   useEffect(() => {
+    let loaded = 0;
+    const done = () => { loaded += 1; if (loaded === 2) setReady(true); };
     const img = new window.Image();
     img.src = "/images/sidewalk-dirty.jpg";
-    img.onload = () => {
-      imgRef.current = img;
-      setReady(true);
-    };
+    img.onload = () => { imgRef.current = img; done(); };
+    const cleanImg = new window.Image();
+    cleanImg.src = "/images/sidewalk-clean.jpg";
+    cleanImg.onload = () => { cleanRef.current = cleanImg; done(); };
   }, []);
 
   useEffect(() => {
@@ -111,21 +144,21 @@ export default function GrimeCanvas() {
 
   const samplePct = useCallback(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    const pts = dirtPts.current;
+    if (!canvas || pts.length === 0) return;
     const ctx = canvas.getContext("2d")!;
-    const { width, height } = canvas;
-    const step = 16;
-    const data = ctx.getImageData(0, 0, width, height).data;
+    const dpr = canvas.width / canvas.clientWidth || 1;
+    const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
     let clear = 0;
-    let total = 0;
-    for (let i = 3; i < data.length; i += 4 * step) {
-      total++;
-      if (data[i] < 40) clear++;
+    for (const pt of pts) {
+      const px = Math.min(canvas.width - 1, Math.round(pt.x * dpr));
+      const py = Math.min(canvas.height - 1, Math.round(pt.y * dpr));
+      if (data[(py * canvas.width + px) * 4 + 3] < 60) clear++;
     }
-    const p = Math.round((clear / total) * 100);
+    const p = Math.round((clear / pts.length) * 100);
     pctRef.current = p;
     setPct(p);
-    if (p >= 82) setDone(true);
+    if (p >= 85) setDone(true);
   }, []);
 
   const blast = useCallback(
@@ -247,7 +280,7 @@ export default function GrimeCanvas() {
                   />
                   <path
                     d="M12 1.5C15.8 8 21.5 12.8 21.5 19a9.5 9.5 0 1 1-19 0C2.5 12.8 8.2 8 12 1.5Z"
-                    fill="#17c1c9"
+                    fill="#1da9e8"
                     clipPath="url(#dropfill)"
                   />
                 </svg>
@@ -269,12 +302,20 @@ export default function GrimeCanvas() {
                 <span className="md:hidden">Drag your finger to wash</span>
               </p>
               {done && (
-                <button
-                  onClick={paintGrime}
-                  className="label pointer-events-auto rounded-full bg-hydro px-5 py-2.5 text-abyss transition-transform hover:scale-105"
-                >
-                  Dirty it up again
-                </button>
+                <div className="pointer-events-auto flex flex-wrap items-center gap-2.5">
+                  <button
+                    onClick={paintGrime}
+                    className="label rounded-full bg-abyss/70 px-5 py-2.5 text-spray backdrop-blur-sm transition-transform hover:scale-105"
+                  >
+                    Dirty it up again
+                  </button>
+                  <a
+                    href="/contact"
+                    className="label rounded-full bg-hydro px-5 py-2.5 text-abyss shadow-[0_8px_24px_-8px_rgba(29,169,232,0.8)] transition-transform hover:scale-105"
+                  >
+                    Now do my property →
+                  </a>
+                </div>
               )}
             </div>
           </div>
@@ -282,7 +323,10 @@ export default function GrimeCanvas() {
 
         <Reveal delay={0.2}>
           <p className="mt-6 text-center text-xs uppercase tracking-[0.2em] text-slate">
-            Satisfying, right? Now imagine your whole property.
+            Satisfying, right?{" "}
+            <a href="/contact" className="font-bold text-brand underline underline-offset-4 hover:text-hydro">
+              Get your free estimate →
+            </a>
           </p>
         </Reveal>
       </div>

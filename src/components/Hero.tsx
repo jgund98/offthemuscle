@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import PowerWash from "@/components/PowerWash";
 import JetButton from "@/components/JetButton";
 import SplashMark from "@/components/SplashMark";
-import { CITIES, HERO_MEDIA } from "@/lib/site";
+import { SITE, CITIES, HERO_MEDIA } from "@/lib/site";
 
 /* Hero: the screen is split by a pressure jet on a diagonal. Left, the pitch;
    right, Off The Muscle's own footage of a surface cleaner throwing mist.
@@ -75,13 +75,13 @@ export default function Hero({ media = HERO_MEDIA }: { media?: typeof HERO_MEDIA
           <div
             className="absolute inset-y-0 -left-[2px] w-[3px]"
             style={{
-              background: "linear-gradient(180deg, rgba(255,255,255,0.95), rgba(23,193,201,0.9) 60%, rgba(23,193,201,0.35))",
-              boxShadow: "0 0 22px 5px rgba(23,193,201,0.45)",
+              background: "linear-gradient(180deg, rgba(255,255,255,0.95), rgba(29,169,232,0.9) 60%, rgba(29,169,232,0.35))",
+              boxShadow: "0 0 22px 5px rgba(29,169,232,0.45)",
             }}
           />
           <div
             className="absolute inset-y-0 -left-4 w-8 blur-md"
-            style={{ background: "linear-gradient(90deg, transparent, rgba(102,223,228,0.28), transparent)" }}
+            style={{ background: "linear-gradient(90deg, transparent, rgba(124,208,247,0.28), transparent)" }}
           />
           {[0, 1, 2].map((i) => (
             <motion.span
@@ -128,7 +128,7 @@ export default function Hero({ media = HERO_MEDIA }: { media?: typeof HERO_MEDIA
               width={220}
               height={220}
               priority
-              className="h-20 w-20 drop-shadow-[0_6px_24px_rgba(23,193,201,0.4)] sm:h-24 sm:w-24 md:h-36 md:w-36"
+              className="h-20 w-20 drop-shadow-[0_6px_24px_rgba(29,169,232,0.4)] sm:h-24 sm:w-24 md:h-36 md:w-36"
             />
           </motion.div>
 
@@ -180,12 +180,24 @@ export default function Hero({ media = HERO_MEDIA }: { media?: typeof HERO_MEDIA
             </a>
           </motion.div>
 
+          {/* direct line — some leads only ever call */}
+          <motion.a
+            href={SITE.phoneHref}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.78 }}
+            className="group/tel mt-5 inline-flex items-baseline gap-2.5 md:mt-6"
+          >
+            <span className="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-mist">Or call / text</span>
+            <span className="display text-xl text-foam transition-colors group-hover/tel:text-hydro md:text-2xl">{SITE.phone}</span>
+          </motion.a>
+
           {/* real trust chips — licensed, insured, family owned */}
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.85 }}
-            className="mt-5 flex flex-wrap gap-2.5 md:mt-6"
+            className="mt-4 flex flex-wrap gap-2.5"
           >
             {["Licensed & Insured", "Family Owned", "Free Estimates"].map((t) => (
               <span
@@ -193,8 +205,8 @@ export default function Hero({ media = HERO_MEDIA }: { media?: typeof HERO_MEDIA
                 className="inline-flex items-center gap-2 rounded-full border border-foam/15 bg-abyss/40 py-2 pl-3 pr-4 text-xs font-semibold text-foam backdrop-blur-sm"
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z" stroke="#17c1c9" strokeWidth="2" strokeLinejoin="round" />
-                  <path d="M9 12l2 2 4-4" stroke="#17c1c9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z" stroke="#1da9e8" strokeWidth="2" strokeLinejoin="round" />
+                  <path d="M9 12l2 2 4-4" stroke="#1da9e8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
                 {t}
               </span>
@@ -224,7 +236,7 @@ export default function Hero({ media = HERO_MEDIA }: { media?: typeof HERO_MEDIA
                 <span key={i} className="flex items-center gap-6">
                   <span className="display text-sm tracking-wide text-foam/85">{c}</span>
                   <svg width="7" height="10" viewBox="0 0 10 14" fill="none" aria-hidden="true">
-                    <path d="M5 0C7 3.5 10 6.5 10 9a5 5 0 1 1-10 0C0 6.5 3 3.5 5 0Z" fill="#17c1c9" opacity="0.8" />
+                    <path d="M5 0C7 3.5 10 6.5 10 9a5 5 0 1 1-10 0C0 6.5 3 3.5 5 0Z" fill="#1da9e8" opacity="0.8" />
                   </svg>
                 </span>
               ))}

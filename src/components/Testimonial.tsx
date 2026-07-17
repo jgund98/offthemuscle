@@ -43,8 +43,8 @@ export default function Testimonial() {
             {["Licensed & Insured", "Family Owned", "Free Estimates"].map((t) => (
               <span key={t} className="inline-flex items-center gap-2 rounded-full border border-brand/20 px-4 py-2 text-xs font-bold text-ink">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z" stroke="#0a5b56" strokeWidth="2" strokeLinejoin="round" />
-                  <path d="M9 12l2 2 4-4" stroke="#0a5b56" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z" stroke="#0e6ba8" strokeWidth="2" strokeLinejoin="round" />
+                  <path d="M9 12l2 2 4-4" stroke="#0e6ba8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
                 {t}
               </span>

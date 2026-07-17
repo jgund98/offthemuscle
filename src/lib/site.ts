@@ -24,9 +24,30 @@ export const SITE = {
   },
   hours: "Mon–Sun · 7am – 7pm",
   hoursNote: "Holidays closed",
+  gmb: "https://www.google.com/maps/place/Off+The+Muscle+Pressure+Cleaning/@26.6588969,-80.1333836,17z",
+  rating: { value: "5.0", count: 47 },
   // West Palm Beach
   geo: { lat: 26.7153, lng: -80.0534 },
 };
+
+/* Real Google reviews, pulled verbatim from their GMB listing (5.0 · 47). */
+export const REVIEWS = [
+  {
+    name: "Gary Little",
+    when: "2 months ago",
+    text: "Jason did an incredible job on my driveway. I went to work and when I came home I was shocked at how good it looked. 30 years of different companies and this is the best ever. 2 neighbors hired him too.",
+  },
+  {
+    name: "Lucas Novo",
+    when: "3 weeks ago",
+    text: "I couldn't be happier with the job this company did pressure washing my patio. The difference is incredible — years of dirt, grime, and buildup were completely removed, leaving everything looking fresh and like new again.",
+  },
+  {
+    name: "Victor Ingles",
+    when: "5 months ago",
+    text: "Absolutely amazing job! Quote provided was great for the work done, team was punctual to the provided appointment time, and the work done was absolutely phenomenal. The attention to detail and passion behind the work was clearly shown.",
+  },
+];
 
 export type Service = {
   slug: string;

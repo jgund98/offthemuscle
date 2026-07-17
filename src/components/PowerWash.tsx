@@ -50,7 +50,7 @@ export default function PowerWash({
         animate={inView ? { clipPath: "inset(-20% 0% -20% 0)" } : undefined}
         transition={{ duration, delay, ease }}
         style={{
-          textShadow: "0 0 32px rgba(102,223,228,0.18)",
+          textShadow: "0 0 32px rgba(124,208,247,0.18)",
         }}
       >
         {text}
@@ -69,12 +69,12 @@ export default function PowerWash({
           {/* vertical mist curtain */}
           <span
             className="absolute -left-3 top-0 h-full w-6 blur-md"
-            style={{ background: "linear-gradient(90deg, rgba(102,223,228,0), rgba(212,241,252,0.9), rgba(102,223,228,0))" }}
+            style={{ background: "linear-gradient(90deg, rgba(124,208,247,0), rgba(212,241,252,0.9), rgba(124,208,247,0))" }}
           />
           {/* jet core */}
           <span
             className="absolute -left-0.5 top-[-4%] h-[108%] w-1 rounded-full"
-            style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.95), rgba(102,223,228,0.8))", boxShadow: "0 0 18px 4px rgba(102,223,228,0.55)" }}
+            style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.95), rgba(124,208,247,0.8))", boxShadow: "0 0 18px 4px rgba(124,208,247,0.55)" }}
           />
           {/* flecks blasting off */}
           {[...Array(7)].map((_, i) => (

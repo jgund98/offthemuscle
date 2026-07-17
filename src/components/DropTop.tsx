@@ -18,7 +18,7 @@ export default function DropTop() {
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       aria-label="Back to top"
-      className={`group fixed bottom-6 right-6 z-40 hidden transition-all duration-500 lg:block ${
+      className={`group fixed bottom-6 left-6 z-40 hidden transition-all duration-500 lg:block ${
         show ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-6 opacity-0"
       }`}
     >
@@ -27,15 +27,15 @@ export default function DropTop() {
         height="54"
         viewBox="0 0 46 56"
         aria-hidden="true"
-        className="drop-shadow-[0_8px_24px_rgba(23,193,201,0.4)] transition-transform duration-300 group-hover:-translate-y-1.5"
+        className="drop-shadow-[0_8px_24px_rgba(29,169,232,0.4)] transition-transform duration-300 group-hover:-translate-y-1.5"
       >
         <path
           d="M23 2C30 14 42 23 42 35a19 19 0 1 1-38 0C4 23 16 14 23 2Z"
-          fill="rgba(7,26,30,0.9)"
-          stroke="#17c1c9"
+          fill="rgba(7,32,46,0.9)"
+          stroke="#1da9e8"
           strokeWidth="2"
         />
-        <path d="M23 42V26M16 32l7-7 7 7" stroke="#66dfe4" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+        <path d="M23 42V26M16 32l7-7 7 7" stroke="#7cd0f7" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" fill="none" />
       </svg>
     </button>
   );

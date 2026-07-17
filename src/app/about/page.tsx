@@ -182,8 +182,8 @@ export default function AboutPage() {
                   <div className="h-full rounded-2xl border border-brand/15 bg-white p-6 shadow-[0_16px_40px_-24px_rgba(13,37,55,0.28)]">
                     <div className="mb-3 grid h-10 w-10 place-items-center rounded-full bg-hydro/12">
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z" stroke="#0a5b56" strokeWidth="2" strokeLinejoin="round" />
-                        <path d="M9 12l2 2 4-4" stroke="#0a5b56" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z" stroke="#0e6ba8" strokeWidth="2" strokeLinejoin="round" />
+                        <path d="M9 12l2 2 4-4" stroke="#0e6ba8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     </div>
                     <h3 className="display text-lg text-ink md:text-xl">{a.title}</h3>

@@ -65,7 +65,7 @@ export default function BeforeAfter({
       <div className="pointer-events-none absolute inset-y-0" style={{ left: `${pos}%` }}>
         <div
           className="absolute inset-y-0 -left-px w-0.5"
-          style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.9), rgba(23,193,201,0.9))", boxShadow: "0 0 16px 3px rgba(23,193,201,0.5)" }}
+          style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.9), rgba(29,169,232,0.9))", boxShadow: "0 0 16px 3px rgba(29,169,232,0.5)" }}
         />
         {/* mist along the edge */}
         <div
@@ -74,14 +74,14 @@ export default function BeforeAfter({
         />
         {/* the brand droplet is the handle — drag the drop */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-          <svg width="46" height="56" viewBox="0 0 46 56" aria-hidden="true" className="drop-shadow-[0_0_20px_rgba(23,193,201,0.55)]">
+          <svg width="46" height="56" viewBox="0 0 46 56" aria-hidden="true" className="drop-shadow-[0_0_20px_rgba(29,169,232,0.55)]">
             <path
               d="M23 2C30 14 42 23 42 35a19 19 0 1 1-38 0C4 23 16 14 23 2Z"
-              fill="rgba(7,26,30,0.88)"
-              stroke="#66dfe4"
+              fill="rgba(7,32,46,0.88)"
+              stroke="#7cd0f7"
               strokeWidth="2.5"
             />
-            <path d="M17 30l-5 6 5 6M29 30l5 6-5 6" stroke="#66dfe4" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+            <path d="M17 30l-5 6 5 6M29 30l5 6-5 6" stroke="#7cd0f7" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" fill="none" />
           </svg>
         </div>
       </div>

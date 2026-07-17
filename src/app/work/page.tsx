@@ -46,7 +46,10 @@ export default function WorkPage() {
             />
           </Reveal>
           <Reveal delay={0.15}>
-            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate">{roof.blurb}</p>
+            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate">
+              {roof.blurb}{" "}
+              <a href="/contact" className="font-bold text-brand underline underline-offset-4 hover:text-hydro">Get this result at your place →</a>
+            </p>
           </Reveal>
 
           <Reveal>
@@ -67,7 +70,10 @@ export default function WorkPage() {
             />
           </Reveal>
           <Reveal delay={0.15}>
-            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate">{driveway.blurb}</p>
+            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate">
+              {driveway.blurb}{" "}
+              <a href="/contact" className="font-bold text-brand underline underline-offset-4 hover:text-hydro">Get this result at your place →</a>
+            </p>
           </Reveal>
 
           <Reveal>
@@ -88,7 +94,10 @@ export default function WorkPage() {
             />
           </Reveal>
           <Reveal delay={0.15}>
-            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate">{patio.blurb}</p>
+            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate">
+              {patio.blurb}{" "}
+              <a href="/contact" className="font-bold text-brand underline underline-offset-4 hover:text-hydro">Get this result at your place →</a>
+            </p>
           </Reveal>
         </div>
       </section>

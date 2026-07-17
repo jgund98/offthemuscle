@@ -56,8 +56,8 @@ export default function Footer() {
               </div>
               <p className="mt-6 inline-flex items-center gap-2 rounded-full border border-hydro/20 px-4 py-2 text-xs font-bold text-mist">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z" stroke="#17c1c9" strokeWidth="2" strokeLinejoin="round" />
-                  <path d="M9 12l2 2 4-4" stroke="#17c1c9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z" stroke="#1da9e8" strokeWidth="2" strokeLinejoin="round" />
+                  <path d="M9 12l2 2 4-4" stroke="#1da9e8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
                 Licensed &amp; Insured · Docs on request
               </p>

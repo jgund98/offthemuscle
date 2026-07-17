@@ -8,11 +8,13 @@ import BeforeAfter from "@/components/BeforeAfter";
 import Testimonial from "@/components/Testimonial";
 import AreaRipple from "@/components/AreaRipple";
 import SocialStrip from "@/components/SocialStrip";
+import GoogleReviews from "@/components/GoogleReviews";
+import QuoteForm from "@/components/QuoteForm";
 import CtaBand from "@/components/CtaBand";
 import { Reveal } from "@/components/Reveal";
 import JetButton from "@/components/JetButton";
 import SplashMark from "@/components/SplashMark";
-import { TRANSFORMATIONS } from "@/lib/site";
+import { TRANSFORMATIONS, SITE } from "@/lib/site";
 
 export default function Home() {
   const roof = TRANSFORMATIONS[0];
@@ -65,6 +67,7 @@ export default function Home() {
         </div>
       </section>
 
+      <GoogleReviews />
       <InsuredBand />
       <Testimonial />
 
@@ -120,6 +123,45 @@ export default function Home() {
 
       <AreaRipple />
       <SocialStrip />
+
+      {/* the estimate, right here — no page hop between wanting it and asking */}
+      <section id="estimate" className="relative bg-ice py-24 text-ink md:py-32">
+        <div className="mx-auto max-w-7xl px-5 md:px-8">
+          <div className="grid items-start gap-12 lg:grid-cols-[1fr_1.25fr] lg:gap-16">
+            <div className="lg:sticky lg:top-32">
+              <Reveal>
+                <p className="label mb-4 flex items-center gap-3 text-brand">
+                  <SplashMark className="h-3.5" />
+                  Free estimate · 30 seconds
+                </p>
+              </Reveal>
+              <Reveal delay={0.08}>
+                <h2 className="display text-[2rem] leading-[1.04] sm:text-4xl md:text-5xl">
+                  <span className="block">Get your straight</span>
+                  <span className="block text-hydro">price right here.</span>
+                </h2>
+              </Reveal>
+              <Reveal delay={0.16}>
+                <p className="mt-6 max-w-md text-base leading-relaxed text-slate">
+                  Tell us what needs washing and where to send the number. Jason or the
+                  team gets back fast — usually the same day. No spam, no pressure
+                  (except the 4,000 PSI kind).
+                </p>
+              </Reveal>
+              <Reveal delay={0.22}>
+                <a href={SITE.phoneHref} className="group/tel mt-8 inline-flex items-baseline gap-2.5">
+                  <span className="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-slate">Rather talk?</span>
+                  <span className="display text-2xl text-ink transition-colors group-hover/tel:text-hydro">{SITE.phone}</span>
+                </a>
+              </Reveal>
+            </div>
+            <Reveal delay={0.12}>
+              <QuoteForm />
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
       <CtaBand />
     </>
   );

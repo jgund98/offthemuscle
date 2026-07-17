@@ -1,18 +1,18 @@
 @import "tailwindcss";
 
 @theme {
-  --color-abyss: #071a1e;
-  --color-trench: #0e2a2f;
-  --color-deep: #12433f;
-  --color-brand: #0a5b56;
-  --color-hydro: #17c1c9;
-  --color-spray: #66dfe4;
-  --color-foam: #f1f8f6;
-  --color-ice: #dcefee;
-  --color-mist: #a7cfcd;
-  --color-mist-dim: #6f9b98;
-  --color-ink: #0b201e;
-  --color-slate: #47665f;
+  --color-abyss: #07202e;
+  --color-trench: #0c2f42;
+  --color-deep: #104a68;
+  --color-brand: #0e6ba8;
+  --color-hydro: #1da9e8;
+  --color-spray: #7cd0f7;
+  --color-foam: #f4f9fc;
+  --color-ice: #e3f0f9;
+  --color-mist: #abcfe6;
+  --color-mist-dim: #7397ac;
+  --color-ink: #0c2233;
+  --color-slate: #48657a;
   --color-brass: #e0a744;
 
   --font-display: var(--font-archivo), "Arial Black", sans-serif;
@@ -69,8 +69,8 @@ body {
   inset: 0;
   pointer-events: none;
   opacity: 0.5;
-  background-image: radial-gradient(ellipse 80% 50% at 20% 0%, rgba(23,193,201, 0.2), transparent 60%),
-    radial-gradient(ellipse 60% 40% at 85% 100%, rgba(18, 67, 63, 0.4), transparent 65%);
+  background-image: radial-gradient(ellipse 80% 50% at 20% 0%, rgba(29,169,232, 0.2), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 85% 100%, rgba(16, 62, 96, 0.4), transparent 65%);
 }
 
 .grain::after {
@@ -97,7 +97,7 @@ body {
   left: -30%;
   width: 40%;
   transform: skewX(-18deg) translateX(-160%);
-  background: linear-gradient(90deg, transparent, rgba(102,223,228, 0.25), transparent);
+  background: linear-gradient(90deg, transparent, rgba(124,208,247, 0.25), transparent);
   transition: transform 0.9s var(--ease-water);
   pointer-events: none;
 }
@@ -168,8 +168,8 @@ body {
   position: absolute;
   bottom: -4vh;
   border-radius: 9999px;
-  border: 1px solid rgba(102,223,228, 0.35);
-  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.25), rgba(102,223,228, 0.05));
+  border: 1px solid rgba(124,208,247, 0.35);
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.25), rgba(124,208,247, 0.05));
   animation: rise linear infinite;
 }
 
