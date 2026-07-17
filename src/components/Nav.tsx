@@ -88,7 +88,7 @@ export default function Nav() {
             </span>
             {/* handwritten, like the logo lettering — not another tracked-out label */}
             <span className="script mt-0.5 block -rotate-2 text-sm text-spray md:text-base">
-              pressure cleaning · South Florida
+              Pressure Cleaning · South Florida
             </span>
           </span>
         </Link>

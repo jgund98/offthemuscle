@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import PowerWash from "@/components/PowerWash";
 import JetButton from "@/components/JetButton";
@@ -13,6 +13,10 @@ import { SITE, CITIES, HERO_MEDIA } from "@/lib/site";
    The headline washes itself clean on load. */
 export default function Hero({ media = HERO_MEDIA }: { media?: typeof HERO_MEDIA }) {
   const ref = useRef<HTMLDivElement>(null);
+  // the droplet rides the seam: as you scroll the hero away, it slides down
+  // the jet line (the skewed parent keeps it glued to the diagonal)
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const seamTop = useTransform(scrollYProgress, [0, 1], ["8%", "78%"]);
   // mount only the video for the active breakpoint — a display:none video still downloads
   const [desktop, setDesktop] = useState<boolean | null>(null);
   useEffect(() => {
@@ -95,7 +99,7 @@ export default function Hero({ media = HERO_MEDIA }: { media?: typeof HERO_MEDIA
 
           {/* the source: the brand droplet sits on the seam like a valve —
               the whole jet (and every drip) pours out of the logo */}
-          <div className="absolute left-0 top-[8%] z-10 w-24 -translate-x-1/2 -skew-x-[7deg] lg:w-28">
+          <motion.div style={{ top: seamTop }} className="absolute left-0 z-10 w-24 -translate-x-1/2 -skew-x-[7deg] lg:w-28">
             <motion.div
               initial={{ opacity: 0, scale: 0.5, y: -18 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -117,7 +121,7 @@ export default function Hero({ media = HERO_MEDIA }: { media?: typeof HERO_MEDIA
                 />
               </motion.div>
             </motion.div>
-          </div>
+          </motion.div>
         </div>
       </div>
 

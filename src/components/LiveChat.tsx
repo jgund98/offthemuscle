@@ -18,6 +18,24 @@ const SERVICES_QR = ["Driveway / surface", "House soft wash", "Roof cleaning", "
 export default function LiveChat() {
   const [open, setOpen] = useState(false);
   const [nudge, setNudge] = useState(false);
+  // on mobile the launcher waits until the hero (and its CTAs) are scrolled
+  // past, so it never competes with the hero + sticky dock at once
+  const [pastHero, setPastHero] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setPastHero(window.scrollY > window.innerHeight * 0.85);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const update = () => setIsDesktop(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      mq.removeEventListener("change", update);
+    };
+  }, []);
+  const launcherVisible = isDesktop || pastHero;
   const [step, setStep] = useState<Step>("service");
   const [msgs, setMsgs] = useState<Msg[]>([
     { from: "jason", text: "Hey, it's Jason 👋 Owner here. What can we get cleaned up for you?" },
@@ -27,9 +45,10 @@ export default function LiveChat() {
   const data = useRef<{ service?: string; name?: string; phone?: string; notes?: string }>({});
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // gentle one-time nudge after 18s if they haven't opened it
+  // gentle one-time nudge after 30s if they haven't opened it — late enough
+  // that it never stacks on top of the estimate popup's moment
   useEffect(() => {
-    const t = setTimeout(() => setNudge(true), 18000);
+    const t = setTimeout(() => setNudge(true), 30000);
     return () => clearTimeout(t);
   }, []);
 
@@ -94,10 +113,14 @@ export default function LiveChat() {
 
   return (
     <>
-      {/* launcher */}
-      <div className="fixed bottom-[5.5rem] right-4 z-50 lg:bottom-6 lg:right-6">
+      {/* launcher — slides in only once it has the stage to itself */}
+      <div
+        className={`fixed bottom-[5.5rem] right-4 z-50 transition-all duration-500 lg:bottom-6 lg:right-6 ${
+          launcherVisible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-24 opacity-0"
+        }`}
+      >
         <AnimatePresence>
-          {nudge && !open && (
+          {nudge && !open && launcherVisible && (
             <motion.button
               initial={{ opacity: 0, y: 10, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
