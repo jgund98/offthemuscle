@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SITE } from "@/lib/site";
 
@@ -76,11 +76,19 @@ export default function QuoteForm() {
       `Free quote request — ${fd.get("name")}`
     )}&body=${body}`;
     setSent(true);
-    // bring the confirmation into view on any screen
-    requestAnimationFrame(() =>
-      wrapRef.current?.scrollIntoView({ behavior: "smooth", block: "center" })
-    );
   };
+
+  // once the confirmation has actually rendered and laid out, center it on
+  // screen (desktop + mobile). A short delay lets the mailto hand-off settle
+  // and the card reach full height before we measure.
+  const doneRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!sent) return;
+    const t = setTimeout(() => {
+      doneRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 180);
+    return () => clearTimeout(t);
+  }, [sent]);
 
   return (
     <div ref={wrapRef} className="relative scroll-mt-28">
@@ -88,9 +96,10 @@ export default function QuoteForm() {
         {sent ? (
           <motion.div
             key="done"
+            ref={doneRef}
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="flex min-h-[420px] flex-col items-center justify-center rounded-3xl border border-brand/15 bg-white p-10 text-center shadow-[0_24px_60px_-24px_rgba(13,37,55,0.25)]"
+            className="flex min-h-[420px] scroll-mt-28 flex-col items-center justify-center rounded-3xl border border-brand/15 bg-white p-10 text-center shadow-[0_24px_60px_-24px_rgba(13,37,55,0.25)]"
           >
             <motion.div
               initial={{ scale: 0 }}
