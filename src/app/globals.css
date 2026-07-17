@@ -1,0 +1,224 @@
+@import "tailwindcss";
+
+@theme {
+  --color-abyss: #071a1e;
+  --color-trench: #0e2a2f;
+  --color-deep: #12433f;
+  --color-brand: #0a5b56;
+  --color-hydro: #17c1c9;
+  --color-spray: #66dfe4;
+  --color-foam: #f1f8f6;
+  --color-ice: #dcefee;
+  --color-mist: #a7cfcd;
+  --color-mist-dim: #6f9b98;
+  --color-ink: #0b201e;
+  --color-slate: #47665f;
+  --color-brass: #e0a744;
+
+  --font-display: var(--font-archivo), "Arial Black", sans-serif;
+  --font-body: var(--font-instrument), "Segoe UI", sans-serif;
+
+  --ease-water: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-abyss);
+  color: var(--color-foam);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-hydro);
+  color: var(--color-abyss);
+}
+
+/* ------- type utilities ------- */
+.display {
+  font-family: var(--font-display);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.92;
+}
+
+.script {
+  font-family: var(--font-caveat), cursive;
+}
+
+.label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 0.6875rem;
+}
+
+/* ------- water texture layers ------- */
+.caustics {
+  position: relative;
+}
+.caustics::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: radial-gradient(ellipse 80% 50% at 20% 0%, rgba(23,193,201, 0.2), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 85% 100%, rgba(18, 67, 63, 0.4), transparent 65%);
+}
+
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  mix-blend-mode: overlay;
+}
+
+/* ------- wet sheen sweep on hover ------- */
+.sheen {
+  position: relative;
+  overflow: hidden;
+}
+.sheen::after {
+  content: "";
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  left: -30%;
+  width: 40%;
+  transform: skewX(-18deg) translateX(-160%);
+  background: linear-gradient(90deg, transparent, rgba(102,223,228, 0.25), transparent);
+  transition: transform 0.9s var(--ease-water);
+  pointer-events: none;
+}
+.sheen:hover::after {
+  transform: skewX(-18deg) translateX(520%);
+}
+
+/* ------- ripple button ------- */
+.btn-jet {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.btn-jet::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--color-spray);
+  clip-path: circle(0% at var(--rx, 50%) var(--ry, 50%));
+  transition: clip-path 0.55s var(--ease-water);
+}
+.btn-jet:hover::before {
+  clip-path: circle(140% at var(--rx, 50%) var(--ry, 50%));
+}
+
+/* ------- drip line under nav links ------- */
+.drip-link {
+  position: relative;
+}
+.drip-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -4px;
+  height: 2px;
+  background: var(--color-hydro);
+  border-radius: 2px;
+  transition: right 0.4s var(--ease-water);
+}
+.drip-link:hover::after,
+.drip-link[data-active="true"]::after {
+  right: 0;
+}
+
+/* ------- marquee ------- */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee 42s linear infinite;
+  will-change: transform;
+}
+.marquee-hover:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* ------- ambient bubbles ------- */
+@keyframes rise {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: var(--o, 0.5); }
+  90% { opacity: var(--o, 0.5); }
+  100% { transform: translateY(-110vh) translateX(var(--dx, 20px)); opacity: 0; }
+}
+.bubble {
+  position: absolute;
+  bottom: -4vh;
+  border-radius: 9999px;
+  border: 1px solid rgba(102,223,228, 0.35);
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.25), rgba(102,223,228, 0.05));
+  animation: rise linear infinite;
+}
+
+/* ------- spray cone shimmer ------- */
+@keyframes sprayJitter {
+  0%, 100% { transform: rotate(-1.2deg) scaleY(0.98); opacity: 0.85; }
+  50% { transform: rotate(1.2deg) scaleY(1.04); opacity: 1; }
+}
+.spray-cone {
+  animation: sprayJitter 0.18s linear infinite;
+  transform-origin: left center;
+}
+
+/* ------- water surface divider ------- */
+@keyframes swell {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-3%); }
+}
+.swell {
+  animation: swell 9s ease-in-out infinite;
+}
+
+/* ------- gauge needle ------- */
+@keyframes needleSettle {
+  0% { transform: rotate(-120deg); }
+  60% { transform: rotate(8deg); }
+  80% { transform: rotate(-4deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* ------- droplet cursor trail canvas sits above all ------- */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+/* focus */
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--color-hydro);
+  outline-offset: 3px;
+}
+
+/* respect reduced motion — ambient loops stop, content still appears */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track,
+  .bubble,
+  .spray-cone,
+  .swell {
+    animation: none !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
