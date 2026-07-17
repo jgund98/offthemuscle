@@ -16,3 +16,4 @@ out/
 next-env.d.ts
 
 .vercel
+_source-assets/
