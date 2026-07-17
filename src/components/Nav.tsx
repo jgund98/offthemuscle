@@ -20,7 +20,12 @@ export default function Nav() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    // hysteresis: only compact past 90px, only expand back under 20px, so the
+    // header never flip-flops (and appears to "jump") while easing near the top
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled((was) => (was ? y > 20 : y > 90));
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -52,8 +57,8 @@ export default function Nav() {
         />
       )}
       <div
-        className={`mx-auto flex max-w-[90rem] items-center justify-between gap-6 px-5 transition-all duration-500 md:px-8 ${
-          scrolled ? "py-3" : "py-4 md:py-5"
+        className={`mx-auto flex max-w-[90rem] items-center justify-between gap-6 px-5 py-4 transition-all duration-500 md:px-8 ${
+          scrolled ? "md:py-3" : "md:py-5"
         }`}
       >
         {/* the real lockup, exactly as the brand kit draws it */}
@@ -69,21 +74,22 @@ export default function Nav() {
           className="group flex shrink-0 items-center gap-3.5"
           aria-label="Off The Muscle Pressure Cleaning home"
         >
-          {/* the droplet hangs below the bar like a shop badge */}
-          <span className={`relative z-10 transition-all duration-500 ${scrolled ? "-mb-1" : "-mb-7 md:-mb-9"}`}>
+          {/* the droplet hangs a touch below the bar like a shop badge —
+              only a subtle shrink on scroll so nothing "jumps" */}
+          <span className={`relative z-10 -mb-2 transition-all duration-500 ${scrolled ? "md:-mb-1" : "md:-mb-3"}`}>
             <Image
               src="/images/otm-script-white.svg"
               alt="Off The Muscle"
               width={220}
               height={220}
               priority
-              className={`w-auto object-contain drop-shadow-[0_10px_24px_rgba(6,24,38,0.65)] transition-all duration-500 group-hover:rotate-[4deg] ${
-                scrolled ? "h-11 md:h-12" : "h-14 md:h-[4.5rem]"
+              className={`h-12 w-auto object-contain drop-shadow-[0_10px_24px_rgba(6,24,38,0.65)] transition-all duration-500 group-hover:rotate-[4deg] ${
+                scrolled ? "md:h-12" : "md:h-14"
               }`}
             />
           </span>
           <span className="leading-none">
-            <span className="display block text-base text-foam md:text-xl">
+            <span className="display block text-lg text-foam md:text-xl">
               Off The <span className="text-hydro">Muscle</span>
             </span>
             {/* handwritten, like the logo lettering — not another tracked-out label */}
