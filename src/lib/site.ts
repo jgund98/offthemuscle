@@ -177,7 +177,7 @@ export const TRUST = [
   { value: "100%", label: "family owned & operated" },
   { value: "Licensed", label: "& fully insured" },
   { value: "Res + Com", label: "residential & commercial" },
-  { value: "3 Counties", label: "Palm Beach · Broward · Martin" },
+  { value: "3 Counties", label: "Palm Beach, Broward & Martin" },
 ];
 
 /* Real before/after pairs from the field — the wash showcase. */
@@ -226,5 +226,5 @@ export const APART = [
   { title: "Owner on every job", body: "You'll find Jason on nearly every job, or directly overseeing the crew, so quality and consistency never slip." },
   { title: "No job too big or small", body: "From a single driveway to full commercial cleanups, we take on the jobs others avoid. No grime is too stubborn." },
   { title: "Professional results", body: "Curb appeal that protects your property and turns heads — it's more than a slogan, it's the mindset." },
-  { title: "We give back", body: "We're proud to donate a share of our profits to causes we care about right here in the community." },
+  { title: "We love giving back", body: "We donate 5% of our profits to support the elephants at the Cheyenne Mountain Zoo — doing our part beyond the driveway." },
 ];

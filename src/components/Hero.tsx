@@ -117,26 +117,12 @@ export default function Hero({ media = HERO_MEDIA }: { media?: typeof HERO_MEDIA
       {/* ---------- content ---------- */}
       <div className="relative z-10 mx-auto flex w-full max-w-[90rem] flex-1 flex-col justify-center px-5 pb-14 pt-24 md:px-8 md:pb-14 md:pt-28">
         <div className="md:max-w-[44%]">
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <Image
-              src="/images/otm-script-white.svg"
-              alt="Off The Muscle Pressure Cleaning"
-              width={220}
-              height={220}
-              priority
-              className="h-20 w-20 drop-shadow-[0_6px_24px_rgba(29,169,232,0.4)] sm:h-24 sm:w-24 md:h-36 md:w-36"
-            />
-          </motion.div>
-
+          {/* the nav badge already carries the droplet — the hero leads with type */}
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.25 }}
-            className="label mb-4 mt-2 flex items-center gap-3 text-spray md:mb-6"
+            className="label mb-4 flex items-center gap-3 text-spray md:mb-6"
           >
             <SplashMark className="h-3.5" />
             <span>
