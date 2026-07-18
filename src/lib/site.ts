@@ -14,7 +14,12 @@ export const SITE = {
   base: "South Florida",
   region: "Palm Beach County, Florida",
   owner: "Jason",
-  url: "https://offthemuscle.net",
+  /* Canonical base for metadata: absolute OG/Twitter image URLs, canonicals,
+     sitemap and JSON-LD all resolve against this, so it MUST be the domain
+     actually serving this site or link previews come back imageless.
+     Flip NEXT_PUBLIC_SITE_URL (or this default) to https://offthemuscle.net
+     the day that domain is pointed here. */
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://otm.epicdevsolutions.com",
   founded: "2021",
   address: {
     street: "3200 Summit Blvd",
