@@ -32,7 +32,9 @@ export default function InsuredBand() {
           </div>
 
           <Reveal delay={0.12}>
-            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+            {/* single column on small phones — the display-font values (e.g.
+                "3 Counties") overflow a half-width card below ~420px */}
+            <div className="grid grid-cols-1 gap-3 min-[420px]:grid-cols-2 sm:gap-4">
               {TRUST.map((t) => (
                 <div
                   key={t.label}

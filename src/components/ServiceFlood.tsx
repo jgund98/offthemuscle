@@ -60,7 +60,7 @@ export default function ServiceFlood() {
                     <div>
                       <span
                         className={`display block text-2xl transition-all duration-300 md:text-4xl ${
-                          active === i ? "translate-x-2 text-brand" : "text-abyss"
+                          active === i ? "text-brand md:translate-x-2" : "text-abyss"
                         }`}
                       >
                         {s.name}

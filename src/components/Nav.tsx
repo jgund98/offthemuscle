@@ -71,7 +71,7 @@ export default function Nav() {
               window.scrollTo({ top: 0, behavior: "smooth" });
             }
           }}
-          className="group flex shrink-0 items-center gap-3.5"
+          className="group flex min-w-0 shrink items-center gap-2.5 sm:gap-3.5"
           aria-label="Off The Muscle Pressure Cleaning home"
         >
           {/* the droplet hangs a touch below the bar like a shop badge —
@@ -83,17 +83,17 @@ export default function Nav() {
               width={220}
               height={220}
               priority
-              className={`h-12 w-auto object-contain drop-shadow-[0_10px_24px_rgba(6,24,38,0.65)] transition-all duration-500 group-hover:rotate-[4deg] ${
+              className={`h-10 w-auto object-contain drop-shadow-[0_10px_24px_rgba(6,24,38,0.65)] transition-all duration-500 group-hover:rotate-[4deg] sm:h-12 ${
                 scrolled ? "md:h-12" : "md:h-14"
               }`}
             />
           </span>
-          <span className="leading-none">
-            <span className="display block text-lg text-foam md:text-xl">
+          <span className="min-w-0 leading-none">
+            <span className="display block whitespace-nowrap text-[0.95rem] text-foam sm:text-lg md:text-xl">
               Off The <span className="text-hydro">Muscle</span>
             </span>
             {/* handwritten, like the logo lettering — not another tracked-out label */}
-            <span className="script mt-0.5 block -rotate-2 text-sm text-spray md:text-base">
+            <span className="script mt-0.5 block whitespace-nowrap -rotate-2 text-xs text-spray sm:text-sm md:text-base">
               Pressure Cleaning · South Florida
             </span>
           </span>

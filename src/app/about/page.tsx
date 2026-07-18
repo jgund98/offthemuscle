@@ -135,7 +135,7 @@ export default function AboutPage() {
                   </div>
                 </Reveal>
                 <Reveal delay={0.1}>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 gap-4 min-[420px]:grid-cols-2">
                     {TRUST.map((s) => (
                       <div key={s.label} className="rounded-2xl border border-brand/15 bg-white p-4 shadow-[0_12px_32px_-18px_rgba(13,37,55,0.3)] sm:p-5">
                         <p className="display whitespace-nowrap text-lg leading-none text-brand sm:text-xl md:text-2xl">{s.value}</p>
