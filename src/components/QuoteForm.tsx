@@ -43,6 +43,8 @@ export default function QuoteForm() {
   const [hasName, setHasName] = useState(false);
   const [hasPhone, setHasPhone] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
+  // how long the visitor spent on the form — the API rejects instant (scripted) submits
+  const mountedAt = useRef(Date.now());
   const active = PROPERTY_TYPES.find((p) => p.key === property)!;
   // estimate progress fills like a water line: property is picked by default
   const progress = 25 + (services.length ? 25 : 0) + (hasName ? 25 : 0) + (hasPhone ? 25 : 0);
@@ -74,6 +76,7 @@ export default function QuoteForm() {
           notes: fd.get("message"),
           company: fd.get("company"),
           source: "Quote form",
+          elapsedMs: Date.now() - mountedAt.current,
         }),
       });
       if (!res.ok) throw new Error("send_failed");

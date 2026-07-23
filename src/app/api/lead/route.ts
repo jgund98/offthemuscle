@@ -16,7 +16,41 @@ type LeadPayload = {
   notes?: string;
   company?: string; // honeypot
   source?: string; // "Quote form" | "Live chat"
+  elapsedMs?: number; // ms between form render and submit — bots submit instantly
 };
+
+/* ---------------------------------------------------------------------------
+   Abuse protection. This endpoint emails the owner's real inbox, so an open
+   POST is a spam vector. Layers: honeypot, submit-speed check, per-IP rate
+   limit, field caps, and link heuristics on fields that should never contain
+   URLs. Deliberately fails "silently ok" for bot-shaped traffic so probing
+   scripts learn nothing about which rule caught them.
+--------------------------------------------------------------------------- */
+
+const WINDOW_MS = 10 * 60 * 1000;
+const MAX_PER_WINDOW = 5;
+const MIN_FILL_MS = 2500;
+const hits = new Map<string, number[]>();
+
+function rateLimited(ip: string): boolean {
+  const now = Date.now();
+  const recent = (hits.get(ip) ?? []).filter((t) => now - t < WINDOW_MS);
+  if (recent.length >= MAX_PER_WINDOW) {
+    hits.set(ip, recent);
+    return true;
+  }
+  recent.push(now);
+  hits.set(ip, recent);
+  // opportunistic sweep so the map can't grow without bound on a warm instance
+  if (hits.size > 2000) {
+    for (const [k, v] of hits) if (!v.some((t) => now - t < WINDOW_MS)) hits.delete(k);
+  }
+  return false;
+}
+
+const cap = (v: unknown, n: number) => String(v ?? "").trim().slice(0, n);
+// name/phone containing a URL is a near-certain spam signature
+const LINKY = /(https?:\/\/|www\.|\[url|<a\s|\br\/)/i;
 
 const BRAND = {
   navy: "#04121f",
@@ -170,17 +204,56 @@ function buildEmail(d: LeadPayload) {
 }
 
 export async function POST(req: Request) {
-  let d: LeadPayload;
+  if (!(req.headers.get("content-type") || "").includes("application/json")) {
+    return NextResponse.json({ ok: false, error: "bad_request" }, { status: 400 });
+  }
+
+  let raw: LeadPayload;
   try {
-    d = await req.json();
+    raw = await req.json();
   } catch {
     return NextResponse.json({ ok: false, error: "bad_request" }, { status: 400 });
   }
 
   // honeypot — pretend success so bots don't learn anything
-  if (d.company) return NextResponse.json({ ok: true });
+  if (raw.company) return NextResponse.json({ ok: true });
 
-  if (!d.name && !d.phone && !d.email) {
+  // humans take a beat to fill a form; instant submits are scripted
+  if (typeof raw.elapsedMs === "number" && raw.elapsedMs >= 0 && raw.elapsedMs < MIN_FILL_MS) {
+    return NextResponse.json({ ok: true });
+  }
+
+  const ip =
+    (req.headers.get("x-forwarded-for") || "").split(",")[0].trim() ||
+    req.headers.get("x-real-ip") ||
+    "unknown";
+  if (rateLimited(ip)) {
+    console.warn("[lead] rate limited", ip);
+    return NextResponse.json({ ok: false, error: "rate_limited" }, { status: 429 });
+  }
+
+  // clamp every field so an oversized payload can't become a wall of spam
+  const servicesArr = Array.isArray(raw.services)
+    ? raw.services.slice(0, 12).map((s) => cap(s, 60)).filter(Boolean)
+    : cap(raw.services, 300);
+  const d: LeadPayload = {
+    name: cap(raw.name, 80),
+    phone: cap(raw.phone, 32),
+    email: cap(raw.email, 120),
+    property: cap(raw.property, 60),
+    services: servicesArr,
+    notes: cap(raw.notes, 1500),
+    source: cap(raw.source, 40) || "Website",
+  };
+
+  // a real customer's name or phone never contains a link
+  if (LINKY.test(d.name || "") || LINKY.test(d.phone || "")) {
+    console.warn("[lead] dropped link-spam", ip);
+    return NextResponse.json({ ok: true });
+  }
+
+  // a lead with no way to reply is worthless — and is what junk submissions look like
+  if (!d.phone && !d.email) {
     return NextResponse.json({ ok: false, error: "missing_fields" }, { status: 422 });
   }
 

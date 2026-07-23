@@ -96,8 +96,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               description:
                 "Family-owned, licensed and insured pressure cleaning company serving South Florida: residential power washing, house soft washing, driveway and surface cleaning, roof cleaning, and commercial power washing across Palm Beach, Northern Broward, and Southern Martin counties.",
               url: SITE.url,
+              // telephone stays — it's core NAP data Google uses for local ranking.
+              // email is deliberately omitted: it isn't a ranking factor, and listing
+              // it here published the address in plaintext on every page for scrapers.
+              // The visible address is rendered by <ObfMail> (assembled client-side).
               telephone: "+1-561-698-8537",
-              email: SITE.email,
               foundingDate: SITE.founded,
               image: [`${SITE.url}/images/ba-roof-after.jpg`, `${SITE.url}/images/svc-commercial.jpg`, `${SITE.url}/images/crew-roof.jpg`],
               logo: `${SITE.url}/icon.png`,
