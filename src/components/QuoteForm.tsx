@@ -48,6 +48,8 @@ const inputCls =
 
 export default function QuoteForm() {
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState(false);
   const [property, setProperty] = useState("Residential");
   const [services, setServices] = useState<string[]>([]);
   const [hasName, setHasName] = useState(false);
@@ -64,18 +66,35 @@ export default function QuoteForm() {
   const toggle = (name: string) =>
     setServices((s) => (s.includes(name) ? s.filter((x) => x !== name) : [...s, name]));
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
     // honeypot: real users never fill this hidden field — bots do
     if (fd.get("company")) return;
-    const body = encodeURIComponent(
-      `Name: ${fd.get("name")}\nPhone: ${fd.get("phone")}\nEmail: ${fd.get("email") || "—"}\nProperty: ${property}\nNeeds washing: ${services.join(", ") || "Not sure yet — walk me through it"}\nNotes: ${fd.get("message") || "—"}`
-    );
-    window.location.href = `mailto:${SITE.email}?subject=${encodeURIComponent(
-      `Free quote request — ${fd.get("name")}`
-    )}&body=${body}`;
-    setSent(true);
+    setError(false);
+    setSending(true);
+    try {
+      const res = await fetch("/api/lead", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          name: fd.get("name"),
+          phone: fd.get("phone"),
+          email: fd.get("email"),
+          property,
+          services: services.length ? services : ["Not sure yet — walk me through it"],
+          notes: fd.get("message"),
+          company: fd.get("company"),
+          source: "Quote form",
+        }),
+      });
+      if (!res.ok) throw new Error("send_failed");
+      setSent(true);
+    } catch {
+      setError(true);
+    } finally {
+      setSending(false);
+    }
   };
 
   // once the confirmation has actually rendered and laid out, center it on
@@ -245,13 +264,21 @@ export default function QuoteForm() {
 
             <button
               type="submit"
-              className="btn-jet label mt-7 w-full rounded-full bg-hydro py-4.5 text-abyss transition-transform active:scale-[0.99] md:py-5"
+              disabled={sending}
+              className="btn-jet label mt-7 w-full rounded-full bg-hydro py-4.5 text-abyss transition-transform active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70 md:py-5"
             >
-              Send my free quote request →
+              {sending ? "Sending…" : "Send my free quote request →"}
             </button>
-            <p className="mt-4 text-center text-xs text-slate">
-              Takes 30 seconds. No spam, no pushy calls — just a straight price.
-            </p>
+            {error ? (
+              <p className="mt-4 text-center text-xs font-semibold text-red-600">
+                Something went wrong sending that. Please call or text{" "}
+                <a href={SITE.phoneHref} className="underline">{SITE.phone}</a> and we&apos;ll take care of you.
+              </p>
+            ) : (
+              <p className="mt-4 text-center text-xs text-slate">
+                Takes 30 seconds. No spam, no pushy calls — just a straight price.
+              </p>
+            )}
           </motion.form>
         )}
       </AnimatePresence>

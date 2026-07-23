@@ -11,7 +11,7 @@ import { SITE } from "@/lib/site";
    the handoff goes out via the same obfuscated address the form uses. */
 
 type Msg = { from: "jason" | "you"; text: string };
-type Step = "service" | "name" | "phone" | "notes" | "done";
+type Step = "service" | "name" | "phone" | "email" | "notes" | "done";
 
 const SERVICES_QR = ["Driveway / surface", "House soft wash", "Roof cleaning", "Commercial", "Something else"];
 
@@ -42,7 +42,9 @@ export default function LiveChat() {
   ]);
   const [draft, setDraft] = useState("");
   const [typing, setTyping] = useState(false);
-  const data = useRef<{ service?: string; name?: string; phone?: string; notes?: string }>({});
+  const data = useRef<{ service?: string; property?: string; name?: string; phone?: string; email?: string; notes?: string }>({});
+  const [sending, setSending] = useState(false);
+  const [sentOk, setSentOk] = useState<null | boolean>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   // gentle one-time nudge after 30s if they haven't opened it — late enough
@@ -72,8 +74,10 @@ export default function LiveChat() {
     if (!value.trim()) return;
     pushYou(value);
     setDraft("");
+    const skip = /^(skip|no|nope|n\/a|none)$/i.test(value.trim());
     if (step === "service") {
       data.current.service = value;
+      data.current.property = /commercial/i.test(value) ? "Commercial" : "Residential";
       setStep("name");
       jasonSays(`Nice — ${value.toLowerCase()}. What's your first name?`);
     } else if (step === "name") {
@@ -82,10 +86,14 @@ export default function LiveChat() {
       jasonSays(`Good to meet you, ${value}! What's the best number to text your free estimate?`);
     } else if (step === "phone") {
       data.current.phone = value;
+      setStep("email");
+      jasonSays("Got it. What's your email? I'll send the written estimate there too — or tap Skip.");
+    } else if (step === "email") {
+      data.current.email = skip ? undefined : value;
       setStep("notes");
-      jasonSays("Perfect. Anything else I should know? (gate code, problem spots, timeline) — or just tap Send.");
+      jasonSays("Perfect. Anything else I should know? (gate code, problem spots, timeline) — or tap Skip.");
     } else if (step === "notes") {
-      data.current.notes = value;
+      data.current.notes = skip ? undefined : value;
       finish();
     }
   };
@@ -97,19 +105,39 @@ export default function LiveChat() {
     );
   };
 
-  const sendHandoff = () => {
+  const sendHandoff = async () => {
     const d = data.current;
-    const body = encodeURIComponent(
-      `New chat lead from the website:\n\nName: ${d.name || "—"}\nPhone: ${d.phone || "—"}\nService: ${d.service || "—"}\nNotes: ${d.notes || "—"}`
-    );
-    window.location.href = `mailto:${SITE.emailUser}@${SITE.emailDomain}?subject=${encodeURIComponent(
-      `Website chat — ${d.name || "new lead"}`
-    )}&body=${body}`;
+    setSending(true);
+    setSentOk(null);
+    try {
+      const res = await fetch("/api/lead", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          name: d.name,
+          phone: d.phone,
+          email: d.email,
+          property: d.property,
+          services: d.service,
+          notes: d.notes,
+          source: "Live chat",
+        }),
+      });
+      setSentOk(res.ok);
+    } catch {
+      setSentOk(false);
+    } finally {
+      setSending(false);
+    }
   };
 
-  const inputMode = step === "phone" ? "tel" : "text";
+  const inputMode = step === "phone" ? "tel" : step === "email" ? "email" : "text";
   const placeholder =
-    step === "name" ? "First name…" : step === "phone" ? "(561) 555-0134" : step === "notes" ? "Anything else… (optional)" : "Type a message…";
+    step === "name" ? "First name…"
+    : step === "phone" ? "(561) 555-0134"
+    : step === "email" ? "you@email.com (optional)"
+    : step === "notes" ? "Anything else… (optional)"
+    : "Type a message…";
 
   return (
     <>
@@ -221,14 +249,40 @@ export default function LiveChat() {
                   ))}
                 </div>
               )}
+              {/* optional steps get a Skip chip */}
+              {(step === "email" || step === "notes") && !typing && (
+                <div className="flex justify-end pt-1">
+                  <button
+                    onClick={() => advance("skip")}
+                    className="rounded-full border border-slate/25 bg-white px-3 py-1.5 text-xs font-semibold text-slate transition-colors hover:border-hydro hover:text-brand"
+                  >
+                    Skip →
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* composer / done state */}
             {step === "done" ? (
               <div className="border-t border-brand/10 bg-white p-3">
-                <button onClick={sendHandoff} className="btn-jet label w-full rounded-full bg-hydro py-3.5 text-center text-abyss">
-                  Send to Jason →
-                </button>
+                {sentOk === true ? (
+                  <p className="rounded-full bg-hydro/12 py-3 text-center text-sm font-semibold text-brand">
+                    ✓ Sent to Jason — he&apos;ll be in touch shortly.
+                  </p>
+                ) : (
+                  <button
+                    onClick={sendHandoff}
+                    disabled={sending}
+                    className="btn-jet label w-full rounded-full bg-hydro py-3.5 text-center text-abyss disabled:opacity-70"
+                  >
+                    {sending ? "Sending…" : "Send to Jason →"}
+                  </button>
+                )}
+                {sentOk === false && (
+                  <p className="mt-2 text-center text-xs font-semibold text-red-600">
+                    Couldn&apos;t send — call or text {SITE.phone} and we&apos;ve got you.
+                  </p>
+                )}
                 <a href={SITE.phoneHref} className="mt-2 block text-center text-xs font-semibold text-slate transition-colors hover:text-brand">
                   Prefer to talk now? Call or text {SITE.phone}
                 </a>
