@@ -132,11 +132,12 @@ export async function POST(req: Request) {
       headers: { "api-key": apiKey, "content-type": "application/json", accept: "application/json" },
       body: JSON.stringify(body),
     });
+    const detail = await res.text();
     if (!res.ok) {
-      const detail = await res.text();
       console.error("[lead] brevo error", res.status, detail);
       return NextResponse.json({ ok: false, error: "send_failed" }, { status: 502 });
     }
+    console.log("[lead] sent via brevo", res.status, `from=${fromEmail} to=${toEmail}`, detail);
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("[lead] network error", err);
