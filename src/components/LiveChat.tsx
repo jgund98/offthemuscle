@@ -3,17 +3,19 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { SITE } from "@/lib/site";
+import { SITE, PROPERTY_OPTIONS } from "@/lib/site";
 
-/* Live "chat with Jason" — a guided, on-brand conversation that mirrors the
-   lead-capture flow: pick a service, drop a name + number, and Jason texts back
-   a free estimate. Nothing is posted anywhere until the visitor hits send, and
-   the handoff goes out via the same obfuscated address the form uses. */
+/* Live "chat with Jason" — a guided, on-brand conversation that MIRRORS the
+   quote form: it walks the same fields in the same order (property → services →
+   name → phone → email → notes) and posts to the same /api/lead endpoint.
+   It sends automatically once the flow completes, and — as a safety net — if a
+   visitor gives a phone or email and then goes quiet for 5 minutes, it sends
+   what it has so the lead is never lost. */
 
 type Msg = { from: "jason" | "you"; text: string };
-type Step = "service" | "name" | "phone" | "email" | "notes" | "done";
+type Step = "property" | "services" | "name" | "phone" | "email" | "notes" | "done";
 
-const SERVICES_QR = ["Driveway / surface", "House soft wash", "Roof cleaning", "Commercial", "Something else"];
+const AUTOSEND_MS = 5 * 60 * 1000;
 
 export default function LiveChat() {
   const [open, setOpen] = useState(false);
@@ -36,16 +38,20 @@ export default function LiveChat() {
     };
   }, []);
   const launcherVisible = isDesktop || pastHero;
-  const [step, setStep] = useState<Step>("service");
+  const [step, setStep] = useState<Step>("property");
   const [msgs, setMsgs] = useState<Msg[]>([
-    { from: "jason", text: "Hey, it's Jason 👋 Owner here. What can we get cleaned up for you?" },
+    { from: "jason", text: "Hey, it's Jason 👋 Owner here. Quick few questions and I'll get you a free estimate. First — where are we washing?" },
   ]);
   const [draft, setDraft] = useState("");
   const [typing, setTyping] = useState(false);
-  const data = useRef<{ service?: string; property?: string; name?: string; phone?: string; email?: string; notes?: string }>({});
+  const [svcSel, setSvcSel] = useState<string[]>([]);
+  const data = useRef<{ property?: string; propertyLabel?: string; services: string[]; name?: string; phone?: string; email?: string; notes?: string }>({ services: [] });
   const [sending, setSending] = useState(false);
   const [sentOk, setSentOk] = useState<null | boolean>(null);
+  const sentRef = useRef(false);
+  const autosendTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const activeProperty = PROPERTY_OPTIONS.find((p) => p.key === data.current.property);
 
   // gentle one-time nudge after 30s if they haven't opened it — late enough
   // that it never stacks on top of the estimate popup's moment
@@ -70,42 +76,12 @@ export default function LiveChat() {
 
   const pushYou = (text: string) => setMsgs((m) => [...m, { from: "you", text }]);
 
-  const advance = (value: string) => {
-    if (!value.trim()) return;
-    pushYou(value);
-    setDraft("");
-    const skip = /^(skip|no|nope|n\/a|none)$/i.test(value.trim());
-    if (step === "service") {
-      data.current.service = value;
-      data.current.property = /commercial/i.test(value) ? "Commercial" : "Residential";
-      setStep("name");
-      jasonSays(`Nice — ${value.toLowerCase()}. What's your first name?`);
-    } else if (step === "name") {
-      data.current.name = value;
-      setStep("phone");
-      jasonSays(`Good to meet you, ${value}! What's the best number to text your free estimate?`);
-    } else if (step === "phone") {
-      data.current.phone = value;
-      setStep("email");
-      jasonSays("Got it. What's your email? I'll send the written estimate there too — or tap Skip.");
-    } else if (step === "email") {
-      data.current.email = skip ? undefined : value;
-      setStep("notes");
-      jasonSays("Perfect. Anything else I should know? (gate code, problem spots, timeline) — or tap Skip.");
-    } else if (step === "notes") {
-      data.current.notes = skip ? undefined : value;
-      finish();
-    }
-  };
-
-  const finish = () => {
-    setStep("done");
-    jasonSays(
-      `You're all set${data.current.name ? `, ${data.current.name}` : ""} — I'll get you a straight price, usually the same day. Talk soon! 🧼`
-    );
-  };
-
-  const sendHandoff = async () => {
+  // POST the lead. Idempotent — auto-send + manual send can both fire; only the
+  // first wins. Sends whatever we have (never blocks on optional fields).
+  const sendLead = async () => {
+    if (sentRef.current) return;
+    sentRef.current = true;
+    if (autosendTimer.current) clearTimeout(autosendTimer.current);
     const d = data.current;
     setSending(true);
     setSentOk(null);
@@ -117,18 +93,83 @@ export default function LiveChat() {
           name: d.name,
           phone: d.phone,
           email: d.email,
-          property: d.property,
-          services: d.service,
+          property: d.propertyLabel || d.property,
+          services: d.services.length ? d.services : "Not sure yet — walk me through it",
           notes: d.notes,
           source: "Live chat",
         }),
       });
       setSentOk(res.ok);
+      if (!res.ok) sentRef.current = false; // allow a manual retry
     } catch {
       setSentOk(false);
+      sentRef.current = false;
     } finally {
       setSending(false);
     }
+  };
+
+  // once we have a way to reach them, arm a 5-min inactivity auto-send
+  const armAutoSend = () => {
+    if (autosendTimer.current) clearTimeout(autosendTimer.current);
+    autosendTimer.current = setTimeout(() => {
+      if (!sentRef.current && (data.current.phone || data.current.email)) sendLead();
+    }, AUTOSEND_MS);
+  };
+  useEffect(() => () => { if (autosendTimer.current) clearTimeout(autosendTimer.current); }, []);
+
+  const advance = (value: string) => {
+    if (!value.trim()) return;
+    if (autosendTimer.current) clearTimeout(autosendTimer.current); // activity resets the timer
+    setDraft("");
+    const skip = /^(skip|no|nope|n\/a|none)$/i.test(value.trim());
+
+    if (step === "name") {
+      pushYou(value);
+      data.current.name = value;
+      setStep("phone");
+      jasonSays(`Good to meet you, ${value}! What's the best number to text your free estimate?`);
+    } else if (step === "phone") {
+      pushYou(value);
+      data.current.phone = value;
+      setStep("email");
+      armAutoSend();
+      jasonSays("Got it. What's your email? I'll send the written estimate there too — or tap Skip.");
+    } else if (step === "email") {
+      pushYou(skip ? "Skip" : value);
+      data.current.email = skip ? undefined : value;
+      setStep("notes");
+      armAutoSend();
+      jasonSays("Perfect. Anything else I should know? (gate code, problem spots, timeline) — or tap Skip.");
+    } else if (step === "notes") {
+      pushYou(skip ? "Skip" : value);
+      data.current.notes = skip ? undefined : value;
+      finish();
+    }
+  };
+
+  const pickProperty = (opt: (typeof PROPERTY_OPTIONS)[number]) => {
+    pushYou(opt.label);
+    data.current.property = opt.key;
+    data.current.propertyLabel = opt.label;
+    setStep("services");
+    jasonSays(`${opt.label} — got it. What needs the wash? Tap all that apply, then hit "That's all".`);
+  };
+
+  const confirmServices = () => {
+    const chosen = svcSel.length ? svcSel : ["Not sure yet"];
+    data.current.services = chosen;
+    pushYou(chosen.join(", "));
+    setStep("name");
+    jasonSays("Perfect. What's your first name?");
+  };
+
+  const finish = () => {
+    setStep("done");
+    jasonSays(
+      `You're all set${data.current.name ? `, ${data.current.name}` : ""} — I'll get you a straight price, usually the same day. Talk soon! 🧼`,
+      () => sendLead() // completed flow = enough info, send automatically
+    );
   };
 
   const inputMode = step === "phone" ? "tel" : step === "email" ? "email" : "text";
@@ -235,18 +276,45 @@ export default function LiveChat() {
                   </div>
                 </div>
               )}
-              {/* service quick-replies */}
-              {step === "service" && !typing && (
+              {/* property chips — mirrors the form's "Where are we washing?" */}
+              {step === "property" && !typing && (
                 <div className="flex flex-wrap gap-2 pt-1">
-                  {SERVICES_QR.map((s) => (
+                  {PROPERTY_OPTIONS.map((p) => (
                     <button
-                      key={s}
-                      onClick={() => advance(s)}
-                      className="rounded-full border border-brand/30 bg-white px-3 py-1.5 text-xs font-semibold text-brand transition-colors hover:border-hydro hover:bg-hydro hover:text-abyss"
+                      key={p.key}
+                      onClick={() => pickProperty(p)}
+                      className="rounded-full border border-brand/30 bg-white px-3.5 py-1.5 text-xs font-semibold text-brand transition-colors hover:border-hydro hover:bg-hydro hover:text-abyss"
                     >
-                      {s}
+                      {p.label}
                     </button>
                   ))}
+                </div>
+              )}
+              {/* services multi-select — mirrors "What needs the wash? (tap all)" */}
+              {step === "services" && !typing && activeProperty && (
+                <div className="pt-1">
+                  <div className="flex flex-wrap gap-2">
+                    {activeProperty.services.map((s) => {
+                      const on = svcSel.includes(s);
+                      return (
+                        <button
+                          key={s}
+                          onClick={() => setSvcSel((cur) => (on ? cur.filter((x) => x !== s) : [...cur, s]))}
+                          className={`rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-colors ${
+                            on ? "border-hydro bg-hydro text-abyss" : "border-brand/30 bg-white text-brand hover:border-hydro"
+                          }`}
+                        >
+                          {on ? "✓ " : ""}{s}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <button
+                    onClick={confirmServices}
+                    className="btn-jet mt-3 rounded-full bg-brand px-4 py-2 text-xs font-bold text-foam transition-transform active:scale-95"
+                  >
+                    That&apos;s all →
+                  </button>
                 </div>
               )}
               {/* optional steps get a Skip chip */}
@@ -271,7 +339,7 @@ export default function LiveChat() {
                   </p>
                 ) : (
                   <button
-                    onClick={sendHandoff}
+                    onClick={sendLead}
                     disabled={sending}
                     className="btn-jet label w-full rounded-full bg-hydro py-3.5 text-center text-abyss disabled:opacity-70"
                   >
@@ -286,6 +354,10 @@ export default function LiveChat() {
                 <a href={SITE.phoneHref} className="mt-2 block text-center text-xs font-semibold text-slate transition-colors hover:text-brand">
                   Prefer to talk now? Call or text {SITE.phone}
                 </a>
+              </div>
+            ) : step === "property" || step === "services" ? (
+              <div className="border-t border-brand/10 bg-white p-3 text-center text-xs font-semibold text-slate">
+                👆 Tap {step === "property" ? "where we're washing" : "everything that needs cleaning"} above
               </div>
             ) : (
               <form

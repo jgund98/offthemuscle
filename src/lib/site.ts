@@ -169,6 +169,14 @@ export const CITIES = [
 
 export const COUNTIES = ["Palm Beach County", "Northern Broward County", "Southern Martin County"];
 
+/* Single source of truth for the quote flow — the form and the live chat both
+   read this so they collect the exact same options in the exact same order. */
+export const PROPERTY_OPTIONS = [
+  { key: "Residential", label: "My home", services: ["Driveway & sidewalks", "House wash", "Roof", "Pool deck / patio", "Fence", "Gutters"] },
+  { key: "Commercial", label: "My business", services: ["Building exterior", "Concrete & walkways", "Parking areas", "Dumpster pad", "Commercial roof (TPO)", "Recurring program"] },
+  { key: "Roof & Specialty", label: "My roof", services: ["Tile roof", "Shingle roof", "House soft wash", "Screen enclosure", "Patio / lanai", "Not sure yet"] },
+] as const;
+
 /* Hero background footage — Off The Muscle's own cinematic surface-cleaner clip. */
 export const HERO_MEDIA = {
   video: "/videos/hero-wash.mp4",

@@ -1,47 +1,35 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { SITE } from "@/lib/site";
+import { SITE, PROPERTY_OPTIONS } from "@/lib/site";
 
 /* One screen, three friendly questions, two required fields.
-   Residential leads — it's the main line of work. */
+   Residential leads — it's the main line of work. The property/service options
+   come from the shared PROPERTY_OPTIONS so the live chat mirrors this exactly. */
 
-const PROPERTY_TYPES = [
-  {
-    key: "Residential",
-    label: "My home",
-    icon: (
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="m3 11 9-7 9 7M6 9.5V20h12V9.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M10 20v-5h4v5" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
-      </svg>
-    ),
-    services: ["Driveway & sidewalks", "House wash", "Roof", "Pool deck / patio", "Fence", "Gutters"],
-  },
-  {
-    key: "Commercial",
-    label: "My business",
-    icon: (
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M3 21h18M5 21V8h14v13M5 8l2-4h10l2 4M9 12h2m2 0h2M9 16h2m2 0h2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-    services: ["Building exterior", "Concrete & walkways", "Parking areas", "Dumpster pad", "Commercial roof (TPO)", "Recurring program"],
-  },
-  {
-    key: "Roof & Specialty",
-    label: "My roof",
-    icon: (
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M2 13 12 4l10 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M6 9.5V8h3v-2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M5 16h14M7.5 19.5h9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      </svg>
-    ),
-    services: ["Tile roof", "Shingle roof", "House soft wash", "Screen enclosure", "Patio / lanai", "Not sure yet"],
-  },
-];
+const ICONS: Record<string, ReactNode> = {
+  Residential: (
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="m3 11 9-7 9 7M6 9.5V20h12V9.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M10 20v-5h4v5" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+    </svg>
+  ),
+  Commercial: (
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M3 21h18M5 21V8h14v13M5 8l2-4h10l2 4M9 12h2m2 0h2M9 16h2m2 0h2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
+  "Roof & Specialty": (
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M2 13 12 4l10 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M6 9.5V8h3v-2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M5 16h14M7.5 19.5h9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  ),
+};
+
+const PROPERTY_TYPES = PROPERTY_OPTIONS.map((p) => ({ ...p, icon: ICONS[p.key] }));
 
 const inputCls =
   "w-full rounded-xl border border-slate/30 bg-ice/60 px-4 py-3.5 text-ink placeholder:text-slate/60 outline-none transition-all focus:border-hydro focus:bg-white";

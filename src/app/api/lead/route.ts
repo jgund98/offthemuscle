@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { SITE } from "@/lib/site";
 
 /* Lead intake for both the quote form and the "chat with Jason" widget.
    Sends a clean, on-brand notification through Brevo transactional email.
@@ -32,61 +33,138 @@ function esc(v: unknown): string {
     .replace(/>/g, "&gt;");
 }
 
+const EMAIL_FONT = "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
+
 function row(label: string, value: string, link?: string): string {
-  const inner = link ? `<a href="${link}" style="color:${BRAND.hydro};text-decoration:none;">${value}</a>` : value;
+  const shown = value || "—";
+  const inner = link && value
+    ? `<a href="${link}" style="color:${BRAND.hydro};text-decoration:none;font-weight:600;">${shown}</a>`
+    : `<span style="color:${value ? BRAND.ink : "#a9bcc9"};">${shown}</span>`;
   return `
     <tr>
-      <td style="padding:12px 0;border-bottom:1px solid #e7eef3;vertical-align:top;width:132px;">
-        <span style="font:600 11px/1.4 Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:${BRAND.mist};">${label}</span>
+      <td style="padding:14px 0;border-bottom:1px solid #eef3f7;vertical-align:top;width:130px;">
+        <span style="font:600 11px/1.5 ${EMAIL_FONT};letter-spacing:.07em;text-transform:uppercase;color:${BRAND.mist};">${label}</span>
       </td>
-      <td style="padding:12px 0;border-bottom:1px solid #e7eef3;font:600 16px/1.5 Arial,sans-serif;color:${BRAND.ink};">${inner || "—"}</td>
+      <td style="padding:14px 0;border-bottom:1px solid #eef3f7;font:500 15px/1.6 ${EMAIL_FONT};">${inner}</td>
     </tr>`;
 }
 
 function buildEmail(d: LeadPayload) {
-  const name = esc(d.name) || "New lead";
-  const phone = esc(d.phone);
-  const phoneDigits = String(d.phone ?? "").replace(/[^\d+]/g, "");
-  const email = esc(d.email);
-  const property = esc(d.property);
-  const services = Array.isArray(d.services) ? d.services.map(esc).join(", ") : esc(d.services);
-  const notes = esc(d.notes);
-  const source = esc(d.source) || "Website";
+  /* Keep RAW values for the subject + plaintext part (they are not HTML — an
+     escaped "&" would literally render as "&amp;"), and escape only where the
+     value is interpolated into the HTML body. */
+  const rawName = String(d.name ?? "").trim() || "New lead";
+  const rawPhone = String(d.phone ?? "").trim();
+  const rawEmail = String(d.email ?? "").trim();
+  const rawProperty = String(d.property ?? "").trim();
+  const rawServices = Array.isArray(d.services) ? d.services.join(", ") : String(d.services ?? "").trim();
+  const rawNotes = String(d.notes ?? "").trim();
+  const rawSource = String(d.source ?? "").trim() || "Website";
 
-  const subject = `New quote request — ${name}${property ? ` (${property})` : ""}`;
+  const name = esc(rawName);
+  const phone = esc(rawPhone);
+  const phoneDigits = rawPhone.replace(/[^\d+]/g, "");
+  const email = esc(rawEmail);
+  const property = esc(rawProperty);
+  const services = esc(rawServices);
+  const notes = esc(rawNotes);
+  const source = esc(rawSource);
 
-  const html = `<!doctype html><html><body style="margin:0;background:#eef4f8;padding:24px;">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;margin:0 auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 12px 40px -16px rgba(6,24,38,.35);">
-    <tr><td style="background:${BRAND.navy};padding:26px 28px;">
-      <div style="font:800 20px/1 Arial,sans-serif;color:#fff;letter-spacing:.02em;">OFF THE <span style="color:${BRAND.hydro};">MUSCLE</span></div>
-      <div style="font:600 11px/1.5 Arial,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:${BRAND.hydro};margin-top:6px;">New lead · ${source}</div>
-    </td></tr>
-    <tr><td style="padding:26px 28px 8px;">
-      <p style="font:700 20px/1.3 Arial,sans-serif;color:${BRAND.ink};margin:0 0 4px;">You've got a new quote request.</p>
-      <p style="font:400 14px/1.6 Arial,sans-serif;color:${BRAND.mist};margin:0 0 8px;">${email ? "Hit reply to answer this customer directly." : "No email given — call or text the number below."}</p>
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-        ${row("Name", name)}
-        ${row("Phone", phone, phoneDigits ? `tel:${phoneDigits}` : undefined)}
-        ${row("Email", email, email ? `mailto:${email}` : undefined)}
-        ${row("Property", property)}
-        ${row("Needs washing", services)}
-        ${row("Notes", notes)}
+  const subject = `New quote request — ${rawName}${rawProperty ? ` (${rawProperty})` : ""}`;
+
+  const stamp = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/New_York",
+    weekday: "short", month: "short", day: "numeric",
+    hour: "numeric", minute: "2-digit",
+  }).format(new Date());
+
+  const font = EMAIL_FONT;
+  const btn = (label: string, href: string, primary = false) =>
+    `<a href="${href}" style="display:inline-block;margin:0 8px 8px 0;padding:13px 24px;border-radius:8px;text-decoration:none;font:600 15px/1 ${font};${
+      primary
+        ? `background:${BRAND.hydro};color:#ffffff;`
+        : `background:#ffffff;color:${BRAND.ink};border:1px solid #d5e2ec;`
+    }">${label}</a>`;
+
+  const html = `<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${subject}</title></head>
+<body style="margin:0;padding:0;background:#eef3f7;">
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;">${name}${rawPhone ? ` · ${phone}` : ""}${rawServices ? ` · ${services}` : ""}</div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#eef3f7;padding:32px 16px;">
+    <tr><td align="center">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#ffffff;border:1px solid #dce7ef;border-radius:12px;overflow:hidden;">
+
+        <!-- header -->
+        <tr><td style="background:${BRAND.navy};padding:22px 32px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+            <td style="vertical-align:middle;width:44px;">
+              <img src="${SITE.url}/images/email-logo.png" width="38" height="38" alt="" style="display:block;border:0;">
+            </td>
+            <td style="vertical-align:middle;padding-left:12px;">
+              <div style="font:700 16px/1.2 ${font};color:#ffffff;letter-spacing:.04em;">OFF THE <span style="color:${BRAND.hydro};">MUSCLE</span></div>
+              <div style="font:400 12px/1.4 ${font};color:#8fb3c9;margin-top:2px;">Pressure Cleaning · South Florida</div>
+            </td>
+            <td align="right" style="vertical-align:middle;">
+              <span style="display:inline-block;background:rgba(29,169,232,.16);color:${BRAND.hydro};font:600 11px/1 ${font};letter-spacing:.08em;text-transform:uppercase;padding:7px 11px;border-radius:5px;">${source}</span>
+            </td>
+          </tr></table>
+        </td></tr>
+
+        <!-- lead headline -->
+        <tr><td style="padding:30px 32px 22px;border-bottom:1px solid #eaf0f5;">
+          <div style="font:600 12px/1 ${font};letter-spacing:.1em;text-transform:uppercase;color:${BRAND.mist};">New quote request</div>
+          <div style="font:700 26px/1.25 ${font};color:${BRAND.ink};margin-top:10px;">${name}</div>
+          <div style="font:400 13px/1.5 ${font};color:${BRAND.mist};margin-top:6px;">${stamp}</div>
+        </td></tr>
+
+        <!-- details -->
+        <tr><td style="padding:8px 32px 4px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+            ${row("Phone", phone, phoneDigits ? `tel:${phoneDigits}` : undefined)}
+            ${row("Email", email, rawEmail ? `mailto:${rawEmail}` : undefined)}
+            ${row("Property", property)}
+            ${row("Needs washing", services)}
+            ${row("Notes", notes)}
+          </table>
+        </td></tr>
+
+        <!-- actions -->
+        <tr><td style="padding:24px 32px 8px;">
+          ${phoneDigits ? btn("Call", `tel:${phoneDigits}`, true) : ""}
+          ${phoneDigits ? btn("Text", `sms:${phoneDigits}`) : ""}
+          ${rawEmail ? btn("Email", `mailto:${rawEmail}`) : ""}
+        </td></tr>
+        <tr><td style="padding:4px 32px 28px;">
+          <div style="font:400 13px/1.6 ${font};color:${BRAND.mist};">
+            ${rawEmail
+              ? "Replying to this email goes straight to the customer."
+              : "No email provided — reach this customer by phone or text."}
+          </div>
+        </td></tr>
+
+        <!-- footer -->
+        <tr><td style="background:#f6f9fb;border-top:1px solid #eaf0f5;padding:16px 32px;">
+          <div style="font:400 12px/1.6 ${font};color:#8aa1b3;">
+            Sent from the Off The Muscle website · ${source}
+          </div>
+        </td></tr>
+
       </table>
     </td></tr>
-    <tr><td style="padding:14px 28px 28px;">
-      ${phoneDigits ? `<a href="tel:${phoneDigits}" style="display:inline-block;background:${BRAND.hydro};color:#04121f;font:700 14px/1 Arial,sans-serif;text-decoration:none;padding:14px 22px;border-radius:999px;">Call ${phone}</a>` : ""}
-    </td></tr>
-    <tr><td style="background:#f4f8fb;padding:16px 28px;font:400 12px/1.6 Arial,sans-serif;color:${BRAND.mist};">
-      Sent automatically from the Off The Muscle website · ${source}
-    </td></tr>
   </table>
-  </body></html>`;
+</body></html>`;
 
   const text =
-    `New quote request (${source})\n\n` +
-    `Name: ${d.name || "—"}\nPhone: ${d.phone || "—"}\nEmail: ${d.email || "—"}\n` +
-    `Property: ${d.property || "—"}\nNeeds washing: ${services || "—"}\nNotes: ${d.notes || "—"}\n\n` +
-    (d.email ? "Reply to this email to reach the customer." : "No email given — call or text the number above.");
+    `NEW QUOTE REQUEST — ${rawSource}\n${stamp}\n\n` +
+    `Name:          ${rawName}\n` +
+    `Phone:         ${rawPhone || "—"}\n` +
+    `Email:         ${rawEmail || "—"}\n` +
+    `Property:      ${rawProperty || "—"}\n` +
+    `Needs washing: ${rawServices || "—"}\n` +
+    `Notes:         ${rawNotes || "—"}\n\n` +
+    (rawEmail
+      ? "Replying to this email goes straight to the customer."
+      : "No email provided — reach this customer by phone or text.");
 
   return { subject, html, text };
 }
