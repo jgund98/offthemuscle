@@ -203,24 +203,48 @@ function buildEmail(d: LeadPayload) {
   return { subject, html, text };
 }
 
-/* Compact lead SMS — same field order as the email, trimmed to stay cheap.
-   Each Brevo SMS credit ~= 160 GSM-7 chars, so notes are capped hard. */
-function buildSms(d: LeadPayload): string {
-  const name = String(d.name ?? "").trim() || "New lead";
-  const phone = String(d.phone ?? "").trim();
-  const email = String(d.email ?? "").trim();
-  const property = String(d.property ?? "").trim();
-  const services = Array.isArray(d.services) ? d.services.join(", ") : String(d.services ?? "").trim();
-  const notes = String(d.notes ?? "").trim();
-  const source = String(d.source ?? "").trim() || "Website";
+/* Force GSM-7 so the message can never flip to Unicode (which bills at 70
+   chars/segment instead of 160). Transliterate the common offenders — smart
+   quotes, dashes, ellipsis — and strip anything else (emoji, accents). Also
+   drop the GSM "extended" chars ([]{}~^\|), which each bill as 2. */
+function toGsm(v: unknown): string {
+  return String(v ?? "")
+    .replace(/[‘’‛′]/g, "'")
+    .replace(/[“”″]/g, '"')
+    .replace(/[–—―]/g, "-")
+    .replace(/…/g, "...")
+    .replace(/ /g, " ")
+    .replace(/[[\]{}~^\\|]/g, "")
+    .replace(/[^\x20-\x7E\n]/g, "")
+    .replace(/[ \t]+/g, " ")
+    .trim();
+}
 
-  const lines = [`New OTM lead (${source})`, name];
+/* Lead SMS, hard-capped to ONE segment (<=160 GSM-7 chars = 1 credit, always).
+   Full detail is in the email; the text is the fast heads-up. Same field
+   order — notes take whatever room is left, then the whole thing is clamped. */
+const SMS_LIMIT = 160;
+function buildSms(d: LeadPayload): string {
+  const name = toGsm(d.name) || "New lead";
+  const phone = toGsm(d.phone);
+  const email = toGsm(d.email);
+  const property = toGsm(d.property);
+  const services = toGsm(Array.isArray(d.services) ? d.services.join(", ") : d.services);
+  const notes = toGsm(d.notes);
+
+  const lines = [`OTM lead: ${name}`];
   if (phone) lines.push(phone);
   if (email) lines.push(email);
-  if (property) lines.push(property + (services ? `: ${services}` : ""));
-  else if (services) lines.push(services);
-  if (notes) lines.push(`Notes: ${notes.length > 90 ? notes.slice(0, 87) + "…" : notes}`);
-  return lines.join("\n");
+  const svc = property ? property + (services ? ` - ${services}` : "") : services;
+  if (svc) lines.push(svc);
+
+  let msg = lines.join("\n");
+  if (notes && msg.length < SMS_LIMIT - 12) {
+    const room = SMS_LIMIT - msg.length - 1; // leading newline
+    const clip = notes.length > room ? notes.slice(0, room - 3).trimEnd() + "..." : notes;
+    msg += "\n" + clip;
+  }
+  return msg.length > SMS_LIMIT ? msg.slice(0, SMS_LIMIT).trim() : msg;
 }
 
 /* Fire-and-forget SMS. Never blocks or fails the lead — email is the source of
