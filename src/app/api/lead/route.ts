@@ -203,6 +203,49 @@ function buildEmail(d: LeadPayload) {
   return { subject, html, text };
 }
 
+/* Compact lead SMS — same field order as the email, trimmed to stay cheap.
+   Each Brevo SMS credit ~= 160 GSM-7 chars, so notes are capped hard. */
+function buildSms(d: LeadPayload): string {
+  const name = String(d.name ?? "").trim() || "New lead";
+  const phone = String(d.phone ?? "").trim();
+  const email = String(d.email ?? "").trim();
+  const property = String(d.property ?? "").trim();
+  const services = Array.isArray(d.services) ? d.services.join(", ") : String(d.services ?? "").trim();
+  const notes = String(d.notes ?? "").trim();
+  const source = String(d.source ?? "").trim() || "Website";
+
+  const lines = [`New OTM lead (${source})`, name];
+  if (phone) lines.push(phone);
+  if (email) lines.push(email);
+  if (property) lines.push(property + (services ? `: ${services}` : ""));
+  else if (services) lines.push(services);
+  if (notes) lines.push(`Notes: ${notes.length > 90 ? notes.slice(0, 87) + "…" : notes}`);
+  return lines.join("\n");
+}
+
+/* Fire-and-forget SMS. Never blocks or fails the lead — email is the source of
+   truth; SMS is a bonus ping. No-op unless a recipient is configured. */
+async function sendLeadSms(apiKey: string, content: string) {
+  const toRaw = process.env.LEAD_SMS_TO;
+  if (!toRaw) return;
+  // Brevo wants E.164 digits, no "+". Assume US if 10 digits.
+  let digits = toRaw.replace(/[^\d]/g, "");
+  if (digits.length === 10) digits = "1" + digits;
+  const sender = (process.env.LEAD_SMS_SENDER || "OTM").slice(0, 11);
+  try {
+    const res = await fetch("https://api.brevo.com/v3/transactionalSMS/sms", {
+      method: "POST",
+      headers: { "api-key": apiKey, "content-type": "application/json", accept: "application/json" },
+      body: JSON.stringify({ type: "transactional", sender, recipient: digits, content }),
+    });
+    const detail = await res.text();
+    if (!res.ok) console.error("[lead] brevo SMS error", res.status, detail);
+    else console.log("[lead] SMS sent", res.status, `to=${digits}`, detail);
+  } catch (err) {
+    console.error("[lead] SMS network error", err);
+  }
+}
+
 export async function POST(req: Request) {
   if (!(req.headers.get("content-type") || "").includes("application/json")) {
     return NextResponse.json({ ok: false, error: "bad_request" }, { status: 400 });
@@ -289,6 +332,9 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: false, error: "send_failed" }, { status: 502 });
     }
     console.log("[lead] sent via brevo", res.status, `from=${fromEmail} to=${toEmail}`, detail);
+    // bonus SMS ping — awaited so it runs before the function freezes, but its
+    // own try/catch means it can never turn a delivered lead into an error
+    await sendLeadSms(apiKey, buildSms(d));
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("[lead] network error", err);
