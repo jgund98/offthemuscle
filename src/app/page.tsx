@@ -76,16 +76,17 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
             <Reveal className="relative">
-              <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-hydro/15 sm:aspect-[16/12]">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-hydro/15">
                 <Image
-                  src="/images/crew-roof.jpg"
-                  alt="Off The Muscle technician soft washing a South Florida tile roof under palms"
+                  src="/images/jason-family.jpg"
+                  alt="Jason, owner of Off The Muscle, with his son and dog by the water in West Palm Beach"
                   fill
                   className="object-cover"
                   sizes="(min-width: 1024px) 45vw, 100vw"
+                  priority
                 />
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-abyss/85 to-transparent p-5">
-                  <p className="display text-lg text-foam">On the roof, on the job</p>
+                  <p className="display text-lg text-foam">The family behind the work</p>
                   <p className="label mt-1 text-spray">Family owned · South Florida</p>
                 </div>
               </div>

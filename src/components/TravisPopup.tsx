@@ -70,10 +70,10 @@ export default function LeadPopup() {
             {/* Jason & Jay — the family in family owned, cut on the wand angle */}
             <div className="relative h-60 sm:h-64" style={{ clipPath: "polygon(0 0, 100% 0, 100% 78%, 0 100%)" }}>
               <Image
-                src="/images/jason-son.jpg"
-                alt="Jason, owner of Off The Muscle, with his son in matching company shirts"
+                src="/images/jason-family.jpg"
+                alt="Jason, owner of Off The Muscle, with his son and dog by the water"
                 fill
-                className="object-cover object-[50%_22%]"
+                className="object-cover object-[50%_38%]"
                 sizes="416px"
               />
               {/* just enough feather for the close button — the photo stays clean */}
