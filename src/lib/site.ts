@@ -239,5 +239,5 @@ export const APART = [
   { title: "Owner on every job", body: "You'll find Jason on nearly every job, or directly overseeing the crew, so quality and consistency never slip." },
   { title: "No job too big or small", body: "From a single driveway to full commercial cleanups, we take on the jobs others avoid. No grime is too stubborn." },
   { title: "Professional results", body: "Curb appeal that protects your property and turns heads — it's more than a slogan, it's the mindset." },
-  { title: "We love giving back", body: "We donate 5% of our profits to support the elephants at the Cheyenne Mountain Zoo — doing our part beyond the driveway." },
+  { title: "10% off for first responders", body: "It's our way of saying thank you: police, fire, EMS, and active military save 10% on any service with valid credentials." },
 ];
