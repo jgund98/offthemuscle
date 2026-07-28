@@ -19,7 +19,7 @@ export const SITE = {
      actually serving this site or link previews come back imageless.
      Flip NEXT_PUBLIC_SITE_URL (or this default) to https://offthemuscle.net
      the day that domain is pointed here. */
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://otm.epicdevsolutions.com",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://offthemuscle.net",
   founded: "2021",
   address: {
     street: "3200 Summit Blvd",
