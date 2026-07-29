@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 };
 
 export default function WorkPage() {
-  const [driveway, fence, brick] = TRANSFORMATIONS;
+  const [driveway, fence] = TRANSFORMATIONS;
   return (
     <>
       <PageHero
@@ -76,32 +76,6 @@ export default function WorkPage() {
           <Reveal delay={0.15}>
             <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-slate">
               {fence.blurb}{" "}
-              <a href="/contact" className="font-bold text-brand underline underline-offset-4 hover:text-hydro">Get this result at your place →</a>
-            </p>
-          </Reveal>
-
-          <Reveal>
-            <div className="mb-8 mt-20 flex flex-wrap items-end justify-between gap-4">
-              <h2 className="display text-3xl md:text-4xl">
-                Brick patio, <span className="text-hydro">colors revived</span>
-              </h2>
-              <p className="label text-slate">Real job · documented</p>
-            </div>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <div className="mx-auto max-w-xl">
-              <BeforeAfter
-                before={brick.before}
-                after={brick.after}
-                altBefore="Dull, grimy brick and stone patio before cleaning"
-                altAfter="The same brick patio revived to its original terracotta color"
-                aspect="aspect-[3/4] sm:aspect-[4/5]"
-              />
-            </div>
-          </Reveal>
-          <Reveal delay={0.15}>
-            <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-slate">
-              {brick.blurb}{" "}
               <a href="/contact" className="font-bold text-brand underline underline-offset-4 hover:text-hydro">Get this result at your place →</a>
             </p>
           </Reveal>

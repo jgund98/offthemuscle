@@ -212,14 +212,6 @@ export const TRANSFORMATIONS = [
     tag: "Soft Wash",
     blurb: "Years of grey algae and mildew lifted off pressure-treated pine — back to warm, raw timber.",
   },
-  {
-    id: "brick",
-    before: "/images/jba-brick-before.jpg",
-    after: "/images/jba-brick-after.jpg",
-    label: "Brick patio revival",
-    tag: "Surface Cleaning",
-    blurb: "Decades of grime pulled out of the brick and stone — the original terracotta color, back for good.",
-  },
 ];
 
 /* Real job photography for the recent-work gallery (9 = fills a 3-col grid). */
