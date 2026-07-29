@@ -194,44 +194,45 @@ export const TRUST = [
 ];
 
 /* Real before/after pairs from the field — the wash showcase. */
+/* Real before/after jobs shot by Jason — matched-framing pairs, drag to reveal. */
 export const TRANSFORMATIONS = [
   {
-    id: "roof",
-    before: "/images/ba-roof-before.jpg",
-    after: "/images/ba-roof-after.jpg",
-    label: "Tile roof soft wash",
-    tag: "Roof Cleaning",
-    blurb: "Years of black algae lifted off barrel tile — back to true terracotta, no cracked tiles.",
-  },
-  {
     id: "driveway",
-    before: "/images/ba-driveway-before.jpg",
-    after: "/images/ba-driveway-after.jpg",
+    before: "/images/jba-driveway-before.jpg",
+    after: "/images/jba-driveway-after.jpg",
     label: "Driveway surface clean",
     tag: "Surface Cleaning",
-    blurb: "A stained, weathered driveway brought back to one even, like-new color.",
+    blurb: "A stained, weathered driveway brought back to one even, like-new color — no etching, no wand stripes.",
   },
   {
-    id: "patio",
-    before: "/images/ba-patio-before.jpg",
-    after: "/images/ba-patio-after.jpg",
-    label: "Back patio restoration",
+    id: "fence",
+    before: "/images/jba-fence-before.jpg",
+    after: "/images/jba-fence-after.jpg",
+    label: "Wood fence restoration",
+    tag: "Soft Wash",
+    blurb: "Years of grey algae and mildew lifted off pressure-treated pine — back to warm, raw timber.",
+  },
+  {
+    id: "brick",
+    before: "/images/jba-brick-before.jpg",
+    after: "/images/jba-brick-after.jpg",
+    label: "Brick patio revival",
     tag: "Surface Cleaning",
-    blurb: "Grime and mildew stripped from the patio — an outdoor space you'd actually use again.",
+    blurb: "Decades of grime pulled out of the brick and stone — the original terracotta color, back for good.",
   },
 ];
 
 /* Real job photography for the recent-work gallery (9 = fills a 3-col grid). */
 export const GALLERY = [
-  { img: "/images/ba-roof-after.jpg", label: "Tile roof, transformed", tag: "Roof" },
-  { img: "/images/svc-commercial.jpg", label: "Commercial steps & entry", tag: "Commercial" },
+  { img: "/images/jba-driveway-after.jpg", label: "Driveway, restored", tag: "Surface" },
+  { img: "/images/jba-fence-after.jpg", label: "Wood fence, brought back", tag: "Residential" },
+  { img: "/images/jba-brick-after.jpg", label: "Brick patio revived", tag: "Surface" },
+  { img: "/images/jgal-patio-after.jpg", label: "Back patio transformed", tag: "Surface" },
+  { img: "/images/jba-awning-after.jpg", label: "Awning & facade wash", tag: "Residential" },
+  { img: "/images/jgal-white-fence.jpg", label: "Block wall, cleaned", tag: "Residential" },
+  { img: "/images/jgal-wall-fence.jpg", label: "Long wall wash", tag: "Residential" },
+  { img: "/images/jgal-split-fence.jpg", label: "Front fence line", tag: "Residential" },
   { img: "/images/crew-roof.jpg", label: "Rooftop soft wash", tag: "Residential" },
-  { img: "/images/ba-driveway-after.jpg", label: "Driveway, restored", tag: "Surface" },
-  { img: "/images/jason-surface.jpg", label: "Surface cleaning a commercial pad", tag: "Commercial" },
-  { img: "/images/roof-halfclean.jpg", label: "Half-clean roof reveal", tag: "Roof" },
-  { img: "/images/svc-surface.jpg", label: "Paver surface clean", tag: "Surface" },
-  { img: "/images/svc-residential.jpg", label: "Home exterior refresh", tag: "Residential" },
-  { img: "/images/ba-patio-after.jpg", label: "Patio brought back", tag: "Surface" },
 ];
 
 /* What sets us apart — carried over from Off The Muscle's own site. */

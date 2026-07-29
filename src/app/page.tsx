@@ -17,7 +17,7 @@ import SplashMark from "@/components/SplashMark";
 import { TRANSFORMATIONS, SITE } from "@/lib/site";
 
 export default function Home() {
-  const roof = TRANSFORMATIONS[0];
+  const proof = TRANSFORMATIONS[0];
   return (
     <>
       <Hero />
@@ -43,9 +43,10 @@ export default function Home() {
               </Reveal>
               <Reveal delay={0.16}>
                 <p className="mt-6 max-w-md text-base leading-relaxed text-slate">
-                  Years of black algae, or one soft wash. Drag the slider and watch a
-                  South Florida tile roof come back to its true color — no cracked
-                  tiles, no pressure damage, just a clean you can see from the street.
+                  A real South Florida driveway, one pass apart. Drag the slider and
+                  watch years of stains and grime disappear into one even, like-new
+                  color — no etching, no wand marks, just a clean you can see from the
+                  street.
                 </p>
               </Reveal>
               <Reveal delay={0.24}>
@@ -56,11 +57,11 @@ export default function Home() {
             </div>
             <Reveal delay={0.12}>
               <BeforeAfter
-                before={roof.before}
-                after={roof.after}
-                altBefore="South Florida tile roof covered in black algae before cleaning"
-                altAfter="The same tile roof soft washed back to clean terracotta"
-                aspect="aspect-[4/3]"
+                before={proof.before}
+                after={proof.after}
+                altBefore="Stained, weathered South Florida driveway before pressure washing"
+                altAfter="The same driveway restored to an even, like-new finish"
+                aspect="aspect-[4/5] sm:aspect-[3/4]"
               />
             </Reveal>
           </div>

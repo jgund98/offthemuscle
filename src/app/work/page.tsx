@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 };
 
 export default function WorkPage() {
-  const [roof, driveway, patio] = TRANSFORMATIONS;
+  const [driveway, fence, brick] = TRANSFORMATIONS;
   return (
     <>
       <PageHero
@@ -31,46 +31,24 @@ export default function WorkPage() {
           <Reveal>
             <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
               <h2 className="display text-3xl md:text-4xl">
-                Tile roof, <span className="text-hydro">years of algae gone</span>
+                Driveway, <span className="text-hydro">back to one color</span>
               </h2>
               <p className="label text-slate">Drag the wand ↔</p>
             </div>
           </Reveal>
           <Reveal delay={0.1}>
-            <BeforeAfter
-              before={roof.before}
-              after={roof.after}
-              altBefore="South Florida tile roof covered in black algae before cleaning"
-              altAfter="The same tile roof soft washed back to clean terracotta"
-              aspect="aspect-[4/5] sm:aspect-[16/10]"
-            />
-          </Reveal>
-          <Reveal delay={0.15}>
-            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate">
-              {roof.blurb}{" "}
-              <a href="/contact" className="font-bold text-brand underline underline-offset-4 hover:text-hydro">Get this result at your place →</a>
-            </p>
-          </Reveal>
-
-          <Reveal>
-            <div className="mb-8 mt-20 flex flex-wrap items-end justify-between gap-4">
-              <h2 className="display text-3xl md:text-4xl">
-                Driveway, <span className="text-hydro">back to one color</span>
-              </h2>
-              <p className="label text-slate">Real job · documented</p>
+            <div className="mx-auto max-w-xl">
+              <BeforeAfter
+                before={driveway.before}
+                after={driveway.after}
+                altBefore="Stained, weathered South Florida driveway before pressure washing"
+                altAfter="The same driveway restored to an even, like-new finish"
+                aspect="aspect-[3/4] sm:aspect-[4/5]"
+              />
             </div>
           </Reveal>
-          <Reveal delay={0.1}>
-            <BeforeAfter
-              before={driveway.before}
-              after={driveway.after}
-              altBefore="Stained, weathered driveway before pressure washing"
-              altAfter="The same driveway restored to an even, like-new finish"
-              aspect="aspect-[4/5] sm:aspect-[16/10]"
-            />
-          </Reveal>
           <Reveal delay={0.15}>
-            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate">
+            <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-slate">
               {driveway.blurb}{" "}
               <a href="/contact" className="font-bold text-brand underline underline-offset-4 hover:text-hydro">Get this result at your place →</a>
             </p>
@@ -79,23 +57,51 @@ export default function WorkPage() {
           <Reveal>
             <div className="mb-8 mt-20 flex flex-wrap items-end justify-between gap-4">
               <h2 className="display text-3xl md:text-4xl">
-                Back patio, <span className="text-hydro">reclaimed</span>
+                Wood fence, <span className="text-hydro">back to raw timber</span>
               </h2>
               <p className="label text-slate">Real job · documented</p>
             </div>
           </Reveal>
           <Reveal delay={0.1}>
-            <BeforeAfter
-              before={patio.before}
-              after={patio.after}
-              altBefore="Grimy, mildew-stained back patio before cleaning"
-              altAfter="The same patio cleaned and restored"
-              aspect="aspect-[4/5] sm:aspect-[16/10]"
-            />
+            <div className="mx-auto max-w-xl">
+              <BeforeAfter
+                before={fence.before}
+                after={fence.after}
+                altBefore="Grey, algae-streaked wood fence before soft washing"
+                altAfter="The same fence washed back to clean, warm pine"
+                aspect="aspect-[3/4] sm:aspect-[4/5]"
+              />
+            </div>
           </Reveal>
           <Reveal delay={0.15}>
-            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate">
-              {patio.blurb}{" "}
+            <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-slate">
+              {fence.blurb}{" "}
+              <a href="/contact" className="font-bold text-brand underline underline-offset-4 hover:text-hydro">Get this result at your place →</a>
+            </p>
+          </Reveal>
+
+          <Reveal>
+            <div className="mb-8 mt-20 flex flex-wrap items-end justify-between gap-4">
+              <h2 className="display text-3xl md:text-4xl">
+                Brick patio, <span className="text-hydro">colors revived</span>
+              </h2>
+              <p className="label text-slate">Real job · documented</p>
+            </div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <div className="mx-auto max-w-xl">
+              <BeforeAfter
+                before={brick.before}
+                after={brick.after}
+                altBefore="Dull, grimy brick and stone patio before cleaning"
+                altAfter="The same brick patio revived to its original terracotta color"
+                aspect="aspect-[3/4] sm:aspect-[4/5]"
+              />
+            </div>
+          </Reveal>
+          <Reveal delay={0.15}>
+            <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-slate">
+              {brick.blurb}{" "}
               <a href="/contact" className="font-bold text-brand underline underline-offset-4 hover:text-hydro">Get this result at your place →</a>
             </p>
           </Reveal>
