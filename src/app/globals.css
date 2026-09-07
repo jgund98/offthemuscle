@@ -51,18 +51,72 @@ body {
   font-family: var(--font-caveat), cursive;
 }
 
-/* PowerWash's grimy under-layer: same glyphs as the clean layer, painted from
-   the data-text attribute so crawlers see the headline text only once. */
-.wash-dirty::before {
-  content: attr(data-text);
+/* ------- first-paint entrance animations -------
+   Everything above the fold animates with CSS, not framer-motion, so the hero
+   text is painted (and counts as Largest Contentful Paint) at first paint
+   instead of after JavaScript hydrates. Delay via --d. */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+.rise {
+  animation: rise-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--d, 0s);
+}
+@keyframes surface-up {
+  from { transform: translateY(110%); }
+  to { transform: none; }
+}
+.surface-up {
+  display: inline-block;
+  animation: surface-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--d, 0s);
+}
+@keyframes rise-solid {
+  from { transform: translateY(22px); }
+  to { transform: none; }
+}
+.rise-solid {
+  display: inline-block;
+  animation: rise-solid 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--d, 0s);
+}
+
+/* PowerWash headline. The words are plain inline spans in one block so Chrome
+   measures them as one Largest Contentful Paint candidate at first paint
+   (a positioned inline would split the measurement per line). The grime is a
+   generated-text overlay per line band (.wash-grime, data-text, empty alt so
+   assistive tech never hears it twice) that the wand wipes away. */
+.wash-text {
+  animation: wash-glow var(--dur, 1s) cubic-bezier(0.65, 0, 0.35, 1) both;
+  animation-delay: var(--d, 0.3s);
+}
+.wash-grime {
   position: absolute;
-  inset: 0;
-  color: transparent;
-  background-image: linear-gradient(160deg, #4a3f2e 0%, #5e5442 30%, #3c332a 55%, #57503c 80%, #463d2c 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  filter: saturate(0.8);
-  opacity: 0.55;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  animation: wash-wipe var(--dur, 1s) cubic-bezier(0.65, 0, 0.35, 1) both;
+  animation-delay: var(--d, 0.3s);
+}
+.wash-grime::before {
+  content: attr(data-text) / "";
+  color: #333a36;
+  -webkit-text-stroke: 0.6px #333a36;
+  text-shadow: none;
+}
+@keyframes wash-wipe {
+  from { clip-path: inset(-20% 0 -20% 0); }
+  to { clip-path: inset(-20% 0 -20% 100%); }
+}
+@keyframes wash-glow {
+  from { text-shadow: 0 0 0 rgba(124, 208, 247, 0); }
+  to { text-shadow: 0 0 32px rgba(124, 208, 247, 0.18); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rise, .surface-up, .rise-solid, .wash-text { animation: none; }
+  .wash-grime { display: none; }
 }
 
 .label {

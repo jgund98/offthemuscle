@@ -1,6 +1,16 @@
 import Image from "next/image";
-import { Reveal, Surface } from "@/components/Reveal";
 import SplashMark from "@/components/SplashMark";
+
+/* Inner-page hero. Entrance animations are pure CSS (.rise / .surface-up) so
+   the H1 and the display line paint immediately instead of waiting on
+   hydration; this is what Largest Contentful Paint measures. */
+function Surface({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+  return (
+    <span className="rise-solid align-bottom" style={{ ["--d" as string]: `${delay}s` }}>
+      {children}
+    </span>
+  );
+}
 
 export default function PageHero({
   kicker,
@@ -31,12 +41,10 @@ export default function PageHero({
         {/* The kicker is the page's H1: it names the service and the city
             in plain words. The big display line below is the brand moment
             and stays a paragraph, exactly like the home hero. */}
-        <Reveal>
-          <h1 className="label mb-5 flex items-center gap-3 text-hydro">
-            <SplashMark className="h-3.5" />
-            {kicker}
-          </h1>
-        </Reveal>
+        <h1 className="rise label mb-5 flex items-center gap-3 text-hydro">
+          <SplashMark className="h-3.5" />
+          {kicker}
+        </h1>
         <p className="display max-w-4xl text-5xl md:text-7xl">
           <Surface>{title}</Surface>
           {accent && (
@@ -49,9 +57,9 @@ export default function PageHero({
           )}
         </p>
         {body && (
-          <Reveal delay={0.2}>
-            <p className={`mt-7 ${bodyMax} text-lg leading-relaxed text-mist`}>{body}</p>
-          </Reveal>
+          <p className={`rise mt-7 ${bodyMax} text-lg leading-relaxed text-mist`} style={{ ["--d" as string]: "0.2s" }}>
+            {body}
+          </p>
         )}
       </div>
     </section>

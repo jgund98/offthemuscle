@@ -4,9 +4,8 @@ import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import MobileDock from "@/components/MobileDock";
-import TravisPopup from "@/components/TravisPopup";
-import LiveChat from "@/components/LiveChat";
-import DropTop from "@/components/DropTop";
+import DeferredWidgets from "@/components/DeferredWidgets";
+import Analytics from "@/components/Analytics";
 import { SITE, SERVICES, CITIES, COUNTIES, REVIEWS } from "@/lib/site";
 
 const archivo = Archivo({
@@ -87,9 +86,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main>{children}</main>
         <Footer />
         <MobileDock />
-        <TravisPopup />
-        <LiveChat />
-        <DropTop />
+        <DeferredWidgets />
+        <Analytics />
         {/* Local-business graph: NAP, geo, hours, service area, the real
             Google rating and reviews, and the site node. Google does not show
             star snippets for a business's own reviews, but the markup is

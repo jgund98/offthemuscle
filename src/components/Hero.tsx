@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import PowerWash from "@/components/PowerWash";
+import WashHeadline from "@/components/PowerWash";
 import JetButton from "@/components/JetButton";
 import SplashMark from "@/components/SplashMark";
 import { SITE, CITIES, HERO_MEDIA } from "@/lib/site";
@@ -27,7 +27,7 @@ export default function Hero({ media = HERO_MEDIA }: { media?: typeof HERO_MEDIA
     <section ref={ref} className="relative flex min-h-[100svh] flex-col overflow-hidden bg-abyss">
       {/* ---------- mobile backdrop: the pool-deck footage under water glass ---------- */}
       <div className="absolute inset-0 md:hidden" aria-hidden="true">
-        <Image src={media.poster} alt="Off The Muscle surface cleaner washing a South Florida pool deck" fill priority className="object-cover" style={{ objectPosition: media.posMobile }} sizes="100vw" />
+        <Image src={media.poster} alt="Off The Muscle surface cleaner washing a South Florida pool deck" fill loading="eager" fetchPriority="low" className="object-cover" style={{ objectPosition: media.posMobile }} sizes="100vw" />
         {desktop === false && (
           <video
             autoPlay
@@ -50,7 +50,7 @@ export default function Hero({ media = HERO_MEDIA }: { media?: typeof HERO_MEDIA
       <div className="absolute inset-y-0 right-0 hidden w-[57%] md:block" aria-hidden="true">
         <div className="absolute inset-y-0 -right-40 left-0 origin-top-left skew-x-[7deg] overflow-hidden">
           <div className="absolute -inset-x-24 inset-y-0 origin-top-left -skew-x-[7deg]">
-            <Image src={media.poster} alt="Off The Muscle surface cleaner washing a South Florida pool deck" fill priority className="object-cover" style={{ objectPosition: media.posDesktop }} sizes="60vw" />
+            <Image src={media.poster} alt="Off The Muscle surface cleaner washing a South Florida pool deck" fill loading="eager" fetchPriority="low" className="object-cover" style={{ objectPosition: media.posDesktop }} sizes="60vw" />
             {desktop === true && (
               <video
                 autoPlay
@@ -121,41 +121,29 @@ export default function Hero({ media = HERO_MEDIA }: { media?: typeof HERO_MEDIA
               (service + city) while the big display line below stays the
               brand moment. Visually identical to before, semantically the
               H1 now says what the page is about. */}
-          <motion.h1
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.25 }}
-            className="label mb-4 flex items-start gap-3 text-spray md:mb-6"
-          >
+          <h1 className="rise label mb-4 flex items-start gap-3 text-spray md:mb-6" style={{ ["--d" as string]: "0.25s" }}>
             <SplashMark className="mt-0.5 h-3.5 shrink-0" />
             <span>
               <span className="whitespace-nowrap">Pressure Washing</span>{" "}
               <span className="whitespace-nowrap">West Palm Beach</span>{" "}
               <span className="whitespace-nowrap">&amp; Palm Beach County</span>
             </span>
-          </motion.h1>
+          </h1>
 
-          <p className="display text-[clamp(2.6rem,10vw,4rem)] md:text-[clamp(2.8rem,5.5vw,5.5rem)]">
-            <PowerWash text="WE PUT THE" delay={0.5} duration={1.0} className="block" />
-            <PowerWash text="MUSCLE" delay={1.1} duration={0.95} cleanClassName="text-hydro" className="block" />
-            <PowerWash text="IN CLEAN." delay={1.7} duration={1.0} className="block" />
+          <WashHeadline
+            className="display text-[clamp(2.6rem,10vw,4rem)] md:text-[clamp(2.8rem,5.5vw,5.5rem)]"
+            lines={[
+              { text: "WE PUT THE", delay: 0.5, duration: 1.0 },
+              { text: "MUSCLE", delay: 1.1, duration: 0.95, className: "text-hydro" },
+              { text: "IN CLEAN.", delay: 1.7, duration: 1.0 },
+            ]}
+          />
+
+          <p className="rise mt-5 max-w-md text-sm leading-relaxed text-mist sm:text-base md:mt-7 md:text-lg" style={{ ["--d" as string]: "0.55s" }}>
+            Breathing life back into South Florida properties — homes, driveways, roofs, and storefronts, one at a time.
           </p>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.55 }}
-            className="mt-5 max-w-md text-sm leading-relaxed text-mist sm:text-base md:mt-7 md:text-lg"
-          >
-            Breathing life back into South Florida properties — homes, driveways, roofs, and storefronts, one at a time.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.7 }}
-            className="mt-7 flex flex-col items-stretch gap-3 md:mt-9 md:flex-row md:flex-wrap md:items-center md:gap-5"
-          >
+          <div className="rise mt-7 flex flex-col items-stretch gap-3 md:mt-9 md:flex-row md:flex-wrap md:items-center md:gap-5" style={{ ["--d" as string]: "0.7s" }}>
             <JetButton href="/contact">Get My Free Quote</JetButton>
             {/* full button on mobile, quiet link on desktop */}
             <a
@@ -169,29 +157,21 @@ export default function Hero({ media = HERO_MEDIA }: { media?: typeof HERO_MEDIA
                 </svg>
               </span>
             </a>
-          </motion.div>
+          </div>
 
           {/* direct line — some leads only ever call */}
-          <motion.a
-            href={SITE.phoneHref}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.78 }}
-            className="group/tel mt-6 flex w-fit items-baseline gap-2.5 md:mt-7"
-          >
+          <a href={SITE.phoneHref} className="rise group/tel mt-6 flex w-fit items-baseline gap-2.5 md:mt-7" style={{ ["--d" as string]: "0.78s" }}>
             <span className="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-mist">Or call / text</span>
             <span className="display text-xl text-foam transition-colors group-hover/tel:text-hydro md:text-2xl">{SITE.phone}</span>
-          </motion.a>
+          </a>
 
           {/* real proof beats badges: the actual Google rating */}
-          <motion.a
+          <a
             href={SITE.gmb}
             target="_blank"
             rel="noopener noreferrer"
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.85 }}
-            className="mt-4 flex w-fit items-center gap-3 rounded-full border border-foam/15 bg-abyss/40 py-2.5 pl-4 pr-5 backdrop-blur-sm transition-colors hover:border-hydro/50"
+            className="rise mt-4 flex w-fit items-center gap-3 rounded-full border border-foam/15 bg-abyss/40 py-2.5 pl-4 pr-5 backdrop-blur-sm transition-colors hover:border-hydro/50"
+            style={{ ["--d" as string]: "0.85s" }}
           >
             <span className="flex gap-0.5" aria-hidden="true">
               {[...Array(5)].map((_, i) => (
@@ -204,16 +184,14 @@ export default function Hero({ media = HERO_MEDIA }: { media?: typeof HERO_MEDIA
               {SITE.rating.value} on Google
               <span className="text-mist-dim"> · {SITE.rating.count} reviews</span>
             </span>
-          </motion.a>
+          </a>
         </div>
       </div>
 
       {/* the whole service area drifts by — you'll spot your town before you scroll */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.9 }}
-        className="relative z-10 border-t border-foam/10 bg-abyss/60 backdrop-blur-md"
+      <div
+        className="rise relative z-10 border-t border-foam/10 bg-abyss/60 backdrop-blur-md"
+        style={{ ["--d" as string]: "0.9s" }}
         role="region"
         aria-label={`Proudly serving ${CITIES.join(", ")} and beyond`}
       >
@@ -237,7 +215,7 @@ export default function Hero({ media = HERO_MEDIA }: { media?: typeof HERO_MEDIA
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }
