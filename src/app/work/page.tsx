@@ -6,11 +6,12 @@ import CtaBand from "@/components/CtaBand";
 import { Reveal } from "@/components/Reveal";
 import SplashMark from "@/components/SplashMark";
 import { TRANSFORMATIONS, GALLERY } from "@/lib/site";
+import { breadcrumbList } from "@/lib/schema";
 
 export const metadata: Metadata = {
-  title: "Before & After — Pressure Cleaning Results in South Florida",
+  title: "Before & After Pressure Washing Photos",
   description:
-    "Real before-and-after pressure cleaning results from Off The Muscle: tile roofs, driveways, patios, and storefronts across Palm Beach County and South Florida.",
+    "Real before and after pressure washing results from Off The Muscle: driveways, fences, patios, and roofs across West Palm Beach and Palm Beach County.",
   alternates: { canonical: "/work" },
 };
 
@@ -18,8 +19,9 @@ export default function WorkPage() {
   const [driveway, fence] = TRANSFORMATIONS;
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbList([{ name: "Our Work", path: "/work" }])) }} />
       <PageHero
-        kicker="Our Work"
+        kicker="Our Work Across Palm Beach County"
         title="The proof is in"
         accent="the after."
         body="Every job gets documented before and after — the transformation is the product. A few recent favorites from across South Florida."
@@ -50,7 +52,7 @@ export default function WorkPage() {
           <Reveal delay={0.15}>
             <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-slate">
               {driveway.blurb}{" "}
-              <a href="/contact" className="font-bold text-brand underline underline-offset-4 hover:text-hydro">Get this result at your place →</a>
+              <a href="/contact" className="font-bold text-brand underline underline-offset-4 hover:text-hydro">Quote my driveway →</a>
             </p>
           </Reveal>
 
@@ -76,7 +78,7 @@ export default function WorkPage() {
           <Reveal delay={0.15}>
             <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-slate">
               {fence.blurb}{" "}
-              <a href="/contact" className="font-bold text-brand underline underline-offset-4 hover:text-hydro">Get this result at your place →</a>
+              <a href="/contact" className="font-bold text-brand underline underline-offset-4 hover:text-hydro">Quote my fence or patio →</a>
             </p>
           </Reveal>
         </div>
@@ -97,7 +99,7 @@ export default function WorkPage() {
                 <figure className="group relative aspect-[4/5] overflow-hidden rounded-2xl border border-hydro/10">
                   <Image
                     src={shot.img}
-                    alt={shot.label}
+                    alt={`${shot.label}: pressure washing by Off The Muscle in Palm Beach County`}
                     fill
                     className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
                     sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"

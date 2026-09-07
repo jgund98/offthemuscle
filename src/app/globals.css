@@ -51,6 +51,20 @@ body {
   font-family: var(--font-caveat), cursive;
 }
 
+/* PowerWash's grimy under-layer: same glyphs as the clean layer, painted from
+   the data-text attribute so crawlers see the headline text only once. */
+.wash-dirty::before {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  color: transparent;
+  background-image: linear-gradient(160deg, #4a3f2e 0%, #5e5442 30%, #3c332a 55%, #57503c 80%, #463d2c 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  filter: saturate(0.8);
+  opacity: 0.55;
+}
+
 .label {
   font-family: var(--font-display);
   font-weight: 700;

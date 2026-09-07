@@ -27,7 +27,7 @@ export default function Hero({ media = HERO_MEDIA }: { media?: typeof HERO_MEDIA
     <section ref={ref} className="relative flex min-h-[100svh] flex-col overflow-hidden bg-abyss">
       {/* ---------- mobile backdrop: the pool-deck footage under water glass ---------- */}
       <div className="absolute inset-0 md:hidden" aria-hidden="true">
-        <Image src={media.poster} alt="" fill priority className="object-cover" style={{ objectPosition: media.posMobile }} sizes="100vw" />
+        <Image src={media.poster} alt="Off The Muscle surface cleaner washing a South Florida pool deck" fill priority className="object-cover" style={{ objectPosition: media.posMobile }} sizes="100vw" />
         {desktop === false && (
           <video
             autoPlay
@@ -50,7 +50,7 @@ export default function Hero({ media = HERO_MEDIA }: { media?: typeof HERO_MEDIA
       <div className="absolute inset-y-0 right-0 hidden w-[57%] md:block" aria-hidden="true">
         <div className="absolute inset-y-0 -right-40 left-0 origin-top-left skew-x-[7deg] overflow-hidden">
           <div className="absolute -inset-x-24 inset-y-0 origin-top-left -skew-x-[7deg]">
-            <Image src={media.poster} alt="" fill priority className="object-cover" style={{ objectPosition: media.posDesktop }} sizes="60vw" />
+            <Image src={media.poster} alt="Off The Muscle surface cleaner washing a South Florida pool deck" fill priority className="object-cover" style={{ objectPosition: media.posDesktop }} sizes="60vw" />
             {desktop === true && (
               <video
                 autoPlay
@@ -117,8 +117,11 @@ export default function Hero({ media = HERO_MEDIA }: { media?: typeof HERO_MEDIA
       {/* ---------- content ---------- */}
       <div className="relative z-10 mx-auto flex w-full max-w-[90rem] flex-1 flex-col justify-center px-5 pb-14 pt-24 md:px-8 md:pb-14 md:pt-28">
         <div className="md:max-w-[44%]">
-          {/* the nav badge already carries the droplet — the hero leads with type */}
-          <motion.p
+          {/* The small kicker is the page's H1: it carries the search phrase
+              (service + city) while the big display line below stays the
+              brand moment. Visually identical to before, semantically the
+              H1 now says what the page is about. */}
+          <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.25 }}
@@ -126,16 +129,17 @@ export default function Hero({ media = HERO_MEDIA }: { media?: typeof HERO_MEDIA
           >
             <SplashMark className="mt-0.5 h-3.5 shrink-0" />
             <span>
-              <span className="whitespace-nowrap">Residential &amp; Commercial</span>{" "}
-              <span className="whitespace-nowrap">Pressure Washing</span>
+              <span className="whitespace-nowrap">Pressure Washing</span>{" "}
+              <span className="whitespace-nowrap">West Palm Beach</span>{" "}
+              <span className="whitespace-nowrap">&amp; Palm Beach County</span>
             </span>
-          </motion.p>
+          </motion.h1>
 
-          <h1 className="display text-[clamp(2.6rem,10vw,4rem)] md:text-[clamp(2.8rem,5.5vw,5.5rem)]">
+          <p className="display text-[clamp(2.6rem,10vw,4rem)] md:text-[clamp(2.8rem,5.5vw,5.5rem)]">
             <PowerWash text="WE PUT THE" delay={0.5} duration={1.0} className="block" />
             <PowerWash text="MUSCLE" delay={1.1} duration={0.95} cleanClassName="text-hydro" className="block" />
             <PowerWash text="IN CLEAN." delay={1.7} duration={1.0} className="block" />
-          </h1>
+          </p>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}

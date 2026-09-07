@@ -5,11 +5,13 @@ import CtaBand from "@/components/CtaBand";
 import SplashMark from "@/components/SplashMark";
 import { Reveal } from "@/components/Reveal";
 import { TRUST, APART, SITE } from "@/lib/site";
+import { breadcrumbList } from "@/lib/schema";
 
 export const metadata: Metadata = {
-  title: "About Off The Muscle — Jason's Family-Owned Pressure Cleaning in South Florida",
+  title: "About Our Family-Owned Pressure Washing",
   description:
-    "Meet Jason, the owner behind Off The Muscle Pressure Cleaning — a small, family-owned business with one goal: making South Florida look better, one property at a time. Licensed, insured, and proud of the work.",
+    "Meet Jason, owner of Off The Muscle Pressure Cleaning, a family-owned, licensed and insured pressure washing company in West Palm Beach, Florida.",
+  alternates: { canonical: "/about" },
 };
 
 const TIMELINE = [
@@ -38,8 +40,9 @@ const TIMELINE = [
 export default function AboutPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbList([{ name: "About", path: "/about" }])) }} />
       <PageHero
-        kicker="From the owner"
+        kicker="From the owner, West Palm Beach"
         title="Hey there —"
         accent="I'm Jason."
         body="I run Off The Muscle Pressure Cleaning — a small, family-owned business with one goal: making South Florida look better, one property at a time. This isn't an 'About Us' written by a marketing team. It's who's actually showing up at your property."

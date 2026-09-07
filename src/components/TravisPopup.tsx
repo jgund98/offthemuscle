@@ -94,7 +94,7 @@ export default function LeadPopup() {
             <div className="relative px-6 pb-6 pt-4">
               <Image
                 src="/images/otm-mono-dark.svg"
-                alt=""
+                alt="Off The Muscle droplet monogram"
                 width={280}
                 height={280}
                 aria-hidden="true"

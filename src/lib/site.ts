@@ -15,11 +15,10 @@ export const SITE = {
   region: "Palm Beach County, Florida",
   owner: "Jason",
   /* Canonical base for metadata: absolute OG/Twitter image URLs, canonicals,
-     sitemap and JSON-LD all resolve against this, so it MUST be the domain
-     actually serving this site or link previews come back imageless.
-     Flip NEXT_PUBLIC_SITE_URL (or this default) to https://offthemuscle.net
-     the day that domain is pointed here. */
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://offthemuscle.net",
+     sitemap and JSON-LD all resolve against this, so it MUST be the host that
+     actually serves the site. Production serves on www (apex 308s to www), so
+     the default and the Vercel NEXT_PUBLIC_SITE_URL env var are both www. */
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://www.offthemuscle.net",
   founded: "2021",
   address: {
     street: "3200 Summit Blvd",
@@ -57,6 +56,11 @@ export const REVIEWS = [
 export type Service = {
   slug: string;
   name: string;
+  /* <title> before the " | Off The Muscle" template: keep under ~44 chars so
+     the full title stays inside Google's ~580px cutoff. */
+  seoTitle: string;
+  /* meta description, kept under 155 characters */
+  seoDescription: string;
   short: string;
   headline: string;
   intro: string;
@@ -71,6 +75,8 @@ export type Service = {
 export const SERVICES: Service[] = [
   {
     slug: "residential-power-washing",
+    seoTitle: "House Soft Washing West Palm Beach, FL",
+    seoDescription: "Soft wash house washing in West Palm Beach and Palm Beach County. Algae and mildew gone without damaging stucco or paint. Free estimates: 561-698-8537.",
     name: "Residential Power Washing",
     short: "Whole-home soft washing that lifts algae and grime without hurting paint or stucco.",
     headline: "Your home is your biggest investment. First impressions matter.",
@@ -93,6 +99,8 @@ export const SERVICES: Service[] = [
   },
   {
     slug: "driveway-surface-cleaning",
+    seoTitle: "Driveway Cleaning West Palm Beach, FL",
+    seoDescription: "Driveway, paver, and pool deck pressure cleaning in West Palm Beach and Palm Beach County. Even, stripe-free results. Free estimates: 561-698-8537.",
     name: "Driveway & Surface Cleaning",
     short: "Driveways, patios, and pool decks surface-cleaned to an even, like-new finish.",
     headline: "Concrete should be one color. We bring it back.",
@@ -115,6 +123,8 @@ export const SERVICES: Service[] = [
   },
   {
     slug: "roof-cleaning",
+    seoTitle: "Roof Cleaning West Palm Beach, FL",
+    seoDescription: "Soft wash roof cleaning for tile, shingle, and metal roofs in West Palm Beach and Palm Beach County. No cracked tiles. Free estimates: 561-698-8537.",
     name: "Roof Cleaning",
     short: "Soft wash roof cleaning for tile, shingle, and metal — algae gone, tiles unharmed.",
     headline: "Algae eats roofs. We evict it — gently.",
@@ -137,6 +147,8 @@ export const SERVICES: Service[] = [
   },
   {
     slug: "commercial-power-washing",
+    seoTitle: "Commercial Pressure Washing West Palm Beach",
+    seoDescription: "Commercial pressure washing for storefronts, plazas, gas stations, and HOAs across Palm Beach County. Licensed and insured. Free estimates: 561-698-8537.",
     name: "Commercial Power Washing",
     short: "Storefronts, plazas, gas stations, and dumpster pads — your property, spotless.",
     headline: "Your storefront is your first impression. We keep it spotless.",
@@ -233,4 +245,33 @@ export const APART = [
   { title: "No job too big or small", body: "From a single driveway to full commercial cleanups, we take on the jobs others avoid. No grime is too stubborn." },
   { title: "Professional results", body: "Curb appeal that protects your property and turns heads — it's more than a slogan, it's the mindset." },
   { title: "10% off for first responders", body: "It's our way of saying thank you: police, fire, EMS, and active military save 10% on any service with valid credentials." },
+];
+
+/* Home page FAQ: the questions people in Palm Beach County actually search
+   before they call. Rendered visibly AND emitted as FAQPage schema. */
+export const HOME_FAQS = [
+  {
+    q: "How much does pressure washing cost in West Palm Beach?",
+    a: "Pricing depends on the surface, its size, and how much buildup there is. A typical driveway or house wash in Palm Beach County is quoted from a photo and address, and most estimates go out the same day. There are no trip fees and no surprise add-ons.",
+  },
+  {
+    q: "Do you serve all of Palm Beach County?",
+    a: "Yes. We are based in West Palm Beach and work daily across Palm Beach County, including Palm Beach Gardens, Jupiter, Wellington, Royal Palm Beach, Lake Worth, Boynton Beach, Delray Beach, and Boca Raton. We also roll into Northern Broward and Southern Martin counties.",
+  },
+  {
+    q: "What is the difference between soft washing and pressure washing?",
+    a: "Pressure washing uses high PSI to blast dirt off hard surfaces like concrete and pavers. Soft washing uses low pressure and a cleaning solution to kill algae and mildew on houses, roofs, and screens without damaging paint, stucco, or tile. We use whichever the surface calls for.",
+  },
+  {
+    q: "How often should a South Florida home be pressure washed?",
+    a: "Most Palm Beach County homes need a wash every 12 to 18 months. Humidity, shade, and irrigation make algae grow faster here than almost anywhere in the country, so if you can see green or black on the walls or driveway, it is time.",
+  },
+  {
+    q: "Can you help with an HOA violation notice?",
+    a: "Absolutely. HOA cleaning notices for roofs, driveways, and sidewalks are one of the most common calls we get in Palm Beach County. Send us a photo of the notice and we will quote the exact items listed and get you back in compliance fast.",
+  },
+  {
+    q: "Are you licensed and insured?",
+    a: "Yes. Off The Muscle Pressure Cleaning is fully licensed and insured, and we are glad to send our certificate of insurance before we ever start a job.",
+  },
 ];

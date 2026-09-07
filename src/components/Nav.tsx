@@ -79,7 +79,7 @@ export default function Nav() {
           <span className={`relative z-10 -mb-2 transition-all duration-500 ${scrolled ? "md:-mb-1" : "md:-mb-3"}`}>
             <Image
               src="/images/otm-script-white.svg"
-              alt="Off The Muscle"
+              alt="Off The Muscle Pressure Cleaning logo"
               width={220}
               height={220}
               priority
@@ -198,7 +198,7 @@ export default function Nav() {
           >
             <Image
               src="/images/otm-mono-white.svg"
-              alt=""
+              alt="Off The Muscle droplet monogram"
               width={400}
               height={400}
               aria-hidden="true"

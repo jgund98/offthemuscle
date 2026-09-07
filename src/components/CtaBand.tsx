@@ -34,7 +34,7 @@ export default function CtaBand() {
       {/* real splash, ghosted behind the ask */}
       <Image
         src="/images/otm-mono-white.svg"
-        alt=""
+        alt="Off The Muscle droplet monogram"
         width={640}
         height={640}
         aria-hidden="true"

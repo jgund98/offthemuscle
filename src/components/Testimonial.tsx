@@ -9,7 +9,7 @@ export default function Testimonial() {
     <section className="relative overflow-hidden bg-foam py-24 text-abyss md:py-32">
       <Image
         src="/images/otm-mono-dark.svg"
-        alt=""
+        alt="Off The Muscle droplet monogram"
         width={560}
         height={560}
         aria-hidden="true"
@@ -17,7 +17,7 @@ export default function Testimonial() {
       />
       <Image
         src="/images/otm-mono-dark.svg"
-        alt=""
+        alt="Off The Muscle droplet monogram"
         width={400}
         height={400}
         aria-hidden="true"

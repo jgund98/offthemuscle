@@ -25,7 +25,7 @@ export default function Footer() {
               <div className="flex items-center gap-3">
                 <Image
                   src="/images/otm-script-white.svg"
-                  alt="Off The Muscle"
+                  alt="Off The Muscle Pressure Cleaning logo"
                   width={220}
                   height={220}
                   className="h-14 w-auto object-contain md:h-16"
@@ -40,19 +40,28 @@ export default function Footer() {
                 </span>
               </div>
               <p className="mt-6 max-w-sm text-sm leading-relaxed text-mist">
-                Family-owned pressure cleaning based in {SITE.base} — homes, driveways,
-                roofs, and storefronts, cleaned right and treated with care.
+                Family-owned pressure washing based in West Palm Beach, serving all of
+                Palm Beach County: homes, driveways, roofs, and storefronts, cleaned
+                right and treated with care.
               </p>
               <div className="mt-6 flex flex-col gap-2">
                 <a href={SITE.phoneHref} className="display text-3xl text-foam transition-colors hover:text-hydro">
                   {SITE.phone}
                 </a>
                 <ObfMail className="text-sm text-mist transition-colors hover:text-hydro" />
-                <p className="mt-2 text-sm leading-relaxed text-mist-dim">
+                <address className="mt-2 text-sm not-italic leading-relaxed text-mist-dim">
                   {SITE.address.street}, {SITE.address.city}, {SITE.address.state} {SITE.address.zip}
                   <br />
                   {SITE.hours} · {SITE.hoursNote}
-                </p>
+                </address>
+                <a
+                  href={SITE.gmb}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-1 w-fit text-sm text-mist transition-colors hover:text-hydro"
+                >
+                  {SITE.rating.value} stars · {SITE.rating.count} reviews on Google →
+                </a>
               </div>
               <p className="mt-6 text-sm leading-relaxed text-mist">
                 Fully licensed &amp; insured — insurance documentation available on

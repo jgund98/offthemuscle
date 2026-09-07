@@ -5,21 +5,23 @@ import PageHero from "@/components/PageHero";
 import CtaBand from "@/components/CtaBand";
 import { Reveal } from "@/components/Reveal";
 import { SERVICES } from "@/lib/site";
+import { breadcrumbList } from "@/lib/schema";
 
 export const metadata: Metadata = {
-  title: "Pressure Cleaning Services — West Palm Beach & South Florida",
+  title: "Pressure Washing Services West Palm Beach",
   description:
-    "Residential power washing, house soft washing, driveway & surface cleaning, roof cleaning, and commercial power washing across Palm Beach County and South Florida. Free estimates: 561-698-8537.",
+    "House soft washing, driveway and paver cleaning, roof cleaning, and commercial power washing in West Palm Beach and Palm Beach County. Free estimates.",
   alternates: { canonical: "/services" },
 };
 
 export default function ServicesPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbList([{ name: "Services", path: "/services" }])) }} />
       <PageHero
-        kicker="Our Services"
-        title="Simple pricing."
-        accent="Superior results."
+        kicker="Pressure Washing Services in Palm Beach County"
+        title="Pressure washing services"
+        accent="for Palm Beach County."
         body="Every property is different, so every quote is custom — walked, measured, and priced straight. Here's what we bring to yours."
       />
 

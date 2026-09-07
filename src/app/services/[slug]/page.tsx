@@ -7,7 +7,7 @@ import CtaBand from "@/components/CtaBand";
 import { Reveal } from "@/components/Reveal";
 import JetButton from "@/components/JetButton";
 import SplashMark from "@/components/SplashMark";
-import { SERVICES, SITE } from "@/lib/site";
+import { SERVICES, SITE, CITIES } from "@/lib/site";
 
 export function generateStaticParams() {
   return SERVICES.map((s) => ({ slug: s.slug }));
@@ -18,10 +18,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const s = SERVICES.find((x) => x.slug === slug);
   if (!s) return {};
   return {
-    title: `${s.name} in West Palm Beach & South Florida`,
-    description: `${s.short} Serving West Palm Beach, Palm Beach Gardens, Jupiter, Wellington, Boca Raton & beyond. Licensed & insured — free estimates: 561-698-8537.`,
+    title: s.seoTitle,
+    description: s.seoDescription,
     alternates: { canonical: `/services/${s.slug}` },
-    openGraph: { title: `${s.name} — Off The Muscle Pressure Cleaning`, description: s.short, images: [s.image] },
+    openGraph: {
+      title: `${s.seoTitle} | Off The Muscle`,
+      description: s.seoDescription,
+      url: `${SITE.url}/services/${s.slug}`,
+      images: [{ url: `${SITE.url}${s.image}`, alt: s.imageAlt }],
+    },
   };
 }
 
@@ -31,17 +36,24 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
   if (!s) notFound();
   const others = SERVICES.filter((x) => x.slug !== s.slug).slice(0, 3);
 
+  /* Single JSON-LD graph per service page. The provider is a reference to
+     the business node emitted in the root layout, not a second copy of it. */
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "Service",
-        name: `${s.name} — ${SITE.fullName}`,
+        "@id": `${SITE.url}/services/${s.slug}#service`,
+        name: s.name,
         serviceType: s.name,
         description: s.intro,
-        provider: { "@type": "HomeAndConstructionBusiness", name: SITE.fullName, telephone: "+1-561-698-8537" },
-        areaServed: { "@type": "AdministrativeArea", name: "Palm Beach County, FL" },
         url: `${SITE.url}/services/${s.slug}`,
+        image: `${SITE.url}${s.image}`,
+        provider: { "@id": `${SITE.url}/#business` },
+        areaServed: [
+          { "@type": "AdministrativeArea", name: "Palm Beach County, FL" },
+          ...CITIES.map((c) => ({ "@type": "City", name: `${c}, FL` })),
+        ],
       },
       {
         "@type": "FAQPage",
@@ -125,7 +137,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
                     ))}
                   </div>
                   <div className="mt-8 flex flex-wrap items-center gap-5">
-                    <JetButton href="/contact">Get a custom quote</JetButton>
+                    <JetButton href="/contact">{`Quote my ${s.name.toLowerCase()}`}</JetButton>
                     <p className="text-sm text-slate">Walked, measured &amp; priced straight — no pressure. Well, some.</p>
                   </div>
                 </div>
@@ -165,43 +177,6 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
 
       <CtaBand />
 
-      {/* Service + FAQ + breadcrumb structured data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify([
-            {
-              "@context": "https://schema.org",
-              "@type": "Service",
-              name: s.name,
-              serviceType: s.name,
-              description: s.intro,
-              url: `${SITE.url}/services/${s.slug}`,
-              image: `${SITE.url}${s.image}`,
-              provider: { "@id": `${SITE.url}/#business` },
-              areaServed: { "@type": "State", name: "Florida" },
-            },
-            {
-              "@context": "https://schema.org",
-              "@type": "FAQPage",
-              mainEntity: s.faqs.map((f) => ({
-                "@type": "Question",
-                name: f.q,
-                acceptedAnswer: { "@type": "Answer", text: f.a },
-              })),
-            },
-            {
-              "@context": "https://schema.org",
-              "@type": "BreadcrumbList",
-              itemListElement: [
-                { "@type": "ListItem", position: 1, name: "Home", item: SITE.url },
-                { "@type": "ListItem", position: 2, name: "Services", item: `${SITE.url}/services` },
-                { "@type": "ListItem", position: 3, name: s.name, item: `${SITE.url}/services/${s.slug}` },
-              ],
-            },
-          ]),
-        }}
-      />
     </>
   );
 }

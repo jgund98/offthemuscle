@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Hero from "@/components/Hero";
@@ -14,7 +15,15 @@ import CtaBand from "@/components/CtaBand";
 import { Reveal } from "@/components/Reveal";
 import JetButton from "@/components/JetButton";
 import SplashMark from "@/components/SplashMark";
-import { TRANSFORMATIONS, SITE } from "@/lib/site";
+import { TRANSFORMATIONS, SITE, CITIES, HOME_FAQS } from "@/lib/site";
+
+/* Title + description come from the root layout defaults; the canonical is set
+   here (not in the layout) so no other page inherits "/" as its canonical. */
+export const metadata: Metadata = {
+  alternates: { canonical: `${SITE.url}/` },
+};
+
+const inlineLink = "font-semibold text-brand underline underline-offset-4 transition-colors hover:text-hydro";
 
 export default function Home() {
   const proof = TRANSFORMATIONS[0];
@@ -125,6 +134,115 @@ export default function Home() {
 
       <AreaRipple />
       <SocialStrip />
+
+      {/* plain-text local proof: what we wash, where, and the questions people
+          search before calling. Crawlable copy (the marquees above are
+          aria-hidden) plus visible FAQs that double as FAQPage schema. */}
+      <section id="local" className="relative bg-white py-24 text-ink md:py-32">
+        <div className="mx-auto max-w-7xl px-5 md:px-8">
+          <div className="grid gap-14 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
+            <div>
+              <Reveal>
+                <p className="label mb-4 flex items-center gap-3 text-brand">
+                  <SplashMark className="h-3.5" />
+                  Know before you call
+                </p>
+              </Reveal>
+              <Reveal delay={0.08}>
+                <h2 className="display text-[2rem] leading-[1.04] sm:text-4xl md:text-5xl">
+                  <span className="block">Pressure washing</span>
+                  <span className="block text-hydro">West Palm Beach trusts.</span>
+                </h2>
+              </Reveal>
+              <Reveal delay={0.16}>
+                <div className="mt-6 flex max-w-lg flex-col gap-5 text-base leading-relaxed text-slate">
+                  <p>
+                    Off The Muscle Pressure Cleaning is a family-owned, licensed and insured
+                    pressure washing company based in West Palm Beach, Florida. We clean
+                    homes, driveways, roofs, and commercial properties across Palm Beach
+                    County, from Jupiter and Palm Beach Gardens down to Boynton Beach,
+                    Delray Beach, and Boca Raton, and west to Wellington, Royal Palm Beach,
+                    and Loxahatchee.
+                  </p>
+                  <p>
+                    South Florida humidity grows algae and mildew faster than almost
+                    anywhere in the country. Our{" "}
+                    <Link href="/services/residential-power-washing" className={inlineLink}>house soft washing</Link>{" "}
+                    lifts the green and black off stucco without damaging paint.{" "}
+                    <Link href="/services/driveway-surface-cleaning" className={inlineLink}>Driveway and paver cleaning</Link>{" "}
+                    brings concrete back to one even color.{" "}
+                    <Link href="/services/roof-cleaning" className={inlineLink}>Roof cleaning</Link>{" "}
+                    removes the streaks that shorten a tile roof&apos;s life, and{" "}
+                    <Link href="/services/commercial-power-washing" className={inlineLink}>commercial power washing</Link>{" "}
+                    keeps storefronts, plazas, and gas stations inspection-ready.
+                  </p>
+                  <p>
+                    Every job is owner-led, quoted straight, and backed by {SITE.rating.count}{" "}
+                    five-star Google reviews.{" "}
+                    <Link href="/contact" className={inlineLink}>Request a free estimate</Link>{" "}
+                    or call{" "}
+                    <a href={SITE.phoneHref} className={inlineLink}>{SITE.phone}</a>.
+                  </p>
+                </div>
+              </Reveal>
+              <Reveal delay={0.22}>
+                <p className="label mb-4 mt-10 text-slate">Proudly serving</p>
+                <ul className="flex max-w-lg flex-wrap gap-2">
+                  {CITIES.map((c) => (
+                    <li
+                      key={c}
+                      className="rounded-full border border-slate/25 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-slate"
+                    >
+                      {c}
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+            </div>
+
+            <div>
+              <Reveal>
+                <p className="label mb-6 flex items-center gap-3 text-brand">
+                  <SplashMark className="h-3.5" />
+                  Straight answers
+                </p>
+              </Reveal>
+              <div className="flex flex-col gap-4">
+                {HOME_FAQS.map((f, i) => (
+                  <Reveal key={f.q} delay={i * 0.05}>
+                    <details className="group rounded-2xl border border-brand/15 bg-foam px-6 py-5 shadow-[0_12px_32px_-22px_rgba(13,37,55,0.35)] open:border-hydro/40">
+                      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-bold text-ink [&::-webkit-details-marker]:hidden">
+                        <h3 className="text-base font-bold">{f.q}</h3>
+                        <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-brand/20 text-brand transition-transform duration-300 group-open:rotate-45">
+                          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                            <path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                          </svg>
+                        </span>
+                      </summary>
+                      <p className="mt-4 text-sm leading-relaxed text-slate">{f.a}</p>
+                    </details>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: HOME_FAQS.map((f) => ({
+                "@type": "Question",
+                name: f.q,
+                acceptedAnswer: { "@type": "Answer", text: f.a },
+              })),
+            }),
+          }}
+        />
+      </section>
 
       {/* the estimate, right here — no page hop between wanting it and asking */}
       <section id="estimate" className="relative bg-ice py-24 text-ink md:py-32">

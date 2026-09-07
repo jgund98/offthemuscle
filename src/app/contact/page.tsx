@@ -4,20 +4,22 @@ import QuoteForm from "@/components/QuoteForm";
 import ObfMail from "@/components/ObfMail";
 import { Reveal } from "@/components/Reveal";
 import { SITE } from "@/lib/site";
+import { breadcrumbList } from "@/lib/schema";
 
 export const metadata: Metadata = {
-  title: "Free Pressure Washing Estimate — West Palm Beach & South Florida",
+  title: "Free Pressure Washing Estimate",
   description:
-    "Get a free pressure cleaning estimate across South Florida. Homes, driveways, roofs, and businesses. Call or text 561-698-8537 — most estimates same day.",
+    "Get a free pressure washing estimate in West Palm Beach and Palm Beach County. Homes, driveways, roofs, and businesses. Call or text 561-698-8537.",
   alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbList([{ name: "Contact", path: "/contact" }])) }} />
       {/* body constrained so the floating form card never overlaps the copy */}
       <PageHero
-        kicker="Free Estimate"
+        kicker="Free Estimate, West Palm Beach & Palm Beach County"
         title="Let's talk"
         accent="clean."
         body="A few quick details and we'll come back with a straight price — usually the same day. No spam, no pushy calls."
@@ -48,6 +50,14 @@ export default function ContactPage() {
                       <br />
                       {SITE.hoursNote}
                     </p>
+                  </div>
+                  <div>
+                    <p className="label mb-3 text-slate">Based in</p>
+                    <address className="max-w-xs text-base not-italic leading-relaxed text-slate">
+                      {SITE.address.street}
+                      <br />
+                      {SITE.address.city}, {SITE.address.state} {SITE.address.zip}
+                    </address>
                   </div>
                   <div>
                     <p className="label mb-3 text-slate">Service area</p>

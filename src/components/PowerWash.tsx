@@ -26,22 +26,9 @@ export default function PowerWash({
 
   return (
     <span ref={ref} className={`relative inline-block ${className}`}>
-      {/* dirty layer */}
-      <span
-        aria-hidden="true"
-        className="absolute inset-0 select-none"
-        style={{
-          color: "transparent",
-          backgroundImage:
-            "linear-gradient(160deg,#4a3f2e 0%,#5e5442 30%,#3c332a 55%,#57503c 80%,#463d2c 100%)",
-          backgroundClip: "text",
-          WebkitBackgroundClip: "text",
-          filter: "saturate(0.8)",
-          opacity: 0.55,
-        }}
-      >
-        {text}
-      </span>
+      {/* dirty layer: drawn by CSS from data-text (see .wash-dirty in globals.css)
+          so the headline text is in the DOM once, not twice */}
+      <span aria-hidden="true" data-text={text} className="wash-dirty absolute inset-0 select-none" />
 
       {/* clean layer, revealed left → right */}
       <motion.span
