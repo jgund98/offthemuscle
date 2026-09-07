@@ -13,6 +13,11 @@ export const metadata: Metadata = {
   description:
     "Real before and after pressure washing results from Off The Muscle: driveways, fences, patios, and roofs across West Palm Beach and Palm Beach County.",
   alternates: { canonical: "/work" },
+  openGraph: {
+    title: "Before & After Pressure Washing Photos | Off The Muscle",
+    description: "Real before and after pressure washing results across West Palm Beach and Palm Beach County.",
+    url: "/work",
+  },
 };
 
 export default function WorkPage() {
@@ -21,7 +26,7 @@ export default function WorkPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbList([{ name: "Our Work", path: "/work" }])) }} />
       <PageHero
-        kicker="Our Work Across Palm Beach County"
+        kicker="Before & After Pressure Washing in Palm Beach County"
         title="The proof is in"
         accent="the after."
         body="Every job gets documented before and after — the transformation is the product. A few recent favorites from across South Florida."

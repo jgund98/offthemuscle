@@ -12,6 +12,11 @@ export const metadata: Metadata = {
   description:
     "Meet Jason, owner of Off The Muscle Pressure Cleaning, a family-owned, licensed and insured pressure washing company in West Palm Beach, Florida.",
   alternates: { canonical: "/about" },
+  openGraph: {
+    title: "About Our Family-Owned Pressure Washing | Off The Muscle",
+    description: "Meet Jason, owner of Off The Muscle Pressure Cleaning in West Palm Beach, Florida.",
+    url: "/about",
+  },
 };
 
 const TIMELINE = [
@@ -42,7 +47,7 @@ export default function AboutPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbList([{ name: "About", path: "/about" }])) }} />
       <PageHero
-        kicker="From the owner, West Palm Beach"
+        kicker="Family-Owned Pressure Washing in West Palm Beach"
         title="Hey there —"
         accent="I'm Jason."
         body="I run Off The Muscle Pressure Cleaning — a small, family-owned business with one goal: making South Florida look better, one property at a time. This isn't an 'About Us' written by a marketing team. It's who's actually showing up at your property."

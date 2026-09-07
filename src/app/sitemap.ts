@@ -8,7 +8,7 @@ const UPDATED = new Date("2026-09-07");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
-    { url: `${SITE.url}/`, lastModified: UPDATED, changeFrequency: "monthly", priority: 1 },
+    { url: SITE.url, lastModified: UPDATED, changeFrequency: "monthly", priority: 1 },
     { url: `${SITE.url}/services`, lastModified: UPDATED, changeFrequency: "monthly", priority: 0.9 },
     ...SERVICES.map((s) => ({
       url: `${SITE.url}/services/${s.slug}`,

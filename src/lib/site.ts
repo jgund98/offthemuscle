@@ -192,6 +192,8 @@ export const PROPERTY_OPTIONS = [
 /* Hero background footage — Off The Muscle's own cinematic surface-cleaner clip. */
 export const HERO_MEDIA = {
   video: "/videos/hero-wash.mp4",
+  // 720p re-encode (~1/3 the bytes) for the phone hero: same clip, same crop
+  videoMobile: "/videos/hero-wash-720.mp4",
   poster: "/images/hero-wash-poster.jpg",
   posDesktop: "50% 60%",
   posMobile: "58% center",

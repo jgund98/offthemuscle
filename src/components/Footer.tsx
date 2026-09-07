@@ -86,7 +86,7 @@ export default function Footer() {
               <p className="label mb-5 text-mist-dim">Explore</p>
               <ul className="flex flex-col gap-3">
                 {[
-                  { href: "/work", label: "Our Work" },
+                  { href: "/work", label: "Before & After Gallery" },
                   { href: "/about", label: "About Us" },
                   { href: "/services", label: "All Services" },
                   { href: "/contact", label: "Request a Quote" },
@@ -113,7 +113,28 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-hydro/10 pt-6 text-[0.8125rem] text-mist-dim md:flex-row">
+          {/* share row: cheap word of mouth for a business that lives on neighbor referrals */}
+          <div className="mt-12 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-hydro/10 pt-6 text-[0.8125rem] text-mist-dim">
+            <span className="label text-mist-dim">Share</span>
+            {[
+              { label: "Facebook", href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(SITE.url)}` },
+              { label: "X", href: `https://twitter.com/intent/tweet?url=${encodeURIComponent(SITE.url)}&text=${encodeURIComponent("Off The Muscle Pressure Cleaning, West Palm Beach. Licensed, insured, 5.0 on Google.")}` },
+              { label: "Email", href: `mailto:?subject=${encodeURIComponent("Pressure washing in West Palm Beach")}&body=${encodeURIComponent(`Off The Muscle Pressure Cleaning did great work for us. ${SITE.url}`)}` },
+              { label: "Text", href: `sms:?&body=${encodeURIComponent(`Off The Muscle Pressure Cleaning, West Palm Beach: ${SITE.url}`)}` },
+            ].map((s) => (
+              <a
+                key={s.label}
+                href={s.href}
+                target={s.href.startsWith("http") ? "_blank" : undefined}
+                rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                className="transition-colors hover:text-hydro"
+              >
+                {s.label}
+              </a>
+            ))}
+          </div>
+
+          <div className="mt-6 flex flex-col items-center justify-between gap-4 text-[0.8125rem] text-mist-dim md:flex-row">
             <p>© {new Date().getFullYear()} Off The Muscle Pressure Cleaning. Family owned &amp; operated in South Florida.</p>
             <a
               href="https://www.epicdevsolutions.com"

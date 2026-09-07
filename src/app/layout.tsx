@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Archivo, Instrument_Sans, Caveat } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
@@ -73,6 +73,10 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
   },
   category: "Home Services",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#07202e",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

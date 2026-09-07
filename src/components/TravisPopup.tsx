@@ -116,7 +116,7 @@ export default function LeadPopup() {
                   onClick={() => setOpen(false)}
                   className="btn-jet label rounded-full bg-hydro py-4 text-center text-abyss"
                 >
-                  Get my free quote
+                  Get my straight price
                 </Link>
                 <a
                   href={SITE.phoneHref}

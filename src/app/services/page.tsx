@@ -12,6 +12,11 @@ export const metadata: Metadata = {
   description:
     "House soft washing, driveway and paver cleaning, roof cleaning, and commercial power washing in West Palm Beach and Palm Beach County. Free estimates.",
   alternates: { canonical: "/services" },
+  openGraph: {
+    title: "Pressure Washing Services West Palm Beach | Off The Muscle",
+    description: "House soft washing, driveway and paver cleaning, roof cleaning, and commercial power washing in West Palm Beach and Palm Beach County.",
+    url: "/services",
+  },
 };
 
 export default function ServicesPage() {
@@ -19,9 +24,9 @@ export default function ServicesPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbList([{ name: "Services", path: "/services" }])) }} />
       <PageHero
-        kicker="Pressure Washing Services in Palm Beach County"
-        title="Pressure washing services"
-        accent="for Palm Beach County."
+        kicker="Pressure Washing Services in West Palm Beach & Palm Beach County"
+        title="Simple pricing."
+        accent="Superior results."
         body="Every property is different, so every quote is custom — walked, measured, and priced straight. Here's what we bring to yours."
       />
 

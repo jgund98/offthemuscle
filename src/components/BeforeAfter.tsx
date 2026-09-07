@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useRef, useState } from "react";
 
 /* Before/after comparison where the divider is a pressure-wand jet.
@@ -11,6 +12,7 @@ export default function BeforeAfter({
   altAfter = "After cleaning",
   aspect = "aspect-[4/5] sm:aspect-[3/2]",
   position = "object-center",
+  sizes = "(min-width: 1024px) 50vw, 100vw",
 }: {
   before: string;
   after: string;
@@ -18,6 +20,9 @@ export default function BeforeAfter({
   altAfter?: string;
   aspect?: string;
   position?: string;
+  /* next/image sizes hint: the optimizer serves AVIF/WebP at the displayed
+     width instead of the full-resolution JPEG (the raw files are 250-330 KB) */
+  sizes?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState(38);
@@ -53,12 +58,10 @@ export default function BeforeAfter({
       }}
     >
       {/* before (full) */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={before} alt={altBefore} className={`absolute inset-0 h-full w-full object-cover ${position}`} draggable={false} loading="lazy" decoding="async" />
+      <Image src={before} alt={altBefore} fill sizes={sizes} className={`object-cover ${position}`} draggable={false} />
       {/* after (clipped) */}
       <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={after} alt={altAfter} className={`absolute inset-0 h-full w-full object-cover ${position}`} draggable={false} loading="lazy" decoding="async" />
+        <Image src={after} alt={altAfter} fill sizes={sizes} className={`object-cover ${position}`} draggable={false} />
       </div>
 
       {/* jet divider */}

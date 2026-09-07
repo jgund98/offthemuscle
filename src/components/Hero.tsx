@@ -39,7 +39,7 @@ export default function Hero({ media = HERO_MEDIA }: { media?: typeof HERO_MEDIA
             className="absolute inset-0 h-full w-full object-cover"
             style={{ objectPosition: media.posMobile }}
           >
-            <source src={media.video} type="video/mp4" />
+            <source src={media.videoMobile} type="video/mp4" />
           </video>
         )}
         <div className="absolute inset-0 bg-abyss/55" />
@@ -214,6 +214,7 @@ export default function Hero({ media = HERO_MEDIA }: { media?: typeof HERO_MEDIA
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.9 }}
         className="relative z-10 border-t border-foam/10 bg-abyss/60 backdrop-blur-md"
+        role="region"
         aria-label={`Proudly serving ${CITIES.join(", ")} and beyond`}
       >
         <div className="flex items-center">

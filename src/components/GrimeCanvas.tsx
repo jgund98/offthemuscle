@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Reveal } from "@/components/Reveal";
 import SplashMark from "@/components/SplashMark";
@@ -234,14 +235,13 @@ export default function GrimeCanvas() {
             className="group relative aspect-[4/3] w-full touch-none select-none overflow-hidden rounded-2xl border border-brand/15 shadow-[0_24px_60px_-24px_rgba(13,37,55,0.35)] sm:aspect-[2/1] cursor-crosshair"
           >
             {/* AFTER photo underneath */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src="/images/sidewalk-clean.jpg"
               alt="The same walkway restored to bright, clean concrete"
-              className="absolute inset-0 h-full w-full object-cover"
+              fill
+              sizes="(min-width: 1280px) 1200px, 100vw"
+              className="object-cover"
               draggable={false}
-              loading="lazy"
-              decoding="async"
             />
             {/* grime canvas on top */}
             <canvas

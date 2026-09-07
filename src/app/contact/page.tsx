@@ -11,6 +11,11 @@ export const metadata: Metadata = {
   description:
     "Get a free pressure washing estimate in West Palm Beach and Palm Beach County. Homes, driveways, roofs, and businesses. Call or text 561-698-8537.",
   alternates: { canonical: "/contact" },
+  openGraph: {
+    title: "Free Pressure Washing Estimate | Off The Muscle",
+    description: "Get a free pressure washing estimate in West Palm Beach and Palm Beach County. Call or text 561-698-8537.",
+    url: "/contact",
+  },
 };
 
 export default function ContactPage() {
@@ -19,7 +24,7 @@ export default function ContactPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbList([{ name: "Contact", path: "/contact" }])) }} />
       {/* body constrained so the floating form card never overlaps the copy */}
       <PageHero
-        kicker="Free Estimate, West Palm Beach & Palm Beach County"
+        kicker="Free Pressure Washing Estimate in West Palm Beach"
         title="Let's talk"
         accent="clean."
         body="A few quick details and we'll come back with a straight price — usually the same day. No spam, no pushy calls."
@@ -58,6 +63,14 @@ export default function ContactPage() {
                       <br />
                       {SITE.address.city}, {SITE.address.state} {SITE.address.zip}
                     </address>
+                    <iframe
+                      title="Off The Muscle Pressure Cleaning on Google Maps"
+                      src={`https://www.google.com/maps?q=${encodeURIComponent(`${SITE.fullName}, ${SITE.address.street}, ${SITE.address.city}, ${SITE.address.state}`)}&output=embed`}
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      allowFullScreen
+                      className="mt-5 h-56 w-full max-w-md rounded-2xl border border-brand/15 shadow-[0_16px_40px_-24px_rgba(13,37,55,0.3)]"
+                    />
                   </div>
                   <div>
                     <p className="label mb-3 text-slate">Service area</p>

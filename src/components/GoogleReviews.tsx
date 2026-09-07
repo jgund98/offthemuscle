@@ -21,7 +21,7 @@ function GoogleG({ className = "" }: { className?: string }) {
 
 function Stars() {
   return (
-    <span className="flex gap-1" aria-label="5 star review">
+    <span className="flex gap-1" role="img" aria-label="5 star review">
       {[...Array(5)].map((_, i) => (
         <svg key={i} width="18" height="18" viewBox="0 0 24 24" fill="#fbbc04" aria-hidden="true">
           <path d="m12 2 2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8L12 2Z" />
@@ -100,8 +100,10 @@ export default function GoogleReviews() {
                 key={d}
                 onClick={() => setI(d)}
                 aria-label={`Review ${d + 1}`}
-                className={`h-2 rounded-full transition-all duration-300 ${d === i ? "w-8 bg-hydro" : "w-2 bg-ink/20 hover:bg-ink/40"}`}
-              />
+                className="group/dot -m-1 grid h-8 min-w-8 place-items-center px-1"
+              >
+                <span className={`block h-2 rounded-full transition-all duration-300 ${d === i ? "w-8 bg-hydro" : "w-2 bg-ink/20 group-hover/dot:bg-ink/40"}`} />
+              </button>
             ))}
           </div>
           <a

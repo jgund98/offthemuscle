@@ -53,7 +53,7 @@ export default function CtaBand() {
         </Reveal>
         <Reveal delay={0.18}>
           <div className="mt-10 flex flex-col items-center justify-center gap-5 sm:flex-row">
-            <JetButton href="/contact">Get My Free Quote</JetButton>
+            <JetButton href="/contact">Start My Free Estimate</JetButton>
             <motion.a
               href={SITE.phoneHref}
               whileHover={{ scale: 1.03 }}

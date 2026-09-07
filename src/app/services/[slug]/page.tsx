@@ -77,7 +77,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-      <PageHero kicker={`Services / ${s.name}`} title={s.name} body={s.headline} image={s.image} imageAlt={s.imageAlt} />
+      <PageHero kicker={`${s.name} in West Palm Beach & Palm Beach County`} title={s.name} body={s.headline} image={s.image} imageAlt={s.imageAlt} />
 
       <section className="bg-foam pb-24 pt-20 text-ink md:pb-32">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
@@ -85,6 +85,14 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
             <div>
               <Reveal>
                 <p className="max-w-2xl text-lg leading-relaxed text-slate">{s.intro}</p>
+              </Reveal>
+              <Reveal delay={0.05}>
+                <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate">
+                  We provide {s.name.toLowerCase()} from our base in West Palm Beach across all of
+                  Palm Beach County, including Palm Beach Gardens, Jupiter, Wellington, Royal Palm
+                  Beach, Lake Worth, Boynton Beach, Delray Beach, and Boca Raton, plus Northern
+                  Broward and Southern Martin counties. Licensed, insured, and owner-led on every job.
+                </p>
               </Reveal>
 
               <div className="mt-14 grid gap-x-10 gap-y-12 sm:grid-cols-2">

@@ -72,7 +72,6 @@ export default function Nav() {
             }
           }}
           className="group flex min-w-0 shrink items-center gap-2.5 sm:gap-3.5"
-          aria-label="Off The Muscle Pressure Cleaning home"
         >
           {/* the droplet hangs a touch below the bar like a shop badge —
               only a subtle shrink on scroll so nothing "jumps" */}
@@ -94,7 +93,7 @@ export default function Nav() {
             </span>
             {/* handwritten, like the logo lettering — not another tracked-out label */}
             <span className="script mt-0.5 block whitespace-nowrap -rotate-2 text-xs text-spray sm:text-sm md:text-base">
-              Pressure Cleaning · South Florida
+              Pressure Cleaning · West Palm Beach, FL
             </span>
           </span>
         </Link>

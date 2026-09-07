@@ -93,7 +93,6 @@ export default function Home() {
                   fill
                   className="object-cover"
                   sizes="(min-width: 1024px) 45vw, 100vw"
-                  priority
                 />
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-abyss/85 to-transparent p-5">
                   <p className="display text-lg text-foam">The family behind the work</p>

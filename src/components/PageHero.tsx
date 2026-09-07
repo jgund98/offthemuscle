@@ -28,13 +28,16 @@ export default function PageHero({
         </>
       )}
       <div className="relative mx-auto max-w-7xl px-5 md:px-8">
+        {/* The kicker is the page's H1: it names the service and the city
+            in plain words. The big display line below is the brand moment
+            and stays a paragraph, exactly like the home hero. */}
         <Reveal>
-          <p className="label mb-5 flex items-center gap-3 text-hydro">
+          <h1 className="label mb-5 flex items-center gap-3 text-hydro">
             <SplashMark className="h-3.5" />
             {kicker}
-          </p>
+          </h1>
         </Reveal>
-        <h1 className="display max-w-4xl text-5xl md:text-7xl">
+        <p className="display max-w-4xl text-5xl md:text-7xl">
           <Surface>{title}</Surface>
           {accent && (
             <>
@@ -44,7 +47,7 @@ export default function PageHero({
               </span>
             </>
           )}
-        </h1>
+        </p>
         {body && (
           <Reveal delay={0.2}>
             <p className={`mt-7 ${bodyMax} text-lg leading-relaxed text-mist`}>{body}</p>
