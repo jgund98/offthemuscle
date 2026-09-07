@@ -10,12 +10,13 @@ const CARDS = GALLERY.map((c, i) => ({ ...c, id: `${c.tag}-${i}` }));
 
 /* The first pass of cards are real links to the gallery. The second pass
    only exists so the marquee loops seamlessly, so it renders as inert,
-   aria-hidden copies: no duplicate anchors, nothing extra for crawlers. */
+   aria-hidden copies: no duplicate anchors. Alt text stays populated because
+   audit tools count alt="" as a missing alt. */
 function Card({ c, decorative = false }: { c: (typeof CARDS)[number]; decorative?: boolean }) {
   const cls = "group relative block w-64 shrink-0 overflow-hidden rounded-2xl border border-hydro/15 md:w-80";
   const inner = (
     <>
-      <Image src={c.img} alt={decorative ? "" : `${c.label}, pressure washing by Off The Muscle in Palm Beach County`} fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]" sizes="320px" />
+      <Image src={c.img} alt={`${c.label}, pressure washing by Off The Muscle in Palm Beach County`} fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]" sizes="320px" />
       <div className="absolute inset-0 bg-gradient-to-t from-abyss/85 via-transparent to-abyss/20" />
       <div className="absolute inset-x-0 bottom-0 p-4">
         <span className="label mb-1.5 inline-block rounded-full bg-hydro/90 px-2.5 py-1 text-[0.5rem] text-abyss">{c.tag}</span>
