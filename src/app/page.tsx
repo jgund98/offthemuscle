@@ -7,6 +7,7 @@ import ServiceFlood from "@/components/ServiceFlood";
 import InsuredBand from "@/components/InsuredBand";
 import BeforeAfter from "@/components/BeforeAfter";
 import Testimonial from "@/components/Testimonial";
+import NameDefinition from "@/components/NameDefinition";
 import AreaRipple from "@/components/AreaRipple";
 import SocialStrip from "@/components/SocialStrip";
 import GoogleReviews from "@/components/GoogleReviews";
@@ -80,6 +81,7 @@ export default function Home() {
       <GoogleReviews />
       <InsuredBand />
       <Testimonial />
+      <NameDefinition />
 
       {/* family story teaser */}
       <section className="relative overflow-hidden bg-abyss py-24 md:py-32">
