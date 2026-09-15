@@ -114,6 +114,20 @@ body {
   from { text-shadow: 0 0 0 rgba(124, 208, 247, 0); }
   to { text-shadow: 0 0 32px rgba(124, 208, 247, 0.18); }
 }
+/* Reverse graffiti under the grime canvas: dark stain letters that read as
+   written into the concrete, with a light chisel edge on top. Multiply keeps
+   the concrete texture alive through the lettering. */
+.etched {
+  mix-blend-mode: multiply;
+  color: rgba(38, 30, 22, 0.74);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.38), 0 -1px 0 rgba(0, 0, 0, 0.18);
+  filter: blur(0.3px);
+}
+.etched .etched-def {
+  font-family: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
+  color: rgba(38, 30, 22, 0.8);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .rise, .surface-up, .rise-solid, .wash-text { animation: none; }
   .wash-grime { display: none; }

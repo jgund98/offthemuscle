@@ -8,7 +8,31 @@ import SplashMark from "@/components/SplashMark";
 /* Interactive set piece: a grimy surface the visitor pressure-washes themselves.
    The "before" photo is painted onto a canvas over the "after" photo; moving the
    cursor (or finger) blasts the grime away with destination-out strokes, spraying
-   droplets as it goes. A live "% clean" pressure gauge tracks progress. */
+   droplets as it goes. A live "% clean" pressure gauge tracks progress.
+
+   Under the grime, written into the clean concrete like reverse graffiti, is
+   the name and what it means. Nobody sees it until they wash for it: a few
+   seconds after the section is in view one wand pass writes the headword out
+   on its own (the teaser), and the definition stays buried until the visitor
+   scrubs it up themselves. The meaning of the name, revealed through effort. */
+/* The surface: Jason's own driveway, before and after, an aligned pair. It is
+   portrait, so cover-fit crops top and bottom; FOCUS_Y biases the crop low so
+   the slab (not the garage) fills the box. The canvas draw and the <Image>
+   underneath share the same number so they line up exactly. */
+const BEFORE = "/images/jba-driveway-before.jpg";
+const AFTER = "/images/jba-driveway-after.jpg";
+const FOCUS_Y = 0.66; // desktop (wide box)
+const FOCUS_Y_MOBILE = 0.86; // 4:3 box on phones: push the garage out of frame
+const focusFor = (w: number) => (w < 640 ? FOCUS_Y_MOBILE : FOCUS_Y);
+
+export const ETCHED = {
+  term: "off the muscle",
+  pos: "phrase",
+  pron: "/ôf THə ˈməsəl/",
+  sense1: "By your own strength. On your own reputation. Through your own effort.",
+  sense2: "A belief that your work, your reputation, and your results should speak for themselves.",
+};
+
 export default function GrimeCanvas() {
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -24,6 +48,9 @@ export default function GrimeCanvas() {
   const lastSample = useRef(0);
   const particles = useRef<{ x: number; y: number; vx: number; vy: number; life: number; r: number }[]>([]);
   const raf = useRef(0);
+  const headRef = useRef<HTMLParagraphElement>(null);
+  const teased = useRef(false);
+  const visibleSince = useRef(0);
 
   const paintGrime = useCallback(() => {
     const canvas = canvasRef.current;
@@ -44,7 +71,8 @@ export default function GrimeCanvas() {
     const dw = img.naturalWidth * s;
     const dh = img.naturalHeight * s;
     ctx.globalCompositeOperation = "source-over";
-    ctx.drawImage(img, (w - dw) / 2, (h - dh) / 2, dw, dh);
+    const fy = focusFor(w);
+    ctx.drawImage(img, (w - dw) / 2, (h - dh) * fy, dw, dh);
 
     // map where the dirt actually is: diff dirty vs clean at low res using the
     // same cover-fit transform, so "% clean" only tracks the grimy sidewalk
@@ -58,7 +86,7 @@ export default function GrimeCanvas() {
         cv.width = ow; cv.height = oh;
         const c2 = cv.getContext("2d", { willReadFrequently: true })!;
         const ss = Math.max(ow / im.naturalWidth, oh / im.naturalHeight);
-        c2.drawImage(im, (ow - im.naturalWidth * ss) / 2, (oh - im.naturalHeight * ss) / 2, im.naturalWidth * ss, im.naturalHeight * ss);
+        c2.drawImage(im, (ow - im.naturalWidth * ss) / 2, (oh - im.naturalHeight * ss) * fy, im.naturalWidth * ss, im.naturalHeight * ss);
         return c2.getImageData(0, 0, ow, oh).data;
       };
       const dDirty = off(img);
@@ -91,10 +119,10 @@ export default function GrimeCanvas() {
     let loaded = 0;
     const done = () => { loaded += 1; if (loaded === 2) setReady(true); };
     const img = new window.Image();
-    img.src = "/images/sidewalk-dirty.jpg";
+    img.src = BEFORE;
     img.onload = () => { imgRef.current = img; done(); };
     const cleanImg = new window.Image();
-    cleanImg.src = "/images/sidewalk-clean.jpg";
+    cleanImg.src = AFTER;
     cleanImg.onload = () => { cleanRef.current = cleanImg; done(); };
   }, []);
 
@@ -203,6 +231,41 @@ export default function GrimeCanvas() {
     return { x: e.clientX - r.left, y: e.clientY - r.top };
   };
 
+  /* The teaser: once the section has been on screen for a beat and nobody
+     has touched it, a single wand pass sweeps along the headword and writes
+     "off the muscle" out of the grime. The definition below it stays dirty. */
+  useEffect(() => {
+    if (!ready) return;
+    let cancelled = false;
+    let frame = 0;
+    const tick = () => {
+      if (cancelled || teased.current) return;
+      if (!visible.current) { visibleSince.current = 0; frame = window.setTimeout(tick, 300); return; }
+      if (!visibleSince.current) visibleSince.current = performance.now();
+      // a one-second beat after the section scrolls in, and only if untouched
+      if (pctRef.current > 3 || performance.now() - visibleSince.current < 1100) { frame = window.setTimeout(tick, 250); return; }
+      teased.current = true;
+      const wrap = wrapRef.current, head = headRef.current;
+      if (!wrap || !head) return;
+      const wr = wrap.getBoundingClientRect(), hr = head.getBoundingClientRect();
+      const y0 = hr.top - wr.top + hr.height / 2;
+      const x0 = hr.left - wr.left - hr.height * 0.35;
+      const x1 = hr.right - wr.left + hr.height * 0.35;
+      const dur = 1900, start = performance.now();
+      const step = (now: number) => {
+        if (cancelled) return;
+        const t = Math.min(1, (now - start) / dur);
+        const e = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+        blast(x0 + (x1 - x0) * e, y0 + Math.sin(t * Math.PI * 3) * hr.height * 0.12);
+        if (t < 1) requestAnimationFrame(step); else samplePct();
+      };
+      requestAnimationFrame(step);
+    };
+    frame = window.setTimeout(tick, 300);
+    return () => { cancelled = true; window.clearTimeout(frame); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready]);
+
   return (
     <section id="wash" className="relative overflow-hidden bg-ice py-24 text-ink md:py-32">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
@@ -211,20 +274,21 @@ export default function GrimeCanvas() {
             <Reveal>
               <p className="label mb-4 flex items-center gap-3 text-brand">
                 <SplashMark className="h-3.5" />
-                Try it yourself
+                Where the name comes from
               </p>
             </Reveal>
             <Reveal delay={0.08}>
               <h2 className="display max-w-2xl text-[2rem] leading-[1.04] sm:text-4xl md:text-5xl">
                 <span className="block">Grab the wand.</span>
-                <span className="block text-hydro">Wash this walkway.</span>
+                <span className="block text-hydro">Uncover the name.</span>
               </h2>
             </Reveal>
           </div>
           <Reveal delay={0.15} className="max-w-sm">
             <p className="text-sm leading-relaxed text-slate">
-              One South Florida summer is all it takes — algae, mildew, and dirt baked
-              into the concrete. Drag across it and watch a year of grime disappear.
+              Everyone asks what the name means. The answer is written into this
+              driveway, under years of South Florida stains and grime. Drag across it
+              and earn the definition the same way we did.
             </p>
           </Reveal>
         </div>
@@ -236,13 +300,26 @@ export default function GrimeCanvas() {
           >
             {/* AFTER photo underneath */}
             <Image
-              src="/images/sidewalk-clean.jpg"
-              alt="The same walkway restored to bright, clean concrete"
+              src={AFTER}
+              alt="Jason's driveway in West Palm Beach after pressure washing, clean and even"
               fill
               sizes="(min-width: 1280px) 1200px, 100vw"
-              className="object-cover"
+              className="object-cover object-[50%_86%] sm:object-[50%_66%]"
               draggable={false}
             />
+            {/* reverse graffiti: the name and its meaning, written into the clean
+                concrete. Real text (crawlable), hidden under the grime canvas. */}
+            <div className="etched pointer-events-none absolute inset-0 flex flex-col items-center justify-center px-[6%] text-center">
+              <p ref={headRef} className="display text-[clamp(1.9rem,7.4vw,6rem)] leading-none">
+                {ETCHED.term}
+              </p>
+              <p className="etched-def mt-[1.2%] text-[clamp(0.8rem,1.5vw,1.2rem)] tracking-wide">
+                <em>{ETCHED.pos}</em> &nbsp;|&nbsp; {ETCHED.pron}
+              </p>
+              <p className="etched-def mt-[3.2%] max-w-[88%] text-[clamp(1rem,2.15vw,1.75rem)] leading-snug">
+                {ETCHED.sense1}
+              </p>
+            </div>
             {/* grime canvas on top */}
             <canvas
               ref={canvasRef}
@@ -287,7 +364,7 @@ export default function GrimeCanvas() {
               </span>
               <span className="label flex items-center gap-2 text-foam">
                 {done && <SplashMark className="h-3" />}
-                {done ? "Spotless" : `${pct}% clean`}
+                {done ? "Off the muscle" : `${pct}% clean`}
               </span>
             </div>
 
@@ -298,8 +375,8 @@ export default function GrimeCanvas() {
                   pct > 6 ? "opacity-0" : "opacity-100"
                 }`}
               >
-                <span className="hidden md:inline">Move your cursor to wash</span>
-                <span className="md:hidden">Drag your finger to wash</span>
+                <span className="hidden md:inline">Move your cursor to wash it out</span>
+                <span className="md:hidden">Drag your finger to wash it out</span>
               </p>
               {done && (
                 <div className="pointer-events-auto flex flex-wrap items-center gap-2.5">
@@ -322,7 +399,14 @@ export default function GrimeCanvas() {
         </Reveal>
 
         <Reveal delay={0.2}>
-          <p className="mt-6 text-center text-xs uppercase tracking-[0.2em] text-slate">
+          <p className="mx-auto mt-8 max-w-2xl text-center text-base leading-relaxed text-slate md:text-lg">
+            <span className="font-semibold text-ink">Off the muscle</span>
+            <span className="text-slate/70"> · {ETCHED.pos} · </span>
+            {ETCHED.sense2}
+          </p>
+        </Reveal>
+        <Reveal delay={0.25}>
+          <p className="mt-5 text-center text-xs uppercase tracking-[0.2em] text-slate">
             Satisfying, right?{" "}
             <a href="/contact" className="font-bold text-brand underline underline-offset-4 hover:text-hydro">
               Get your free estimate →
@@ -330,6 +414,19 @@ export default function GrimeCanvas() {
           </p>
         </Reveal>
       </div>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "DefinedTerm",
+            name: ETCHED.term,
+            description: `${ETCHED.sense1} ${ETCHED.sense2}`,
+            inDefinedTermSet: { "@type": "DefinedTermSet", name: "Off The Muscle Pressure Cleaning glossary" },
+          }),
+        }}
+      />
     </section>
   );
 }

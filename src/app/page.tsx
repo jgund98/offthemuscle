@@ -7,7 +7,6 @@ import ServiceFlood from "@/components/ServiceFlood";
 import InsuredBand from "@/components/InsuredBand";
 import BeforeAfter from "@/components/BeforeAfter";
 import Testimonial from "@/components/Testimonial";
-import NameDefinition from "@/components/NameDefinition";
 import AreaRipple from "@/components/AreaRipple";
 import SocialStrip from "@/components/SocialStrip";
 import GoogleReviews from "@/components/GoogleReviews";
@@ -27,7 +26,7 @@ export const metadata: Metadata = {
 const inlineLink = "font-semibold text-brand underline underline-offset-4 transition-colors hover:text-hydro";
 
 export default function Home() {
-  const proof = TRANSFORMATIONS[0];
+  const proof = TRANSFORMATIONS[1];
   return (
     <>
       <Hero />
@@ -53,9 +52,9 @@ export default function Home() {
               </Reveal>
               <Reveal delay={0.16}>
                 <p className="mt-6 max-w-md text-base leading-relaxed text-slate">
-                  A real South Florida driveway, one pass apart. Drag the slider and
-                  watch years of stains and grime disappear into one even, like-new
-                  color — no etching, no wand marks, just a clean you can see from the
+                  A real South Florida fence, one pass apart. Drag the slider and
+                  watch years of grey algae and mildew lift off the wood — no
+                  stripping, no splintering, just warm timber you can see from the
                   street.
                 </p>
               </Reveal>
@@ -69,8 +68,8 @@ export default function Home() {
               <BeforeAfter
                 before={proof.before}
                 after={proof.after}
-                altBefore="Stained, weathered South Florida driveway before pressure washing"
-                altAfter="The same driveway restored to an even, like-new finish"
+                altBefore="Grey, algae-streaked South Florida wood fence before soft washing"
+                altAfter="The same fence washed back to clean, warm pine"
                 aspect="aspect-[4/5] sm:aspect-[3/4]"
               />
             </Reveal>
@@ -81,7 +80,6 @@ export default function Home() {
       <GoogleReviews />
       <InsuredBand />
       <Testimonial />
-      <NameDefinition />
 
       {/* family story teaser */}
       <section className="relative overflow-hidden bg-abyss py-24 md:py-32">
