@@ -121,7 +121,6 @@ body {
   mix-blend-mode: multiply;
   color: rgba(38, 30, 22, 0.74);
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.38), 0 -1px 0 rgba(0, 0, 0, 0.18);
-  filter: blur(0.3px);
 }
 .etched .etched-def {
   font-family: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;

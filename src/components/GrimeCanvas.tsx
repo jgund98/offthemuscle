@@ -296,7 +296,7 @@ export default function GrimeCanvas() {
         <Reveal delay={0.1}>
           <div
             ref={wrapRef}
-            className="group relative aspect-[4/3] w-full touch-none select-none overflow-hidden rounded-2xl border border-brand/15 shadow-[0_24px_60px_-24px_rgba(13,37,55,0.35)] sm:aspect-[2/1] cursor-crosshair"
+            className="group relative aspect-[4/3] w-full select-none overflow-hidden rounded-2xl border border-brand/15 shadow-[0_24px_60px_-24px_rgba(13,37,55,0.35)] [touch-action:pan-y] sm:aspect-[2/1] cursor-crosshair"
           >
             {/* AFTER photo underneath */}
             <Image
@@ -340,10 +340,10 @@ export default function GrimeCanvas() {
             <canvas ref={sprayRef} className="pointer-events-none absolute inset-0" />
 
             {/* pressure gauge readout */}
-            <div className="pointer-events-none absolute left-4 top-4 flex items-center gap-3 rounded-full bg-abyss/70 px-4 py-2 backdrop-blur-sm">
+            <div className="pointer-events-none absolute left-3 top-3 flex items-center gap-2 rounded-full bg-abyss/70 px-3 py-1.5 backdrop-blur-sm sm:left-4 sm:top-4 sm:gap-3 sm:px-4 sm:py-2">
               {/* the brand droplet fills with clean water as you wash */}
-              <span className="relative grid h-8 w-7 place-items-center">
-                <svg viewBox="0 0 24 30" className="h-8 w-7">
+              <span className="relative grid h-6 w-5 place-items-center sm:h-8 sm:w-7">
+                <svg viewBox="0 0 24 30" className="h-6 w-5 sm:h-8 sm:w-7">
                   <defs>
                     <clipPath id="dropfill">
                       <rect x="0" y={30 - (pct / 100) * 28} width="24" height="30" />
@@ -362,7 +362,7 @@ export default function GrimeCanvas() {
                   />
                 </svg>
               </span>
-              <span className="label flex items-center gap-2 text-foam">
+              <span className="label flex items-center gap-2 text-[0.6rem] text-foam sm:text-[0.6875rem]">
                 {done && <SplashMark className="h-3" />}
                 {done ? "Off the muscle" : `${pct}% clean`}
               </span>
@@ -376,10 +376,10 @@ export default function GrimeCanvas() {
                 }`}
               >
                 <span className="hidden md:inline">Move your cursor to wash it out</span>
-                <span className="md:hidden">Drag your finger to wash it out</span>
+                <span className="md:hidden">Drag sideways to wash it out</span>
               </p>
               {done && (
-                <div className="pointer-events-auto flex flex-wrap items-center gap-2.5">
+                <div className="pointer-events-auto hidden flex-wrap items-center gap-2.5 sm:flex">
                   <button
                     onClick={paintGrime}
                     className="label rounded-full bg-abyss/70 px-5 py-2.5 text-spray backdrop-blur-sm transition-transform hover:scale-105"
@@ -397,6 +397,18 @@ export default function GrimeCanvas() {
             </div>
           </div>
         </Reveal>
+
+        {/* on phones the finished-state buttons sit under the canvas so they never cover the lettering */}
+        {done && (
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-2.5 sm:hidden">
+            <button onClick={paintGrime} className="label rounded-full border border-brand/25 px-5 py-3 text-brand">
+              Dirty it up again
+            </button>
+            <a href="/contact" className="label rounded-full bg-hydro px-5 py-3 text-abyss shadow-[0_8px_24px_-8px_rgba(29,169,232,0.8)]">
+              Now do my property →
+            </a>
+          </div>
+        )}
 
         <Reveal delay={0.2}>
           <p className="mx-auto mt-8 max-w-2xl text-center text-base leading-relaxed text-slate md:text-lg">
