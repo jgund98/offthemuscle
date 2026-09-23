@@ -1,5 +1,6 @@
 "use client";
 
+import { fbqTrack } from "@/components/MetaPixel";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -100,6 +101,7 @@ export default function LiveChat() {
         }),
       });
       setSentOk(res.ok);
+      if (res.ok) fbqTrack("Lead", { content_name: "live_chat" });
       if (!res.ok) sentRef.current = false; // allow a manual retry
     } catch {
       setSentOk(false);

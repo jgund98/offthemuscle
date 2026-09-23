@@ -55,12 +55,12 @@ export default function Footer() {
                   {SITE.hours} · {SITE.hoursNote}
                 </address>
                 <a
-                  href={SITE.gmb}
+                  href={SITE.reviews}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-1 w-fit text-sm text-mist transition-colors hover:text-hydro"
                 >
-                  {SITE.rating.value} stars · {SITE.rating.count} reviews on Google →
+                  {SITE.rating.value} stars on Google · read our reviews →
                 </a>
               </div>
               <p className="mt-6 text-sm leading-relaxed text-mist">

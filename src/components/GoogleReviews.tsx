@@ -53,7 +53,7 @@ export default function GoogleReviews() {
               <Stars />
             </div>
             <h2 className="display text-[2rem] leading-[1.04] sm:text-4xl md:text-5xl">
-              <span className="block">47 five-star reviews</span>
+              <span className="block">Five-star reviews</span>
               <span className="block text-hydro">on Google. Zero anything else.</span>
             </h2>
           </div>
@@ -107,12 +107,12 @@ export default function GoogleReviews() {
             ))}
           </div>
           <a
-            href={SITE.gmb}
+            href={SITE.reviews}
             target="_blank"
             rel="noopener noreferrer"
             className="label drip-link pb-1 text-brand"
           >
-            Read all {SITE.rating.count} reviews on Google →
+            Read all our reviews on Google →
           </a>
         </div>
       </div>

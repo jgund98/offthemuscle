@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import MobileDock from "@/components/MobileDock";
 import DeferredWidgets from "@/components/DeferredWidgets";
 import Analytics from "@/components/Analytics";
+import MetaPixel from "@/components/MetaPixel";
 import { SITE, SERVICES, CITIES, COUNTIES, REVIEWS } from "@/lib/site";
 
 const archivo = Archivo({
@@ -88,6 +89,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <MobileDock />
         <DeferredWidgets />
         <Analytics />
+        <MetaPixel />
         {/* Local-business graph: NAP, geo, hours, service area, the real
             Google rating and reviews, and the site node. Google does not show
             star snippets for a business's own reviews, but the markup is

@@ -1,5 +1,6 @@
 "use client";
 
+import { fbqTrack } from "@/components/MetaPixel";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SITE, PROPERTY_OPTIONS } from "@/lib/site";
@@ -81,6 +82,7 @@ export default function QuoteForm() {
       });
       if (!res.ok) throw new Error("send_failed");
       setSent(true);
+      fbqTrack("Lead", { content_name: "quote_form" });
     } catch {
       setError(true);
     } finally {

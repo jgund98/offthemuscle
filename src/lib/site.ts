@@ -29,6 +29,12 @@ export const SITE = {
   hours: "Mon–Sun · 7am – 7pm",
   hoursNote: "Holidays closed",
   gmb: "https://www.google.com/maps/place/Off+The+Muscle+Pressure+Cleaning/@26.6588969,-80.1333836,17z",
+  /* Google place ID for the listing (ChIJ... resolves to the same 0x88d9291dac7861d7:0x2e719d01fb3e2282 entry).
+     reviews: opens the reviews panel directly, not the map. writeReview: the one-tap
+     "leave us a review" link to hand customers. */
+  placeId: "ChIJ12F4rB0p2YgRgiI--wGdcS4",
+  reviews: "https://search.google.com/local/reviews?placeid=ChIJ12F4rB0p2YgRgiI--wGdcS4",
+  writeReview: "https://search.google.com/local/writereview?placeid=ChIJ12F4rB0p2YgRgiI--wGdcS4",
   rating: { value: "5.0", count: 47 },
   // West Palm Beach
   geo: { lat: 26.7153, lng: -80.0534 },

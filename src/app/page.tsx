@@ -176,8 +176,8 @@ export default function Home() {
                     keeps storefronts, plazas, and gas stations inspection-ready.
                   </p>
                   <p>
-                    Every job is owner-led, quoted straight, and backed by {SITE.rating.count}{" "}
-                    five-star Google reviews.{" "}
+                    Every job is owner-led, quoted straight, and backed by five-star Google
+                    reviews.{" "}
                     <Link href="/contact" className={inlineLink}>Request a free estimate</Link>{" "}
                     or call{" "}
                     <a href={SITE.phoneHref} className={inlineLink}>{SITE.phone}</a>.

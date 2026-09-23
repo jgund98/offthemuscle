@@ -167,7 +167,7 @@ export default function Hero({ media = HERO_MEDIA }: { media?: typeof HERO_MEDIA
 
           {/* real proof beats badges: the actual Google rating */}
           <a
-            href={SITE.gmb}
+            href={SITE.reviews}
             target="_blank"
             rel="noopener noreferrer"
             className="rise mt-4 flex w-fit items-center gap-3 rounded-full border border-foam/15 bg-abyss/40 py-2.5 pl-4 pr-5 backdrop-blur-sm transition-colors hover:border-hydro/50"
@@ -182,7 +182,7 @@ export default function Hero({ media = HERO_MEDIA }: { media?: typeof HERO_MEDIA
             </span>
             <span className="text-xs font-semibold text-foam">
               {SITE.rating.value} on Google
-              <span className="text-mist-dim"> · {SITE.rating.count} reviews</span>
+              <span className="text-mist-dim"> · five-star reviews</span>
             </span>
           </a>
         </div>
